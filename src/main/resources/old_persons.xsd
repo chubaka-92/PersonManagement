@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<xs:schema 
+		xmlns:xs="http://www.w3.org/2001/XMLSchema"
+		xmlns:tns="http://example.com/personmenegement/persons"
+        targetNamespace="http://example.com/personmenegement/persons" elementFormDefault="qualified">
+
+    <xs:element name="getPersonByIdRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getPersonByIdResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="person" type="tns:person"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="person">
+        <xs:sequence>
+            <xs:element name="id" type="xs:long"/>
+            <xs:element name="name" type="xs:string"/>
+            <xs:element name="age" type="xs:int"/>
+            <xs:element name="email" type="xs:string"/>
+            <xs:element name="position" type="xs:string"/>
+            <xs:element name="salary" type="xs:double"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>
