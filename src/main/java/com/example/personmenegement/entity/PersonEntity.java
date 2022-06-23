@@ -8,18 +8,18 @@ public class PersonEntity {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     @Column(name = "id", nullable = false)
-    private long id;
+    private long id; // todo обычно используется Long-обертка. Таким образом можно понимать задано ли значение id или нет
 
     private String name;
 
-    private int age;
+    private int age; // todo обертка
 
     private String email;
+    private String position;//енам надо прикрутить // todo можешь сделать поле enum и повесить аннотацию @Enumerated
 
-    private String position;//енам надо прикрутить
+    private long salary; // todo обертка
 
-    private long salary;
-
+    // todo используй lombok
     public PersonEntity(String name, int age, String email, String position, long salary) {
         setName(name);
         setAge(age);

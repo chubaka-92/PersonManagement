@@ -8,6 +8,7 @@ public enum Position {
     LEAD_ENGINEER(40000,55000,"Ведущий инженер"),
     CHIEF_ENGINEER(55000,65000,"Главный инженер");
 
+    // todo почему double в Enum, а в сущности Int?
     private double salaryMin;
     private double salaryMax;
     private String translation;
