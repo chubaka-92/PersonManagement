@@ -37,6 +37,7 @@ public class PersonService {
     public void updatePerson(PersonEntity personEntity) {
         personRepository.save(personEntity);
     }
+
     public void deletePerson(long personId) {
         personRepository.deleteById(personId);
     }

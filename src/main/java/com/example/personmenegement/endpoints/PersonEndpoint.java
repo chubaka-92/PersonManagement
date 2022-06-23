@@ -18,6 +18,7 @@ public class PersonEndpoint {
 
 
     private final PersonService personService;
+    //private final ServiceStatus serviceStatus;
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getPersonByIdRequest")
     @ResponsePayload

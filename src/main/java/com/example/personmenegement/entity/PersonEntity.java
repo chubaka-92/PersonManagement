@@ -1,7 +1,10 @@
 package com.example.personmenegement.entity;
 
+import lombok.Data;
+
 import javax.persistence.*;
 
+@Data
 @Entity
 @Table(name="person")
 public class PersonEntity {
@@ -20,7 +23,7 @@ public class PersonEntity {
 
     private long salary;
 
-    public PersonEntity(String name, int age, String email, String position, long salary) {
+/*    public PersonEntity(String name, int age, String email, String position, long salary) {
         setName(name);
         setAge(age);
         setEmail(email);
@@ -78,5 +81,5 @@ public class PersonEntity {
 
     public void setSalary(long salary) {
         this.salary = salary;
-    }
+    }*/
 }
