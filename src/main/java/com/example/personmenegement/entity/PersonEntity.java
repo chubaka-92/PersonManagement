@@ -3,6 +3,7 @@ package com.example.personmenegement.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Data
 @Entity
@@ -11,75 +12,21 @@ public class PersonEntity {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     @Column(name = "id", nullable = false)
-    private long id;
-
+    private Long id; // todo обычно используется Long-обертка. Таким образом можно понимать задано ли значение id или нет
+                    // done
     private String name;
 
-    private int age;
+    private Integer age; // todo обертка
+                        //   done
 
     private String email;
 
-    private String position;//енам надо прикрутить
+    private String position; // todo можешь сделать поле enum и повесить аннотацию @Enumerated
 
-    private long salary;
+    private BigDecimal salary; // todo обертка
+                            //     done
 
-/*    public PersonEntity(String name, int age, String email, String position, long salary) {
-        setName(name);
-        setAge(age);
-        setEmail(email);
-        setPosition(position);
-        setSalary(salary);
-    }
+    // todo используй lombok
+    //  done
 
-    public PersonEntity() {
-
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getPosition() {
-        return position;
-    }
-
-    public double getSalary() {
-        return salary;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setPosition(String position) {
-        this.position = position;
-    }
-
-    public void setSalary(long salary) {
-        this.salary = salary;
-    }*/
 }

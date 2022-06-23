@@ -1,29 +1,25 @@
 package com.example.personmenegement.enums;
 
+import java.math.BigDecimal;
+
 public enum Position {
 
-    INTERN(15000,20000,"Стажер"),
-    TECHNOLOGIST(20000,30000,"Технолог"),
-    ENGINEER(30000,40000,"Инженер"),
-    LEAD_ENGINEER(40000,55000,"Ведущий инженер"),
-    CHIEF_ENGINEER(55000,65000,"Главный инженер");
+    INTERN(BigDecimal.valueOf(15000),BigDecimal.valueOf(20000),"Стажер"),
+    TECHNOLOGIST(BigDecimal.valueOf(20000),BigDecimal.valueOf(30000),"Технолог"),
+    ENGINEER(BigDecimal.valueOf(30000),BigDecimal.valueOf(40000),"Инженер"),
+    LEAD_ENGINEER(BigDecimal.valueOf(40000),BigDecimal.valueOf(55000),"Ведущий инженер"),
+    CHIEF_ENGINEER(BigDecimal.valueOf(55000),BigDecimal.valueOf(65000),"Главный инженер");
 
-    private double salaryMin;
-    private double salaryMax;
-    private String translation;
+    // todo почему double в Enum, а в сущности Int?
+    // done. определился с типом наконец то)
+    private final BigDecimal salaryMin;
+    private final BigDecimal salaryMax;
+    private final String translation;
 
-    Position(double salaryMin,double salaryMax,String translation){
+    Position(BigDecimal salaryMin,BigDecimal salaryMax,String translation){
     this.salaryMin = salaryMin;
     this.salaryMax = salaryMax;
     this.translation = translation;
-    }
-
-    public double getSalaryMin() {
-        return salaryMin;
-    }
-
-    public double getSalaryMax() {
-        return salaryMax;
     }
 
     @Override
