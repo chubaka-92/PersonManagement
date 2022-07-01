@@ -1,51 +1,76 @@
 package com.example.personmenegement.services;
 
+import com.example.personmenegement.dao.PersonDAO;
 import com.example.personmenegement.entity.PersonEntity;
-import com.example.personmenegement.repository.PersonRepository;
-import com.example.personmenegement.soap.person.Person;
+import com.example.personmenegement.repository.PersonMapper;
+import com.example.personmenegement.soap.person.*;
+import com.example.personmenegement.types.Status;
+import com.example.personmenegement.validation.PersonValidation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.function.Function;
-
 @Service
 @RequiredArgsConstructor
-public class PersonService { // todo делай время от времени реформат кода Ctrl + Alt + L
-    private final PersonRepository personRepository;
-
-    // todo почему статика и почему публичная?
-    public static final Function<PersonEntity, Person> functionEntityToSoap = personEntity -> {
-        Person person = new Person(); // todo используй builder lombok
-        person.setId(personEntity.getId());
-        person.setName(personEntity.getName());
-        person.setAge(personEntity.getAge());
-        person.setEmail(personEntity.getEmail());
-        person.setSalary(personEntity.getSalary().doubleValue());
-        person.setPosition(personEntity.getPosition());
-        return person;
-    };
+public class PersonService {
+    // todo делай время от времени реформат кода Ctrl + Alt + L
+    //   done
+    private final PersonDAO personDao;
+    private final PersonMapper personMapper;
+    private final PersonValidation personValidation;
 
     // todo преобразование вынести в отдельный сервис. Класс-репозиторий по-хорошему должен возвращать объект сущности,
     //  которой орудует PersonRepository
-    public Person getById(Long id) {
-         PersonEntity personEntity = (PersonEntity) personRepository.findAllById(id);
+    //   done
 
-        return functionEntityToSoap.apply(personEntity);
+    public GetPersonByIdResponse getPersonById(Long id) {
+        GetPersonByIdResponse response = new GetPersonByIdResponse();
+        ServiceStatus serviceStatus = new ServiceStatus();
+        PersonEntity personEntity = personDao.findPersonById(id);
+
+        if (personEntity == null) {
+            serviceStatus.setStatus(Status.ERROR.name());
+            serviceStatus.setMessage("Персона с id = " + id + " не найдена");
+        } else {
+            response.setPerson(personMapper.personEntityToPerson(personEntity));
+            serviceStatus.setStatus(Status.SUCCESS.name());
+        }
+        response.setServiceStatus(serviceStatus);
+        return response;
     }
 
-    // todo @Transactional
-    public void addPerson(PersonEntity personEntity) {
-        personRepository.save(personEntity);
+    public AddPersonResponse addNewPerson(Person person) {
+        AddPersonResponse response = personValidation.addPersonValidator(person);
+
+        if (response.getServiceStatus().getStatus().equals(Status.SUCCESS.name())) {
+            response.getPerson().setId(String.valueOf(personDao
+                    .addPerson(personMapper.personToPersonEntity(person))));
+        }
+        return response;
     }
 
-    // todo @Transactional
-    public void updatePerson(PersonEntity personEntity) {
-        personRepository.save(personEntity);
+    public UpdatePersonResponse updatePerson(Person person) {
+        UpdatePersonResponse response = personValidation.updatePersonValidator(person);
+
+        if (response.getServiceStatus().getStatus().equals(Status.SUCCESS.name())) {
+            response.getPerson()
+                    .setId(String.valueOf(personDao
+                            .updatePerson(personMapper.personToPersonEntity(person))));
+        }
+        return response;
     }
 
-    // todo @Transactional
+    public DeletePersonResponse deletePerson(long id) {
+        DeletePersonResponse response = new DeletePersonResponse();
+        ServiceStatus serviceStatus = new ServiceStatus();
 
-    public void deletePerson(long personId) {
-        personRepository.deleteById(personId);
+        if (personDao.findPersonById(id) == null) {
+            serviceStatus.setStatus(Status.ERROR.name());
+            serviceStatus.setMessage("Персона с id = " + id + " не найдена");
+        } else {
+            serviceStatus.setStatus(Status.SUCCESS.name());
+            personDao.deletePersonById(id);
+        }
+        response.setServiceStatus(serviceStatus);
+        return response;
     }
 }

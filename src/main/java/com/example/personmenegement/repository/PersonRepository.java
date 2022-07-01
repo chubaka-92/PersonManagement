@@ -1,8 +1,8 @@
 package com.example.personmenegement.repository;
 
 import com.example.personmenegement.entity.PersonEntity;
+import com.example.personmenegement.soap.person.Person;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
 
 //todo аннотация не нужна
 // done

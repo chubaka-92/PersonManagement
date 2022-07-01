@@ -13,9 +13,9 @@ import javax.xml.bind.annotation.*;
 
 /**
  * <p>Java class for anonymous complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType&gt;
  *   &lt;complexContent&gt;
@@ -28,13 +28,11 @@ import javax.xml.bind.annotation.*;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "serviceStatus",
-    "person"
+        "serviceStatus",
+        "person"
 })
 @XmlRootElement(name = "addPersonResponse")
 public class AddPersonResponse {
@@ -46,11 +44,9 @@ public class AddPersonResponse {
 
     /**
      * Gets the value of the serviceStatus property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link ServiceStatus }
-     *     
+     *
+     * @return possible object is
+     * {@link ServiceStatus }
      */
     public ServiceStatus getServiceStatus() {
         return serviceStatus;
@@ -58,11 +54,9 @@ public class AddPersonResponse {
 
     /**
      * Sets the value of the serviceStatus property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link ServiceStatus }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link ServiceStatus }
      */
     public void setServiceStatus(ServiceStatus value) {
         this.serviceStatus = value;
@@ -70,11 +64,9 @@ public class AddPersonResponse {
 
     /**
      * Gets the value of the person property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Person }
-     *     
+     *
+     * @return possible object is
+     * {@link Person }
      */
     public Person getPerson() {
         return person;
@@ -82,11 +74,9 @@ public class AddPersonResponse {
 
     /**
      * Sets the value of the person property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Person }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link Person }
      */
     public void setPerson(Person value) {
         this.person = value;

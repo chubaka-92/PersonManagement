@@ -6,12 +6,14 @@
 
     <xs:complexType name="person">
         <xs:sequence>
-            <xs:element name="id" type="xs:long"/>
+            <xs:element name="id" type="xs:string"/>
             <xs:element name="name" type="xs:string"/>
-            <xs:element name="age" type="xs:int"/>
+            <xs:element name="age" type="xs:string"/>
             <xs:element name="email" type="xs:string"/>
             <xs:element name="position" type="xs:string"/>
-            <xs:element name="salary" type="xs:double"/>
+            <xs:element name="salary" type="xs:string"/>
+            <xs:element name="valid" type="xs:string"/>
+            <xs:element name="experience" type="xs:string"/>
         </xs:sequence>
     </xs:complexType>
 
@@ -33,6 +35,7 @@
     <xs:element name="getPersonByIdResponse">
         <xs:complexType>
             <xs:sequence>
+                <xs:element name="serviceStatus" type="tns:serviceStatus" />
                 <xs:element name="person" type="tns:person"/>
             </xs:sequence>
         </xs:complexType>
@@ -42,10 +45,11 @@
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="name" type="xs:string"/>
-                <xs:element name="age" type="xs:int"/>
+                <xs:element name="age" type="xs:string"/>
                 <xs:element name="email" type="xs:string"/>
                 <xs:element name="position" type="xs:string"/>
-                <xs:element name="salary" type="xs:double"/>
+                <xs:element name="salary" type="xs:string"/>
+                <xs:element name="experience" type="xs:string"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -71,6 +75,7 @@
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="serviceStatus" type="tns:serviceStatus" />
+                <xs:element name="person" type="tns:person" />
             </xs:sequence>
         </xs:complexType>
     </xs:element>

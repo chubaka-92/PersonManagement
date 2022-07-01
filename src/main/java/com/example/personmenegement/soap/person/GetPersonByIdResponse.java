@@ -13,9 +13,9 @@ import javax.xml.bind.annotation.*;
 
 /**
  * <p>Java class for anonymous complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType&gt;
  *   &lt;complexContent&gt;
@@ -27,26 +27,25 @@ import javax.xml.bind.annotation.*;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "person"
+        "serviceStatus",
+        "person"
 })
 @XmlRootElement(name = "getPersonByIdResponse")
 public class GetPersonByIdResponse {
 
     @XmlElement(required = true)
     protected Person person;
+    @XmlElement(required = true)
+    protected ServiceStatus serviceStatus;
 
     /**
      * Gets the value of the person property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Person }
-     *     
+     *
+     * @return possible object is
+     * {@link Person }
      */
     public Person getPerson() {
         return person;
@@ -54,14 +53,20 @@ public class GetPersonByIdResponse {
 
     /**
      * Sets the value of the person property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Person }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link Person }
      */
     public void setPerson(Person value) {
         this.person = value;
+    }
+
+    public ServiceStatus getServiceStatus() {
+        return serviceStatus;
+    }
+
+    public void setServiceStatus(ServiceStatus serviceStatus) {
+        this.serviceStatus = serviceStatus;
     }
 
 }

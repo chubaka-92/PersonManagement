@@ -13,40 +13,40 @@ import javax.xml.bind.annotation.*;
 
 /**
  * <p>Java class for anonymous complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType&gt;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
  *         &lt;element name="serviceStatus" type="{http://example.com/personmenegement/persons}serviceStatus"/&gt;
+ *         &lt;element name="person" type="{http://example.com/personmenegement/persons}person"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "serviceStatus"
+        "serviceStatus",
+        "person"
 })
 @XmlRootElement(name = "updatePersonResponse")
 public class UpdatePersonResponse {
 
     @XmlElement(required = true)
     protected ServiceStatus serviceStatus;
+    @XmlElement(required = true)
+    protected Person person;
 
     /**
      * Gets the value of the serviceStatus property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link ServiceStatus }
-     *     
+     *
+     * @return possible object is
+     * {@link ServiceStatus }
      */
     public ServiceStatus getServiceStatus() {
         return serviceStatus;
@@ -54,14 +54,20 @@ public class UpdatePersonResponse {
 
     /**
      * Sets the value of the serviceStatus property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link ServiceStatus }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link ServiceStatus }
      */
     public void setServiceStatus(ServiceStatus value) {
         this.serviceStatus = value;
+    }
+
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
     }
 
 }

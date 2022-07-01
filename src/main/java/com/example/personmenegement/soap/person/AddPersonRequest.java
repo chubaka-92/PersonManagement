@@ -13,34 +13,34 @@ import javax.xml.bind.annotation.*;
 
 /**
  * <p>Java class for anonymous complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType&gt;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
  *         &lt;element name="name" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
- *         &lt;element name="age" type="{http://www.w3.org/2001/XMLSchema}int"/&gt;
+ *         &lt;element name="age" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *         &lt;element name="email" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *         &lt;element name="position" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
- *         &lt;element name="salary" type="{http://www.w3.org/2001/XMLSchema}double"/&gt;
+ *         &lt;element name="salary" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="experience" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "name",
-    "age",
-    "email",
-    "position",
-    "salary"
+        "name",
+        "age",
+        "email",
+        "position",
+        "salary",
+        "experience"
 })
 @XmlRootElement(name = "addPersonRequest")
 public class AddPersonRequest {
@@ -53,14 +53,13 @@ public class AddPersonRequest {
     @XmlElement(required = true)
     protected String position;
     protected double salary;
+    protected String experience;
 
     /**
      * Gets the value of the name property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     * {@link String }
      */
     public String getName() {
         return name;
@@ -68,11 +67,9 @@ public class AddPersonRequest {
 
     /**
      * Sets the value of the name property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setName(String value) {
         this.name = value;
@@ -80,7 +77,6 @@ public class AddPersonRequest {
 
     /**
      * Gets the value of the age property.
-     * 
      */
     public int getAge() {
         return age;
@@ -88,7 +84,6 @@ public class AddPersonRequest {
 
     /**
      * Sets the value of the age property.
-     * 
      */
     public void setAge(int value) {
         this.age = value;
@@ -96,11 +91,9 @@ public class AddPersonRequest {
 
     /**
      * Gets the value of the email property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     * {@link String }
      */
     public String getEmail() {
         return email;
@@ -108,11 +101,9 @@ public class AddPersonRequest {
 
     /**
      * Sets the value of the email property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setEmail(String value) {
         this.email = value;
@@ -120,11 +111,9 @@ public class AddPersonRequest {
 
     /**
      * Gets the value of the position property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     * {@link String }
      */
     public String getPosition() {
         return position;
@@ -132,11 +121,9 @@ public class AddPersonRequest {
 
     /**
      * Sets the value of the position property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setPosition(String value) {
         this.position = value;
@@ -144,7 +131,6 @@ public class AddPersonRequest {
 
     /**
      * Gets the value of the salary property.
-     * 
      */
     public double getSalary() {
         return salary;
@@ -152,7 +138,6 @@ public class AddPersonRequest {
 
     /**
      * Sets the value of the salary property.
-     * 
      */
     public void setSalary(double value) {
         this.salary = value;

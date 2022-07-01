@@ -13,9 +13,9 @@ import javax.xml.bind.annotation.*;
 
 /**
  * <p>Java class for anonymous complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType&gt;
  *   &lt;complexContent&gt;
@@ -27,12 +27,10 @@ import javax.xml.bind.annotation.*;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "person"
+        "person"
 })
 @XmlRootElement(name = "updatePersonRequest")
 public class UpdatePersonRequest {
@@ -42,11 +40,9 @@ public class UpdatePersonRequest {
 
     /**
      * Gets the value of the person property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Person }
-     *     
+     *
+     * @return possible object is
+     * {@link Person }
      */
     public Person getPerson() {
         return person;
@@ -54,11 +50,9 @@ public class UpdatePersonRequest {
 
     /**
      * Sets the value of the person property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Person }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link Person }
      */
     public void setPerson(Person value) {
         this.person = value;
