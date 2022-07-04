@@ -1,19 +1,10 @@
 package com.example.personmenegement.dao;
 
 import com.example.personmenegement.entity.PersonEntity;
-import com.example.personmenegement.repository.PersonMapper;
 import com.example.personmenegement.repository.PersonRepository;
-import com.example.personmenegement.soap.person.GetPersonByIdResponse;
-import com.example.personmenegement.soap.person.Person;
-import com.example.personmenegement.soap.person.ServiceStatus;
-import com.example.personmenegement.types.Status;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Collections;
-import java.util.Optional;
-import java.util.function.Function;
 
 @Service
 @RequiredArgsConstructor
@@ -44,4 +35,5 @@ public class PersonDAO {
     public void deletePersonById(long personId) {
         personRepository.deleteById(personId);
     }
+
 }
