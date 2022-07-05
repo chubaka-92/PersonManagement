@@ -1,5 +1,5 @@
 package com.example.personmenegement.endpoints;
-
+// todo unused impotrs это некрасиво. Делай реформат кода
 import com.example.personmenegement.entity.PersonEntity;
 import com.example.personmenegement.services.PersonService;
 import com.example.personmenegement.soap.person.*;

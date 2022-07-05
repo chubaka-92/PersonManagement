@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
-@EnableScheduling
+@EnableScheduling// todo лучше перенести эту аннотацию в DataBaseCleanerTask
 public class PersonManagementApplication {
     public static void main(String[] args) {
         SpringApplication.run(PersonManagementApplication.class, args);
