@@ -16,7 +16,6 @@ import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 public class PersonEndpoint {
     private static final String NAMESPACE_URI = "http://example.com/personmenegement/persons";
 
-
     private final PersonService personService;
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getPersonByIdRequest")
