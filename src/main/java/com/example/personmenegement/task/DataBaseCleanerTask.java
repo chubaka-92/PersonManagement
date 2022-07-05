@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 
-@Component
+@Component// todo Component и Service это одни и те же аннотации. Тут лучше вообще использовать @Configuration
 @Service
 @RequiredArgsConstructor
 public class DataBaseCleanerTask {

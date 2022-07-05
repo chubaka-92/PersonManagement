@@ -12,15 +12,9 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class PersonService {
-    // todo делай время от времени реформат кода Ctrl + Alt + L
-    //   done
     private final PersonDAO personDao;
     private final PersonMapper personMapper;
     private final PersonValidation personValidation;
-
-    // todo преобразование вынести в отдельный сервис. Класс-репозиторий по-хорошему должен возвращать объект сущности,
-    //  которой орудует PersonRepository
-    //   done
 
     public GetPersonByIdResponse getPersonById(Long id) {
         GetPersonByIdResponse response = new GetPersonByIdResponse();
@@ -29,7 +23,7 @@ public class PersonService {
 
         if (personEntity == null) {
             serviceStatus.setStatus(Status.ERROR.name());
-            serviceStatus.setMessage("Персона с id = " + id + " не найдена");
+            serviceStatus.setMessage("Персона с id = " + id + " не найдена");// todo используй ResourceBundle чтобы брать сообщения из property
         } else {
             response.setPerson(personMapper.personEntityToPerson(personEntity));
             serviceStatus.setStatus(Status.SUCCESS.name());

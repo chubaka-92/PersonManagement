@@ -10,9 +10,6 @@ public enum Position {
     LEAD_ENGINEER(BigDecimal.valueOf(40000),BigDecimal.valueOf(55000),"Ведущий инженер", 10.0),
     CHIEF_ENGINEER(BigDecimal.valueOf(55000),BigDecimal.valueOf(65000),"Главный инженер",15.0);
 
-    // todo почему double в Enum, а в сущности Int?
-    //  done. определился с типом наконец то)
-
     private final BigDecimal salaryMin;
     private final BigDecimal salaryMax;
     private final String translation;
