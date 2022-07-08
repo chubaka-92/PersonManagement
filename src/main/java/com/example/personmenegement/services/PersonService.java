@@ -2,12 +2,15 @@ package com.example.personmenegement.services;
 
 import com.example.personmenegement.dao.PersonDAO;
 import com.example.personmenegement.entity.PersonEntity;
-import com.example.personmenegement.repository.PersonMapper;
+import com.example.personmenegement.mapper.PersonMapper;
 import com.example.personmenegement.soap.person.*;
 import com.example.personmenegement.types.Status;
 import com.example.personmenegement.validation.PersonValidation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.text.MessageFormat;
+import java.util.ResourceBundle;
 
 @Service
 @RequiredArgsConstructor
@@ -15,6 +18,7 @@ public class PersonService {
     private final PersonDAO personDao;
     private final PersonMapper personMapper;
     private final PersonValidation personValidation;
+    private final ResourceBundle errorMsg = ResourceBundle.getBundle("message");
 
     public GetPersonByIdResponse getPersonById(Long id) {
         GetPersonByIdResponse response = new GetPersonByIdResponse();
@@ -23,8 +27,8 @@ public class PersonService {
 
         if (personEntity == null) {
             serviceStatus.setStatus(Status.ERROR.name());
-            serviceStatus.setMessage("Персона с id = " + id + " не найдена");// todo используй ResourceBundle чтобы брать сообщения из property
-        } else {
+            serviceStatus.setMessage(MessageFormat.format(errorMsg.getString("personNotFound"), id));// todo используй ResourceBundle чтобы брать сообщения из property
+        } else {//                                                                                           done
             response.setPerson(personMapper.personEntityToPerson(personEntity));
             serviceStatus.setStatus(Status.SUCCESS.name());
         }
@@ -59,7 +63,7 @@ public class PersonService {
 
         if (personDao.findPersonById(id) == null) {
             serviceStatus.setStatus(Status.ERROR.name());
-            serviceStatus.setMessage("Персона с id = " + id + " не найдена");
+            serviceStatus.setMessage(MessageFormat.format(errorMsg.getString("personNotFound"), id));
         } else {
             serviceStatus.setStatus(Status.SUCCESS.name());
             personDao.deletePersonById(id);

@@ -3,16 +3,18 @@ package com.example.personmenegement.dao;
 import com.example.personmenegement.entity.PersonEntity;
 import com.example.personmenegement.repository.PersonRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-@Service // todo @Repository, мне кажется, так будет информативнее
+// todo @Repository, мне кажется, так будет информативнее
+//   done
+@Repository
 @RequiredArgsConstructor
 public class PersonDAO {
     private final PersonRepository personRepository;
 
     public PersonEntity findPersonById(Long id) {
-        return personRepository.findById(id).orElseGet(() -> null); // todo можно без лямбды
+        return personRepository.findById(id).orElse(null); // todo можно без лямбды    //DONE
     }
 
     @Transactional

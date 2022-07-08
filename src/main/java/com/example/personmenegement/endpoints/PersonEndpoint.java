@@ -1,11 +1,10 @@
 package com.example.personmenegement.endpoints;
 // todo unused impotrs это некрасиво. Делай реформат кода
-import com.example.personmenegement.entity.PersonEntity;
+//  done
+
 import com.example.personmenegement.services.PersonService;
 import com.example.personmenegement.soap.person.*;
-import com.example.personmenegement.types.Status;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.BeanUtils;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;

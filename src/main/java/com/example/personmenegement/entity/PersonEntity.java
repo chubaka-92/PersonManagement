@@ -1,24 +1,24 @@
 package com.example.personmenegement.entity;
 
 import com.example.personmenegement.types.Position;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 
-@Data// todo аккуратнее с этой аннотацией. Она генерит equals && hashcode на все поля + у тебя уже есть аннотации для конструкторов, просто лучше добавь @Getter @Setter
+// todo аккуратнее с этой аннотацией @Data. Она генерит equals && hashcode на все поля + у тебя уже есть аннотации для конструкторов, просто лучше добавь @Getter @Setter
+//  done
 @Entity
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
 @Table(name = "person")
 public class PersonEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)// todo лучше делать IDENTITY или SEQUENCE, почитай про отличия
-    @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)// todo лучше делать IDENTITY или SEQUENCE, почитай про отличия
+    @Column(name = "id", nullable = false)            //   done
     private Long id;
     private String name;
 

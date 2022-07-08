@@ -23,7 +23,8 @@ public class WebServiceConfig extends WsConfigurerAdapter {
         return new ServletRegistrationBean<>(servlet, "/ws/*");
     }
 
-    //http://localhost:8080/ws/persons.wsdl // todo лишние комменты убери
+    // todo лишние комменты убери
+    //  done
     @Bean(name = "persons")
     public DefaultWsdl11Definition defaultWsdl11Definition(XsdSchema countriesSchema) {
         DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();

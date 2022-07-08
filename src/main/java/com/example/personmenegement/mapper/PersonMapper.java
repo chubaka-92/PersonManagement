@@ -1,4 +1,5 @@
-package com.example.personmenegement.repository;
+package com.example.personmenegement.mapper;
+
 import com.example.personmenegement.entity.PersonEntity;
 import com.example.personmenegement.soap.person.Person;
 import com.example.personmenegement.types.Position;
@@ -6,10 +7,11 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 // todo unused imports
-import java.util.function.Function;
+//  done
 
 @Service
 public class PersonMapper { // todo в отдельный пакет mapper
+    //                          done
 
     public Person personEntityToPerson(PersonEntity personEntity) {
         return Person.builder()
@@ -26,13 +28,17 @@ public class PersonMapper { // todo в отдельный пакет mapper
 
     public PersonEntity personToPersonEntity(Person person) {
         return PersonEntity.builder()
-                .id(!(person.getId()==(null))?Long.valueOf(person.getId()):null) // todo вынеси логику в отдельный метод
-                .name(person.getName())
+                .id(getId(person))     // todo вынеси логику в отдельный метод
+                .name(person.getName())//  done
                 .age(Integer.valueOf(person.getAge()))
                 .email(person.getEmail())
                 .salary(new BigDecimal(person.getSalary()))
                 .position(Position.valueOf(person.getPosition()))
                 .experience(Double.valueOf(person.getExperience()))
                 .build();
+    }
+
+    private Long getId(Person person) {
+        return !(person.getId() == (null)) ? Long.valueOf(person.getId()) : null;
     }
 }
