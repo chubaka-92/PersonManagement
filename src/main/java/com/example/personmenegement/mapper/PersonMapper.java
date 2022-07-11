@@ -33,7 +33,7 @@ public class PersonMapper { // todo в отдельный пакет mapper
                 .age(Integer.valueOf(person.getAge()))
                 .email(person.getEmail())
                 .salary(new BigDecimal(person.getSalary()))
-                .position(Position.valueOf(person.getPosition()))
+                .position(Position.getDefine(person.getPosition()))
                 .experience(Double.valueOf(person.getExperience()))
                 .build();
     }

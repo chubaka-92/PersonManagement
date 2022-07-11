@@ -15,7 +15,7 @@ public class PersonChecker {
 
     public void checkPersonRequiredFields(Person person) {
 
-        if (person.getName() == null || person.getName().equals("")) {// todo а если null? // DONE
+        if (person.getName() == null || person.getName().equals("") || person.getName().trim().equals("")) {// todo а если null? // DONE
             person.setName(errorMsg.getString("emptyField"));// todo используй ResourceBundle чтобы брать сообщения из property
             person.setValid(false); //                                  done
         }
@@ -27,9 +27,17 @@ public class PersonChecker {
             person.setAge(errorMsg.getString("emptyField"));// todo используй ResourceBundle чтобы брать сообщения из property
             person.setValid(false);//                                  done
         }
+        if (person.getAge() != null && Integer.parseInt(person.getAge()) < 16) {
+            person.setAge(errorMsg.getString("incorrectAge"));
+            person.setValid(false);
+        }
         if (person.getPosition() == null || person.getPosition().equals("")) {// todo а если null? // DONE
             person.setPosition(errorMsg.getString("emptyField"));// todo используй ResourceBundle чтобы брать сообщения из property
             person.setValid(false);//                                  done
+        }
+        if (person.getPosition() != null && Position.getDefine(person.getPosition())==Position.DONT_UNDERSTEND) {
+            person.setPosition(errorMsg.getString("incorrectPosition"));
+            person.setValid(false);
         }
         if (person.getExperience() == null || person.getExperience().equals("")) {// todo а если null? // DONE
             person.setExperience(errorMsg.getString("emptyField"));// todo используй ResourceBundle чтобы брать сообщения из property
@@ -38,7 +46,7 @@ public class PersonChecker {
     }
 
     public ServiceStatus checkPersonSalary(Person person) {
-        Position positionPers = Position.valueOf(person.getPosition());
+        Position positionPers = Position.getDefine(person.getPosition());
         ServiceStatus serviceStatus = new ServiceStatus();
         if (!checkSalaryMatchingPosition(positionPers, new BigDecimal(person.getSalary()))) {
             person.setValid(false);
@@ -54,7 +62,7 @@ public class PersonChecker {
     }
 
     public ServiceStatus checkPersonExperienceForPosition(Person person) {
-        Position positionPers = Position.valueOf(person.getPosition());
+        Position positionPers = Position.getDefine(person.getPosition());
         ServiceStatus serviceStatus = new ServiceStatus();
         if (!checkExperienceMatchingPosition(positionPers, person.getExperience())) { // todo лучше укажи > 0 + лучше вынести в отдельный метод с информативным названием чтобы понимать что тут вычисляется
             //                                                                                   done
