@@ -1,12 +1,12 @@
 package com.example.personmenegement.services;
 
 import com.example.personmenegement.config.api.PersonService;
+import com.example.personmenegement.config.api.PersonValidation;
 import com.example.personmenegement.dao.PersonDAO;
 import com.example.personmenegement.entity.PersonEntity;
 import com.example.personmenegement.services.mapper.PersonMapper;
 import com.example.personmenegement.soap.person.*;
 import com.example.personmenegement.types.Status;
-import com.example.personmenegement.validation.PersonValidationImp;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +20,7 @@ public class PersonServiceImp implements PersonService {// todo добавить
     public static final String PERSON_NOT_FOUND = "personNotFound";
     private final PersonDAO personDao;
     private final PersonMapper personMapper;
-    private final PersonValidationImp personValidation;
+    private final PersonValidation personValidation;
     private final ResourceBundle errorMsg = ResourceBundle.getBundle(MESSAGE);// todo вынеси в константу
                                                                               //  done
 

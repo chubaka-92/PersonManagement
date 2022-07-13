@@ -1,5 +1,6 @@
 package com.example.personmenegement.validation;
 
+import com.example.personmenegement.config.api.PersonChecker;
 import com.example.personmenegement.config.api.PersonValidation;
 import com.example.personmenegement.soap.person.*;
 import com.example.personmenegement.types.Status;
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class PersonValidationImp implements PersonValidation {// todo добавить интерфейс (все интерфейсы в пакете api) // DONE
 
-    private final PersonCheckerImp personChecker;
+    private final PersonChecker personChecker;
 
     public AddPersonResponse addPersonValidator(Person person) {
         personChecker.checkPersonRequiredFields(person);
