@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class PersonValidation {
+public class PersonValidation {// todo добавить интерфейс (все интерфейсы в пакете api)
 
     private final PersonChecker personChecker;
 

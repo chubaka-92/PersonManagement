@@ -6,8 +6,6 @@ import lombok.*;
 import javax.persistence.*;
 import java.math.BigDecimal;
 
-// todo аккуратнее с этой аннотацией @Data. Она генерит equals && hashcode на все поля + у тебя уже есть аннотации для конструкторов, просто лучше добавь @Getter @Setter
-//  done
 @Entity
 @Builder
 @AllArgsConstructor
@@ -17,8 +15,8 @@ import java.math.BigDecimal;
 @Table(name = "person")
 public class PersonEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)// todo лучше делать IDENTITY или SEQUENCE, почитай про отличия
-    @Column(name = "id", nullable = false)            //   done
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private Long id;
     private String name;
 

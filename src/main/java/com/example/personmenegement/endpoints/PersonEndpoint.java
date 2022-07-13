@@ -1,6 +1,4 @@
 package com.example.personmenegement.endpoints;
-// todo unused impotrs это некрасиво. Делай реформат кода
-//  done
 
 import com.example.personmenegement.services.PersonService;
 import com.example.personmenegement.soap.person.*;
@@ -38,7 +36,6 @@ public class PersonEndpoint {
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "deletePersonRequest")
     @ResponsePayload
     public DeletePersonResponse deletePersonById(@RequestPayload DeletePersonRequest request) {
-
         return personService.deletePerson(request.getId());
     }
 }

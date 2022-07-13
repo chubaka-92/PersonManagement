@@ -9,7 +9,7 @@ public enum Position {
     ENGINEER(BigDecimal.valueOf(30000),BigDecimal.valueOf(40000),"Инженер",2.0),
     LEAD_ENGINEER(BigDecimal.valueOf(40000),BigDecimal.valueOf(55000),"Ведущий инженер", 10.0),
     CHIEF_ENGINEER(BigDecimal.valueOf(55000),BigDecimal.valueOf(65000),"Главный инженер",15.0),
-    DONT_UNDERSTEND(BigDecimal.valueOf(55000),BigDecimal.valueOf(0),"Не пойми хто",0.0);
+    DONT_UNDERSTEND(BigDecimal.valueOf(55000),BigDecimal.valueOf(0),"Не пойми хто",0.0); // todo можно просто эти поля сделать null + поменяй название
 
     private final BigDecimal salaryMin;
     private final BigDecimal salaryMax;
@@ -20,9 +20,10 @@ public enum Position {
     this.salaryMin = salaryMin;
     this.salaryMax = salaryMax;
     this.translation = translation;
-    this.workExperience = workExperience; //стаж работы на позиции в годах
+    this.workExperience = workExperience; //стаж работы на позиции в годах // todo лишние комментарии
     }
 
+    // todo реформат кода Ctrl + Alt + L
     public static Position getDefine(String position) {
         if(INTERN.translation.equals(position)){
             return INTERN;

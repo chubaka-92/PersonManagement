@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 public interface PersonRepository extends CrudRepository<PersonEntity, Long> {
     @Query(value = "SELECT * FROM person p WHERE p.id = (SELECT min(pe.id) FROM person pe)", nativeQuery = true)
-    PersonEntity findPersonOldTask();
+    PersonEntity findPersonOldTask();// todo не используется
 
     @Modifying
     @Transactional

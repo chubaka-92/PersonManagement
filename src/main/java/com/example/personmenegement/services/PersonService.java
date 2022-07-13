@@ -14,11 +14,11 @@ import java.util.ResourceBundle;
 
 @Service
 @RequiredArgsConstructor
-public class PersonService {
+public class PersonService {// todo добавить интерфейс
     private final PersonDAO personDao;
     private final PersonMapper personMapper;
     private final PersonValidation personValidation;
-    private final ResourceBundle errorMsg = ResourceBundle.getBundle("message");
+    private final ResourceBundle errorMsg = ResourceBundle.getBundle("message");// todo вынеси в константу
 
     public GetPersonByIdResponse getPersonById(Long id) {
         GetPersonByIdResponse response = new GetPersonByIdResponse();
@@ -27,8 +27,8 @@ public class PersonService {
 
         if (personEntity == null) {
             serviceStatus.setStatus(Status.ERROR.name());
-            serviceStatus.setMessage(MessageFormat.format(errorMsg.getString("personNotFound"), id));// todo используй ResourceBundle чтобы брать сообщения из property
-        } else {//                                                                                           done
+            serviceStatus.setMessage(MessageFormat.format(errorMsg.getString("personNotFound"), id));// todo вынеси в константу
+        } else {
             response.setPerson(personMapper.personEntityToPerson(personEntity));
             serviceStatus.setStatus(Status.SUCCESS.name());
         }
@@ -63,7 +63,7 @@ public class PersonService {
 
         if (personDao.findPersonById(id) == null) {
             serviceStatus.setStatus(Status.ERROR.name());
-            serviceStatus.setMessage(MessageFormat.format(errorMsg.getString("personNotFound"), id));
+            serviceStatus.setMessage(MessageFormat.format(errorMsg.getString("personNotFound"), id));// todo вынеси в константу
         } else {
             serviceStatus.setStatus(Status.SUCCESS.name());
             personDao.deletePersonById(id);
