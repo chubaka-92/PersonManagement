@@ -1,11 +1,12 @@
 package com.example.personmenegement.services;
 
+import com.example.personmenegement.config.api.PersonService;
 import com.example.personmenegement.dao.PersonDAO;
 import com.example.personmenegement.entity.PersonEntity;
-import com.example.personmenegement.mapper.PersonMapper;
+import com.example.personmenegement.services.mapper.PersonMapper;
 import com.example.personmenegement.soap.person.*;
 import com.example.personmenegement.types.Status;
-import com.example.personmenegement.validation.PersonValidation;
+import com.example.personmenegement.validation.PersonValidationImp;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,11 +15,14 @@ import java.util.ResourceBundle;
 
 @Service
 @RequiredArgsConstructor
-public class PersonService {// todo добавить интерфейс
+public class PersonServiceImp implements PersonService {// todo добавить интерфейс
+    public static final String MESSAGE = "message";     //  done
+    public static final String PERSON_NOT_FOUND = "personNotFound";
     private final PersonDAO personDao;
     private final PersonMapper personMapper;
-    private final PersonValidation personValidation;
-    private final ResourceBundle errorMsg = ResourceBundle.getBundle("message");// todo вынеси в константу
+    private final PersonValidationImp personValidation;
+    private final ResourceBundle errorMsg = ResourceBundle.getBundle(MESSAGE);// todo вынеси в константу
+                                                                              //  done
 
     public GetPersonByIdResponse getPersonById(Long id) {
         GetPersonByIdResponse response = new GetPersonByIdResponse();
@@ -27,8 +31,8 @@ public class PersonService {// todo добавить интерфейс
 
         if (personEntity == null) {
             serviceStatus.setStatus(Status.ERROR.name());
-            serviceStatus.setMessage(MessageFormat.format(errorMsg.getString("personNotFound"), id));// todo вынеси в константу
-        } else {
+            serviceStatus.setMessage(MessageFormat.format(errorMsg.getString(PERSON_NOT_FOUND), id));// todo вынеси в константу
+        } else {                                                                                    //   done
             response.setPerson(personMapper.personEntityToPerson(personEntity));
             serviceStatus.setStatus(Status.SUCCESS.name());
         }
@@ -63,8 +67,8 @@ public class PersonService {// todo добавить интерфейс
 
         if (personDao.findPersonById(id) == null) {
             serviceStatus.setStatus(Status.ERROR.name());
-            serviceStatus.setMessage(MessageFormat.format(errorMsg.getString("personNotFound"), id));// todo вынеси в константу
-        } else {
+            serviceStatus.setMessage(MessageFormat.format(errorMsg.getString(PERSON_NOT_FOUND), id));// todo вынеси в константу
+        } else {                                                                                    //   done
             serviceStatus.setStatus(Status.SUCCESS.name());
             personDao.deletePersonById(id);
         }

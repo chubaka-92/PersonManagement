@@ -1,4 +1,5 @@
-package com.example.personmenegement.mapper;// todo перенести пакет mapper в пакет service
+package com.example.personmenegement.services.mapper;// todo перенести пакет mapper в пакет service
+                                                    //   Done
 
 import com.example.personmenegement.entity.PersonEntity;
 import com.example.personmenegement.soap.person.Person;
@@ -35,6 +36,11 @@ public class PersonMapper {
     }
 
     private Long getId(Person person) { // todo тут лучше обойтись без тернарников, их сложнее читать
-        return !(person.getId() == (null)) ? Long.valueOf(person.getId()) : null;
+                                        //  Done
+        if (!(person.getId() == null)) {
+            return Long.valueOf(person.getId());
+        } else {
+            return null;
+        }
     }
 }

@@ -1,6 +1,6 @@
 package com.example.personmenegement.endpoints;
 
-import com.example.personmenegement.services.PersonService;
+import com.example.personmenegement.services.PersonServiceImp;
 import com.example.personmenegement.soap.person.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
@@ -13,7 +13,7 @@ import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 public class PersonEndpoint {
     private static final String NAMESPACE_URI = "http://example.com/personmenegement/persons";
 
-    private final PersonService personService;
+    private final PersonServiceImp personService;
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getPersonByIdRequest")
     @ResponsePayload
