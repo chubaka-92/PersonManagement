@@ -15,14 +15,13 @@ import java.util.ResourceBundle;
 
 @Service
 @RequiredArgsConstructor
-public class PersonServiceImp implements PersonService {// todo добавить интерфейс
-    public static final String MESSAGE = "message";     //  done
-    public static final String PERSON_NOT_FOUND = "personNotFound";
+public class PersonServiceImp implements PersonService {
+    public static final String MESSAGE = "message";// todo private
+    public static final String PERSON_NOT_FOUND = "personNotFound";// todo private
     private final PersonDAO personDao;
     private final PersonMapper personMapper;
     private final PersonValidation personValidation;
-    private final ResourceBundle errorMsg = ResourceBundle.getBundle(MESSAGE);// todo вынеси в константу
-                                                                              //  done
+    private final ResourceBundle errorMsg = ResourceBundle.getBundle(MESSAGE);
 
     public GetPersonByIdResponse getPersonById(Long id) {
         GetPersonByIdResponse response = new GetPersonByIdResponse();
@@ -31,8 +30,8 @@ public class PersonServiceImp implements PersonService {// todo добавить
 
         if (personEntity == null) {
             serviceStatus.setStatus(Status.ERROR.name());
-            serviceStatus.setMessage(MessageFormat.format(errorMsg.getString(PERSON_NOT_FOUND), id));// todo вынеси в константу
-        } else {                                                                                    //   done
+            serviceStatus.setMessage(MessageFormat.format(errorMsg.getString(PERSON_NOT_FOUND), id));
+        } else {
             response.setPerson(personMapper.personEntityToPerson(personEntity));
             serviceStatus.setStatus(Status.SUCCESS.name());
         }
@@ -67,8 +66,8 @@ public class PersonServiceImp implements PersonService {// todo добавить
 
         if (personDao.findPersonById(id) == null) {
             serviceStatus.setStatus(Status.ERROR.name());
-            serviceStatus.setMessage(MessageFormat.format(errorMsg.getString(PERSON_NOT_FOUND), id));// todo вынеси в константу
-        } else {                                                                                    //   done
+            serviceStatus.setMessage(MessageFormat.format(errorMsg.getString(PERSON_NOT_FOUND), id));
+        } else {
             serviceStatus.setStatus(Status.SUCCESS.name());
             personDao.deletePersonById(id);
         }

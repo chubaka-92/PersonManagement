@@ -7,9 +7,6 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.transaction.annotation.Transactional;
 
 public interface PersonRepository extends CrudRepository<PersonEntity, Long> {
-// todo не используется
-//  done
-
     @Modifying
     @Transactional
     @Query(value = "DELETE FROM person p WHERE p.id = (SELECT min(pe.id) FROM person pe)", nativeQuery = true)

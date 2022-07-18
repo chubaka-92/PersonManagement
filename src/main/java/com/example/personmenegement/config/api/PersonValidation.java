@@ -1,4 +1,4 @@
-package com.example.personmenegement.config.api;
+package com.example.personmenegement.config.api;// todo вынеси пакет api из config
 
 import com.example.personmenegement.soap.person.AddPersonResponse;
 import com.example.personmenegement.soap.person.Person;

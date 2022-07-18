@@ -1,5 +1,4 @@
-package com.example.personmenegement.config.schedule; // todo лучше все-таки перенести в пакет config и там создать подпакет schedule
-                                                      //  done
+package com.example.personmenegement.config.schedule;
 import com.example.personmenegement.repository.PersonRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
