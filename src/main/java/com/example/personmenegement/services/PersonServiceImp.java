@@ -1,10 +1,10 @@
 package com.example.personmenegement.services;
 
-import com.example.personmenegement.config.api.PersonService;
-import com.example.personmenegement.config.api.PersonValidation;
+import com.example.personmenegement.api.PersonMapper;
+import com.example.personmenegement.api.PersonService;
+import com.example.personmenegement.api.PersonValidation;
 import com.example.personmenegement.dao.PersonDAO;
 import com.example.personmenegement.entity.PersonEntity;
-import com.example.personmenegement.services.mapper.PersonMapper;
 import com.example.personmenegement.soap.person.*;
 import com.example.personmenegement.types.Status;
 import lombok.RequiredArgsConstructor;
@@ -16,8 +16,8 @@ import java.util.ResourceBundle;
 @Service
 @RequiredArgsConstructor
 public class PersonServiceImp implements PersonService {
-    public static final String MESSAGE = "message";// todo private
-    public static final String PERSON_NOT_FOUND = "personNotFound";// todo private
+    private static final String MESSAGE = "message";// todo private  //  DONE
+    private static final String PERSON_NOT_FOUND = "personNotFound";// todo private  //  DONE
     private final PersonDAO personDao;
     private final PersonMapper personMapper;
     private final PersonValidation personValidation;

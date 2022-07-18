@@ -1,7 +1,12 @@
 package com.example.personmenegement.types;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
 import java.math.BigDecimal;
 
+@AllArgsConstructor
+@Getter
 public enum Position {
 
     INTERN(BigDecimal.valueOf(15000), BigDecimal.valueOf(20000), "Стажер", 0.0),
@@ -16,12 +21,7 @@ public enum Position {
     private final Double workExperience;
 
     // todo используй lombok
-    Position(BigDecimal salaryMin, BigDecimal salaryMax, String translation, Double workExperience) {
-        this.salaryMin = salaryMin;
-        this.salaryMax = salaryMax;
-        this.translation = translation;
-        this.workExperience = workExperience;
-    }
+    //  Done
 
     public static Position getDefine(String position) {
         if (INTERN.translation.equals(position)) {
@@ -40,19 +40,11 @@ public enum Position {
     }
 
     // todo используй lombok
-    public BigDecimal getSalaryMin() {
-        return salaryMin;
-    }
-
+    //  Done
     // todo используй lombok
-    public BigDecimal getSalaryMax() {
-        return salaryMax;
-    }
-
+    //  Done
     // todo используй lombok
-    public Double getWorkExperience() {
-        return workExperience;
-    }
+    //  Done
 
     @Override
     public String toString() {

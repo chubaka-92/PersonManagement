@@ -1,6 +1,6 @@
 package com.example.personmenegement.validation;
 
-import com.example.personmenegement.config.api.PersonChecker;
+import com.example.personmenegement.api.PersonChecker;
 import com.example.personmenegement.soap.person.Person;
 import com.example.personmenegement.soap.person.ServiceStatus;
 import com.example.personmenegement.types.Position;
@@ -12,11 +12,11 @@ import java.util.ResourceBundle;
 
 @Service
 public class PersonCheckerImp implements PersonChecker {
-    public static final String EMPTY_FIELD = "emptyField";
-    public static final String INCORRECT_AGE = "incorrectAge";
-    public static final String INCORRECT_POSITION = "incorrectPosition";
-    public static final String INCORRECT_SALARY = "incorrectSalary";
-    public static final String LITTLE_WORK_EXPERIENCE = "littleWorkExperience";
+    private static final String EMPTY_FIELD = "emptyField";
+    private static final String INCORRECT_AGE = "incorrectAge";
+    private static final String INCORRECT_POSITION = "incorrectPosition";
+    private static final String INCORRECT_SALARY = "incorrectSalary";
+    private static final String LITTLE_WORK_EXPERIENCE = "littleWorkExperience";
     private final ResourceBundle errorMsg = ResourceBundle.getBundle("message");
 
     public void checkPersonRequiredFields(Person person) {

@@ -1,6 +1,6 @@
 package com.example.personmenegement.endpoints;
 
-import com.example.personmenegement.config.api.PersonService;
+import com.example.personmenegement.api.PersonService;
 import com.example.personmenegement.soap.person.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;

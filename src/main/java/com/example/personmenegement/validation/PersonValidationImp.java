@@ -1,7 +1,7 @@
 package com.example.personmenegement.validation;
 
-import com.example.personmenegement.config.api.PersonChecker;
-import com.example.personmenegement.config.api.PersonValidation;
+import com.example.personmenegement.api.PersonChecker;
+import com.example.personmenegement.api.PersonValidation;
 import com.example.personmenegement.soap.person.*;
 import com.example.personmenegement.types.Status;
 import lombok.RequiredArgsConstructor;

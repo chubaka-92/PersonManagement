@@ -1,10 +1,6 @@
-package com.example.personmenegement.config.api;// todo вынеси пакет api из config
-
-import com.example.personmenegement.entity.PersonEntity;
+package com.example.personmenegement.api;// todo вынеси пакет api из config
+                                        //   done
 import com.example.personmenegement.soap.person.*;
-import com.example.personmenegement.types.Status;
-
-import java.text.MessageFormat;
 
 public interface PersonService {
 

@@ -1,15 +1,16 @@
 package com.example.personmenegement.services.mapper;
 
+import com.example.personmenegement.api.PersonMapper;
 import com.example.personmenegement.entity.PersonEntity;
 import com.example.personmenegement.soap.person.Person;
 import com.example.personmenegement.types.Position;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.Objects;
 
 @Service
-public class PersonMapper { // todo сделать для него интерфейс и использовать интерфейс
+public class PersonMapperImp implements PersonMapper { // todo сделать для него интерфейс и использовать интерфейс //  DONE
+
     public Person personEntityToPerson(PersonEntity personEntity) {
         return Person.builder()
                 .id(String.valueOf(personEntity.getId()))
@@ -36,20 +37,11 @@ public class PersonMapper { // todo сделать для него интерф�
     }
 
     private Long getId(Person person) {
-        if (!(person.getId() == null)) {
-            return Long.valueOf(person.getId());
-        } else {
+        if (person.getId() == null) {
             return null;
         }
+        return Long.valueOf(person.getId());
         // todo если можно сдлеать без инверсии, то делай без инверсии + у тебя лишний else
-//        if (person.getId() == null){
-//            return null;
-//        }
-//        return Long.valueOf(person.getId());
-        // или
-//        if (Objects.nonNull(person.getId())){
-//            return Long.valueOf(person.getId());
-//        }
-//        return null;
+        //  done
     }
 }
