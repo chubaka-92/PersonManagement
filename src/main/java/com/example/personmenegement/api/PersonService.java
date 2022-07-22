@@ -1,5 +1,5 @@
-package com.example.personmenegement.api;// todo вынеси пакет api из config
-                                        //   done
+package com.example.personmenegement.api;
+
 import com.example.personmenegement.soap.person.*;
 
 public interface PersonService {

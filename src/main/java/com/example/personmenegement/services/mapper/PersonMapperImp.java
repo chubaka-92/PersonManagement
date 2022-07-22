@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 
 @Service
-public class PersonMapperImp implements PersonMapper { // todo сделать для него интерфейс и использовать интерфейс //  DONE
+public class PersonMapperImp implements PersonMapper {
 
     public Person personEntityToPerson(PersonEntity personEntity) {
         return Person.builder()
@@ -41,7 +41,5 @@ public class PersonMapperImp implements PersonMapper { // todo сделать д
             return null;
         }
         return Long.valueOf(person.getId());
-        // todo если можно сдлеать без инверсии, то делай без инверсии + у тебя лишний else
-        //  done
     }
 }

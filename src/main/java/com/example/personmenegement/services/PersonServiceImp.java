@@ -16,8 +16,8 @@ import java.util.ResourceBundle;
 @Service
 @RequiredArgsConstructor
 public class PersonServiceImp implements PersonService {
-    private static final String MESSAGE = "message";// todo private  //  DONE
-    private static final String PERSON_NOT_FOUND = "personNotFound";// todo private  //  DONE
+    private static final String MESSAGE = "message";
+    private static final String PERSON_NOT_FOUND = "personNotFound";
     private final PersonDAO personDao;
     private final PersonMapper personMapper;
     private final PersonValidation personValidation;

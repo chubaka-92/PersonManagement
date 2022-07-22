@@ -1,4 +1,4 @@
-package com.example.personmenegement.validation;
+package com.example.personmenegement.services.validation;
 
 import com.example.personmenegement.api.PersonChecker;
 import com.example.personmenegement.api.PersonValidation;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class PersonValidationImp implements PersonValidation {// todo добавить интерфейс (все интерфейсы в пакете api) // DONE
+public class PersonValidationImp implements PersonValidation {
 
     private final PersonChecker personChecker;
 

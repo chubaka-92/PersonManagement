@@ -20,8 +20,6 @@ public enum Position {
     private final String translation;
     private final Double workExperience;
 
-    // todo используй lombok
-    //  Done
 
     public static Position getDefine(String position) {
         if (INTERN.translation.equals(position)) {
@@ -38,13 +36,6 @@ public enum Position {
             return UNDEFINED;
         }
     }
-
-    // todo используй lombok
-    //  Done
-    // todo используй lombok
-    //  Done
-    // todo используй lombok
-    //  Done
 
     @Override
     public String toString() {
