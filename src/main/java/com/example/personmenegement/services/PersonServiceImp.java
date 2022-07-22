@@ -21,7 +21,7 @@ public class PersonServiceImp implements PersonService {
     private final PersonDAO personDao;
     private final PersonMapper personMapper;
     private final PersonValidation personValidation;
-    private final ResourceBundle errorMsg = ResourceBundle.getBundle(MESSAGE);
+    private final ResourceBundle errorMsg = ResourceBundle.getBundle(MESSAGE); //todo ResourceBundle используется PersonCheckerImp, сделать отдельный сервис работающий с ResourceBundle
 
     public GetPersonByIdResponse getPersonById(Long id) {
         GetPersonByIdResponse response = new GetPersonByIdResponse();
@@ -44,7 +44,7 @@ public class PersonServiceImp implements PersonService {
 
         if (response.getServiceStatus().getStatus().equals(Status.SUCCESS.name())) {
             response.getPerson().setId(String.valueOf(personDao
-                    .addPerson(personMapper.personToPersonEntity(person))));
+                    .addPerson(personMapper.personToPersonEntity(person)))); //todo плохой перенос
         }
         return response;
     }
@@ -55,7 +55,7 @@ public class PersonServiceImp implements PersonService {
         if (response.getServiceStatus().getStatus().equals(Status.SUCCESS.name())) {
             response.getPerson()
                     .setId(String.valueOf(personDao
-                            .updatePerson(personMapper.personToPersonEntity(person))));
+                            .updatePerson(personMapper.personToPersonEntity(person)))); //todo плохой перенос
         }
         return response;
     }
@@ -64,7 +64,7 @@ public class PersonServiceImp implements PersonService {
         DeletePersonResponse response = new DeletePersonResponse();
         ServiceStatus serviceStatus = new ServiceStatus();
 
-        if (personDao.findPersonById(id) == null) {
+        if (personDao.findPersonById(id) == null) { //todo в методе delete какая доп логика, либо перенести, либо разбить на приватные методы
             serviceStatus.setStatus(Status.ERROR.name());
             serviceStatus.setMessage(MessageFormat.format(errorMsg.getString(PERSON_NOT_FOUND), id));
         } else {

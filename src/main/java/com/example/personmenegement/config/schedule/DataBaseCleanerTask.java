@@ -6,9 +6,9 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 
 @Configuration
-@RequiredArgsConstructor
 @EnableScheduling
-public class DataBaseCleanerTask {
+@RequiredArgsConstructor
+public class DataBaseCleanerTask { //todo добавить суффикс к названию класса Config
     private final PersonRepository personRepository;
 
     @Scheduled(cron = "${cron.expression}")

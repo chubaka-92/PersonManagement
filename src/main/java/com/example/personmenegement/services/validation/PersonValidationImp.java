@@ -13,7 +13,7 @@ public class PersonValidationImp implements PersonValidation {
 
     private final PersonChecker personChecker;
 
-    public AddPersonResponse addPersonValidator(Person person) {
+    public AddPersonResponse addPersonValidator(Person person) { //todo разбить на приватные методы. слишком много логике в методе тяжело проследить, что внутри происходит
         personChecker.checkPersonRequiredFields(person);
         ServiceStatus serviceStatus = new ServiceStatus();
         if (person.getValid()) {
@@ -34,7 +34,7 @@ public class PersonValidationImp implements PersonValidation {
 
     }
 
-    public UpdatePersonResponse updatePersonValidator(Person person) {
+    public UpdatePersonResponse updatePersonValidator(Person person) { //todo разбить на приватные методы. слишком много логике в методе тяжело проследить, что внутри происходит
         personChecker.checkPersonRequiredFields(person);
         ServiceStatus serviceStatus = new ServiceStatus();
         if (person.getValid()) {

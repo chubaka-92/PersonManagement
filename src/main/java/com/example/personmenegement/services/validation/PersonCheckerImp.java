@@ -17,7 +17,7 @@ public class PersonCheckerImp implements PersonChecker {
     private static final String INCORRECT_POSITION = "incorrectPosition";
     private static final String INCORRECT_SALARY = "incorrectSalary";
     private static final String LITTLE_WORK_EXPERIENCE = "littleWorkExperience";
-    private final ResourceBundle errorMsg = ResourceBundle.getBundle("message");
+    private final ResourceBundle errorMsg = ResourceBundle.getBundle("message"); //todo ResourceBundle используется PersonServiceImp, сделать отдельный сервис работающий с ResourceBundle
 
     public void checkPersonRequiredFields(Person person) {
 
@@ -46,11 +46,11 @@ public class PersonCheckerImp implements PersonChecker {
     }
 
     public ServiceStatus checkPersonSalary(Person person) {
-        Position positionPers = Position.getDefine(person.getPosition());
+        Position positionPers = Position.getDefine(person.getPosition()); //todo лучше не сокращать название переменных
         ServiceStatus serviceStatus = new ServiceStatus();
         if (!checkSalaryMatchingPosition(positionPers, new BigDecimal(person.getSalary()))) {
-            person.setValid(false);
-            serviceStatus.setMessage(MessageFormat.format(errorMsg.getString(INCORRECT_SALARY),
+            person.setValid(false); //todo скрытая логика в этом методе. Т.е. я ожидаю, что будет какой то чек, а тут еще есть проставление значений в обьект person
+            serviceStatus.setMessage(MessageFormat.format(errorMsg.getString(INCORRECT_SALARY), //todo в данном случае если начал делать перенос аргументов, то нужно переносить все аргументы
                     positionPers,
                     positionPers.getSalaryMin(),
                     positionPers.getSalaryMax()));
@@ -59,17 +59,17 @@ public class PersonCheckerImp implements PersonChecker {
     }
 
     public ServiceStatus checkPersonExperienceForPosition(Person person) {
-        Position positionPerson = Position.getDefine(person.getPosition());
+        Position positionPerson = Position.getDefine(person.getPosition()); //todo см на туду выше. также тут получается, что нарушается стиль написания. в одном случае пишешь кратко, в другом полное название переменной
         ServiceStatus serviceStatus = new ServiceStatus();
         if (!checkExperienceMatchingPosition(positionPerson, person.getExperience())) {
-            person.setValid(false);
-            serviceStatus.setMessage(MessageFormat.format(errorMsg.getString(LITTLE_WORK_EXPERIENCE),
+            person.setValid(false); //todo скрытая логика в этом методе. Т.е. я ожидаю, что будет какой то чек, а тут еще есть проставление значений в обьект person
+            serviceStatus.setMessage(MessageFormat.format(errorMsg.getString(LITTLE_WORK_EXPERIENCE), //todo в данном случае если начал делать перенос аргументов, то нужно переносить все аргументы
                     positionPerson.toString()));
         }
         return serviceStatus;
     }
 
-    private boolean checkSalaryMatchingPosition(Position positionPerson, BigDecimal salaryPerson) {
+    private boolean checkSalaryMatchingPosition(Position positionPerson, BigDecimal salaryPerson) { //todo логику проверки зп лучше реализовать в enum
         if (positionPerson.getSalaryMin().compareTo(salaryPerson) > 0
                 || positionPerson.getSalaryMax().compareTo(salaryPerson) < 0) {
             return false;
@@ -78,7 +78,7 @@ public class PersonCheckerImp implements PersonChecker {
     }
 
     private boolean checkExperienceMatchingPosition(Position positionPerson, String experience) {
-        if (positionPerson.getWorkExperience().compareTo(Double.valueOf(experience)) > 0) {
+        if (positionPerson.getWorkExperience().compareTo(Double.valueOf(experience)) > 0) { //todo логику проверки опыта лучше реализовать в enum
             return false;
         }
         return true;

@@ -40,5 +40,5 @@ public enum Position {
     @Override
     public String toString() {
         return translation;
-    }
+    } //todo почему не аннотация lombok ?
 }

@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 @RequiredArgsConstructor
-public class PersonDAO {
+public class PersonDAO { //todo создать интерфейс и обращаться через него
     private final PersonRepository personRepository;
 
     public PersonEntity findPersonById(Long id) {
