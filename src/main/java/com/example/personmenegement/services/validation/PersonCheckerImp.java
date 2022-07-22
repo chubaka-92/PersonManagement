@@ -1,9 +1,12 @@
 package com.example.personmenegement.services.validation;
 
 import com.example.personmenegement.api.PersonChecker;
+import com.example.personmenegement.api.ResourceBundleService;
+import com.example.personmenegement.services.ResourceBundleServiceImp;
 import com.example.personmenegement.soap.person.Person;
 import com.example.personmenegement.soap.person.ServiceStatus;
 import com.example.personmenegement.types.Position;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -11,13 +14,16 @@ import java.text.MessageFormat;
 import java.util.ResourceBundle;
 
 @Service
+@RequiredArgsConstructor
 public class PersonCheckerImp implements PersonChecker {
     private static final String EMPTY_FIELD = "emptyField";
     private static final String INCORRECT_AGE = "incorrectAge";
     private static final String INCORRECT_POSITION = "incorrectPosition";
     private static final String INCORRECT_SALARY = "incorrectSalary";
     private static final String LITTLE_WORK_EXPERIENCE = "littleWorkExperience";
-    private final ResourceBundle errorMsg = ResourceBundle.getBundle("message"); //todo ResourceBundle используется PersonServiceImp, сделать отдельный сервис работающий с ResourceBundle
+    //todo ResourceBundle используется PersonServiceImp, сделать отдельный сервис работающий с ResourceBundle
+    //  Done
+    private final ResourceBundleService errorMsg;
 
     public void checkPersonRequiredFields(Person person) {
 
@@ -46,41 +52,33 @@ public class PersonCheckerImp implements PersonChecker {
     }
 
     public ServiceStatus checkPersonSalary(Person person) {
-        Position positionPers = Position.getDefine(person.getPosition()); //todo лучше не сокращать название переменных
+        Position positionPerson = Position.getDefine(person.getPosition()); //todo лучше не сокращать название переменных  //  DONE
         ServiceStatus serviceStatus = new ServiceStatus();
-        if (!checkSalaryMatchingPosition(positionPers, new BigDecimal(person.getSalary()))) {
+        if (!Position.checkSalaryMatchingPosition(positionPerson, new BigDecimal(person.getSalary()))) {
             person.setValid(false); //todo скрытая логика в этом методе. Т.е. я ожидаю, что будет какой то чек, а тут еще есть проставление значений в обьект person
-            serviceStatus.setMessage(MessageFormat.format(errorMsg.getString(INCORRECT_SALARY), //todo в данном случае если начал делать перенос аргументов, то нужно переносить все аргументы
-                    positionPers,
-                    positionPers.getSalaryMin(),
-                    positionPers.getSalaryMax()));
+            serviceStatus.setMessage(MessageFormat.format(
+                    errorMsg.getString(INCORRECT_SALARY), //todo в данном случае если начал делать перенос аргументов, то нужно переносить все аргументы
+                    positionPerson,                       //  Done
+                    positionPerson.getSalaryMin(),
+                    positionPerson.getSalaryMax()));
         }
         return serviceStatus;
     }
 
     public ServiceStatus checkPersonExperienceForPosition(Person person) {
         Position positionPerson = Position.getDefine(person.getPosition()); //todo см на туду выше. также тут получается, что нарушается стиль написания. в одном случае пишешь кратко, в другом полное название переменной
-        ServiceStatus serviceStatus = new ServiceStatus();
-        if (!checkExperienceMatchingPosition(positionPerson, person.getExperience())) {
+        ServiceStatus serviceStatus = new ServiceStatus();                  // Done
+        if (!Position.checkExperienceMatchingPosition(positionPerson, person.getExperience())) {
             person.setValid(false); //todo скрытая логика в этом методе. Т.е. я ожидаю, что будет какой то чек, а тут еще есть проставление значений в обьект person
-            serviceStatus.setMessage(MessageFormat.format(errorMsg.getString(LITTLE_WORK_EXPERIENCE), //todo в данном случае если начал делать перенос аргументов, то нужно переносить все аргументы
-                    positionPerson.toString()));
+            serviceStatus.setMessage(MessageFormat.format(
+                    errorMsg.getString(LITTLE_WORK_EXPERIENCE), //todo в данном случае если начал делать перенос аргументов, то нужно переносить все аргументы
+                    positionPerson.toString()));                //   Done
         }
         return serviceStatus;
     }
+    //todo логику проверки зп лучше реализовать в enum
+    //  Done
+    //todo логику проверки опыта лучше реализовать в enum
+    //  Done
 
-    private boolean checkSalaryMatchingPosition(Position positionPerson, BigDecimal salaryPerson) { //todo логику проверки зп лучше реализовать в enum
-        if (positionPerson.getSalaryMin().compareTo(salaryPerson) > 0
-                || positionPerson.getSalaryMax().compareTo(salaryPerson) < 0) {
-            return false;
-        }
-        return true;
-    }
-
-    private boolean checkExperienceMatchingPosition(Position positionPerson, String experience) {
-        if (positionPerson.getWorkExperience().compareTo(Double.valueOf(experience)) > 0) { //todo логику проверки опыта лучше реализовать в enum
-            return false;
-        }
-        return true;
-    }
 }

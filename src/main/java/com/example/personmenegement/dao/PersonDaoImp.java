@@ -1,5 +1,6 @@
 package com.example.personmenegement.dao;
 
+import com.example.personmenegement.api.PersonDAO;
 import com.example.personmenegement.entity.PersonEntity;
 import com.example.personmenegement.repository.PersonRepository;
 import lombok.RequiredArgsConstructor;
@@ -8,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 @RequiredArgsConstructor
-public class PersonDAO { //todo создать интерфейс и обращаться через него
+public class PersonDaoImp implements PersonDAO { //todo создать интерфейс и обращаться через него  //  DONE
     private final PersonRepository personRepository;
 
     public PersonEntity findPersonById(Long id) {

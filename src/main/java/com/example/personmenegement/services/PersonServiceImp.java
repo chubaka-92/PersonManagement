@@ -1,9 +1,6 @@
 package com.example.personmenegement.services;
 
-import com.example.personmenegement.api.PersonMapper;
-import com.example.personmenegement.api.PersonService;
-import com.example.personmenegement.api.PersonValidation;
-import com.example.personmenegement.dao.PersonDAO;
+import com.example.personmenegement.api.*;
 import com.example.personmenegement.entity.PersonEntity;
 import com.example.personmenegement.soap.person.*;
 import com.example.personmenegement.types.Status;
@@ -16,12 +13,13 @@ import java.util.ResourceBundle;
 @Service
 @RequiredArgsConstructor
 public class PersonServiceImp implements PersonService {
-    private static final String MESSAGE = "message";
     private static final String PERSON_NOT_FOUND = "personNotFound";
     private final PersonDAO personDao;
     private final PersonMapper personMapper;
     private final PersonValidation personValidation;
-    private final ResourceBundle errorMsg = ResourceBundle.getBundle(MESSAGE); //todo ResourceBundle используется PersonCheckerImp, сделать отдельный сервис работающий с ResourceBundle
+     //todo ResourceBundle используется PersonCheckerImp, сделать отдельный сервис работающий с ResourceBundle
+    //  Done
+    private final ResourceBundleService errorMsg;
 
     public GetPersonByIdResponse getPersonById(Long id) {
         GetPersonByIdResponse response = new GetPersonByIdResponse();
@@ -43,8 +41,7 @@ public class PersonServiceImp implements PersonService {
         AddPersonResponse response = personValidation.addPersonValidator(person);
 
         if (response.getServiceStatus().getStatus().equals(Status.SUCCESS.name())) {
-            response.getPerson().setId(String.valueOf(personDao
-                    .addPerson(personMapper.personToPersonEntity(person)))); //todo плохой перенос
+            response.getPerson().setId(String.valueOf(personDao.addPerson(personMapper.personToPersonEntity(person)))); //todo плохой перенос  // DONE
         }
         return response;
     }
@@ -54,24 +51,26 @@ public class PersonServiceImp implements PersonService {
 
         if (response.getServiceStatus().getStatus().equals(Status.SUCCESS.name())) {
             response.getPerson()
-                    .setId(String.valueOf(personDao
-                            .updatePerson(personMapper.personToPersonEntity(person)))); //todo плохой перенос
+                    .setId(String.valueOf(personDao.updatePerson(personMapper.personToPersonEntity(person)))); //todo плохой перенос  // DONE
         }
         return response;
     }
 
     public DeletePersonResponse deletePerson(long id) {
         DeletePersonResponse response = new DeletePersonResponse();
-        ServiceStatus serviceStatus = new ServiceStatus();
+        response.setServiceStatus(processDeletePerson(id));
+        return response;
+    }
 
-        if (personDao.findPersonById(id) == null) { //todo в методе delete какая доп логика, либо перенести, либо разбить на приватные методы
+    private ServiceStatus processDeletePerson(long id) {
+        ServiceStatus serviceStatus = new ServiceStatus();
+        if (personDao.findPersonById(id) == null) { //todo в методе delete какая доп логика, либо перенести, либо разбить на приватные методы // DONE
             serviceStatus.setStatus(Status.ERROR.name());
             serviceStatus.setMessage(MessageFormat.format(errorMsg.getString(PERSON_NOT_FOUND), id));
         } else {
             serviceStatus.setStatus(Status.SUCCESS.name());
             personDao.deletePersonById(id);
         }
-        response.setServiceStatus(serviceStatus);
-        return response;
+        return serviceStatus;
     }
 }

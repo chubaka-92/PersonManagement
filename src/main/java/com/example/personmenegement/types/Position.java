@@ -2,11 +2,13 @@ package com.example.personmenegement.types;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.ToString;
 
 import java.math.BigDecimal;
 
 @AllArgsConstructor
 @Getter
+@ToString
 public enum Position {
 
     INTERN(BigDecimal.valueOf(15000), BigDecimal.valueOf(20000), "Стажер", 0.0),
@@ -36,9 +38,22 @@ public enum Position {
             return UNDEFINED;
         }
     }
+    //todo почему не аннотация lombok ?
+    //  Done
 
-    @Override
-    public String toString() {
-        return translation;
-    } //todo почему не аннотация lombok ?
+
+    public static boolean checkExperienceMatchingPosition(Position positionPerson, String experience) {
+        if (positionPerson.getWorkExperience().compareTo(Double.valueOf(experience)) > 0) {
+            return false;
+        }
+        return true;
+    }
+
+    public static boolean checkSalaryMatchingPosition(Position positionPerson, BigDecimal salaryPerson) {
+        if (positionPerson.getSalaryMin().compareTo(salaryPerson) > 0
+                || positionPerson.getSalaryMax().compareTo(salaryPerson) < 0) {
+            return false;
+        }
+        return true;
+    }
 }
