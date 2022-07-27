@@ -1,4 +1,5 @@
 package com.example.personmenegement.config.schedule;
+
 import com.example.personmenegement.repository.PersonRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;

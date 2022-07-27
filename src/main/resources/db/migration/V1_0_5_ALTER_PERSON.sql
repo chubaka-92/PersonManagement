@@ -10,4 +10,5 @@ create table if not exists person (
                          PRIMARY KEY (id)
 );
 --todo начало версии какое то странное)) + название
+--  done
 

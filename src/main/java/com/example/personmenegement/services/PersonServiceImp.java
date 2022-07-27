@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.text.MessageFormat;
-import java.util.ResourceBundle;
 
 @Service
 @RequiredArgsConstructor
@@ -17,7 +16,8 @@ public class PersonServiceImp implements PersonService {
     private final PersonDAO personDao;
     private final PersonMapper personMapper;
     private final PersonValidation personValidation;
-     //todo ResourceBundle используется PersonCheckerImp, сделать отдельный сервис работающий с ResourceBundle
+
+    //todo ResourceBundle используется PersonCheckerImp, сделать отдельный сервис работающий с ResourceBundle
     //  Done
     private final ResourceBundleService errorMsg;
 
@@ -38,21 +38,34 @@ public class PersonServiceImp implements PersonService {
     }
 
     public AddPersonResponse addNewPerson(Person person) {
-        AddPersonResponse response = personValidation.addPersonValidator(person);
+        AddPersonResponse response = new AddPersonResponse();
+        response.setPerson(personValidation.validate(person));
 
-        if (response.getServiceStatus().getStatus().equals(Status.SUCCESS.name())) {
-            response.getPerson().setId(String.valueOf(personDao.addPerson(personMapper.personToPersonEntity(person)))); //todo плохой перенос  // DONE
+        ServiceStatus serviceStatus = new ServiceStatus();
+        if (response.getPerson() == null) {
+            serviceStatus.setStatus(Status.SUCCESS.name());
+            response.setPerson(personMapper.personEntityToPerson(
+                    personDao.addPerson(personMapper.personToPersonEntity(person)))); //todo плохой перенос  // DONE
+        } else {
+            serviceStatus.setStatus(Status.ERROR.name());
         }
+        response.setServiceStatus(serviceStatus);
         return response;
     }
 
     public UpdatePersonResponse updatePerson(Person person) {
-        UpdatePersonResponse response = personValidation.updatePersonValidator(person);
+        UpdatePersonResponse response = new UpdatePersonResponse();
+        response.setPerson(personValidation.validate(person));
 
-        if (response.getServiceStatus().getStatus().equals(Status.SUCCESS.name())) {
-            response.getPerson()
-                    .setId(String.valueOf(personDao.updatePerson(personMapper.personToPersonEntity(person)))); //todo плохой перенос  // DONE
+        ServiceStatus serviceStatus = new ServiceStatus();
+        if (response.getPerson() == null) {
+            serviceStatus.setStatus(Status.SUCCESS.name());
+            response.setPerson(personMapper.personEntityToPerson(
+                    personDao.updatePerson(personMapper.personToPersonEntity(person)))); //todo плохой перенос  // DONE
+        } else {
+            serviceStatus.setStatus(Status.ERROR.name());
         }
+        response.setServiceStatus(serviceStatus);
         return response;
     }
 

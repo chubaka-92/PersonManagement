@@ -18,7 +18,7 @@ public class PersonMapperImp implements PersonMapper {
                 .age(String.valueOf(personEntity.getAge()))
                 .email(personEntity.getEmail())
                 .salary(String.valueOf(personEntity.getSalary()))
-                .position(personEntity.getPosition().toString())
+                .position(personEntity.getPosition().getTranslation())
                 .valid(true)
                 .experience(personEntity.getExperience().toString())
                 .build();

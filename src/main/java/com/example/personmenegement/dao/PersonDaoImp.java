@@ -17,13 +17,13 @@ public class PersonDaoImp implements PersonDAO { //todo создать инте�
     }
 
     @Transactional
-    public Long addPerson(PersonEntity personEntity) {
-        return personRepository.save(personEntity).getId();
+    public PersonEntity addPerson(PersonEntity personEntity) {
+        return personRepository.save(personEntity);
     }
 
     @Transactional
-    public Long updatePerson(PersonEntity personEntity) {
-        return personRepository.save(personEntity).getId();
+    public PersonEntity updatePerson(PersonEntity personEntity) {
+        return personRepository.save(personEntity);
     }
 
     @Transactional
