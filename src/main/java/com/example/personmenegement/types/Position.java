@@ -1,5 +1,7 @@
 package com.example.personmenegement.types;
 
+import com.example.personmenegement.api.ResourceBundleService;
+import com.example.personmenegement.services.ResourceBundleServiceImp;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
@@ -11,11 +13,12 @@ import java.math.BigDecimal;
 @ToString
 public enum Position {
 
-    INTERN(BigDecimal.valueOf(15000), BigDecimal.valueOf(20000), "Стажер", 0.0), //todo кириллица в коде, вынести в ResourceBundle
-    TECHNOLOGIST(BigDecimal.valueOf(20000), BigDecimal.valueOf(30000), "Технолог", 1.0),
-    ENGINEER(BigDecimal.valueOf(30000), BigDecimal.valueOf(40000), "Инженер", 2.0),
-    LEAD_ENGINEER(BigDecimal.valueOf(40000), BigDecimal.valueOf(55000), "Ведущий инженер", 10.0),
-    CHIEF_ENGINEER(BigDecimal.valueOf(55000), BigDecimal.valueOf(65000), "Главный инженер", 15.0),
+
+    INTERN(BigDecimal.valueOf(15000), BigDecimal.valueOf(20000), "intern", 0.0), //todo кириллица в коде, вынести в ResourceBundle  //  DONE
+    TECHNOLOGIST(BigDecimal.valueOf(20000), BigDecimal.valueOf(30000), "technologist", 1.0),
+    ENGINEER(BigDecimal.valueOf(30000), BigDecimal.valueOf(40000), "engineer", 2.0),
+    LEAD_ENGINEER(BigDecimal.valueOf(40000), BigDecimal.valueOf(55000), "lead_engineer", 10.0),
+    CHIEF_ENGINEER(BigDecimal.valueOf(55000), BigDecimal.valueOf(65000), "chief_engineer", 15.0),
     UNDEFINED(null, null, null, null);
     private final BigDecimal salaryMin;
     private final BigDecimal salaryMax;
@@ -24,19 +27,23 @@ public enum Position {
 
 
     public static Position getDefine(String position) {
-        if (INTERN.translation.equals(position)) {
+        if (INTERN.getTranslation().equals(position)) {
             return INTERN;
-        } else if (TECHNOLOGIST.translation.equals(position)) {
+        } else if (TECHNOLOGIST.getTranslation().equals(position)) {
             return TECHNOLOGIST;
-        } else if (ENGINEER.translation.equals(position)) {
+        } else if (ENGINEER.getTranslation().equals(position)) {
             return ENGINEER;
-        } else if (LEAD_ENGINEER.translation.equals(position)) {
+        } else if (LEAD_ENGINEER.getTranslation().equals(position)) {
             return LEAD_ENGINEER;
-        } else if (CHIEF_ENGINEER.translation.equals(position)) {
+        } else if (CHIEF_ENGINEER.getTranslation().equals(position)) {
             return CHIEF_ENGINEER;
         } else {
             return UNDEFINED;
         }
+    }
+
+    public String getTranslation() {
+        return new ResourceBundleServiceImp().getString(translation);
     }
 
     public static boolean checkExperienceMatchingPosition(Position positionPerson, String experience) {

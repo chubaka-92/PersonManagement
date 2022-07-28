@@ -17,7 +17,8 @@ public class PersonServiceImp implements PersonService {
     private final PersonMapper personMapper;
     private final PersonValidation personValidation;
 
-    private final ResourceBundleService errorMsg; //todo назвать переменную, как название класса. + нежелательно сокращать слова в переменных
+    private final ResourceBundleService resourceBundleService; //todo назвать переменную, как название класса. + нежелательно сокращать слова в переменных
+                                                               //  Done
 
     public GetPersonByIdResponse getPersonById(Long id) {
         GetPersonByIdResponse response = new GetPersonByIdResponse();
@@ -26,7 +27,7 @@ public class PersonServiceImp implements PersonService {
 
         if (personEntity == null) {
             serviceStatus.setStatus(Status.ERROR.name());
-            serviceStatus.setMessage(MessageFormat.format(errorMsg.getString(PERSON_NOT_FOUND), id));
+            serviceStatus.setMessage(MessageFormat.format(resourceBundleService.getString(PERSON_NOT_FOUND), id));
         } else {
             response.setPerson(personMapper.personEntityToPerson(personEntity));
             serviceStatus.setStatus(Status.SUCCESS.name());
@@ -42,9 +43,10 @@ public class PersonServiceImp implements PersonService {
         ServiceStatus serviceStatus = new ServiceStatus();
         if (response.getPerson() == null) {
             serviceStatus.setStatus(Status.SUCCESS.name());
-            response.setPerson(personMapper.personEntityToPerson(
-                    personDao.addPerson(personMapper.personToPersonEntity(person)))); //todo много вложенных вызовов внутри метода. Так ухудшается читаемость кода
-        } else {
+            PersonEntity personEntity = personDao.addPerson(personMapper.personToPersonEntity(person));
+            Person personResponse = personMapper.personEntityToPerson(personEntity);
+            response.setPerson(personResponse); //todo много вложенных вызовов внутри метода. Так ухудшается читаемость кода
+        } else {                                //  Done
             serviceStatus.setStatus(Status.ERROR.name());
         }
         response.setServiceStatus(serviceStatus);
@@ -58,9 +60,10 @@ public class PersonServiceImp implements PersonService {
         ServiceStatus serviceStatus = new ServiceStatus();
         if (response.getPerson() == null) {
             serviceStatus.setStatus(Status.SUCCESS.name());
-            response.setPerson(personMapper.personEntityToPerson(
-                    personDao.updatePerson(personMapper.personToPersonEntity(person)))); //todo много вложенных вызовов внутри метода
-        } else {
+            PersonEntity personEntity = personDao.updatePerson(personMapper.personToPersonEntity(person));
+            Person personResponse = personMapper.personEntityToPerson(personEntity);
+            response.setPerson(personResponse); //todo много вложенных вызовов внутри метода
+        } else {                                //  Done
             serviceStatus.setStatus(Status.ERROR.name());
         }
         response.setServiceStatus(serviceStatus);
@@ -77,7 +80,7 @@ public class PersonServiceImp implements PersonService {
         ServiceStatus serviceStatus = new ServiceStatus();
         if (personDao.findPersonById(id) == null) {
             serviceStatus.setStatus(Status.ERROR.name());
-            serviceStatus.setMessage(MessageFormat.format(errorMsg.getString(PERSON_NOT_FOUND), id));
+            serviceStatus.setMessage(MessageFormat.format(resourceBundleService.getString(PERSON_NOT_FOUND), id));
         } else {
             serviceStatus.setStatus(Status.SUCCESS.name());
             personDao.deletePersonById(id);

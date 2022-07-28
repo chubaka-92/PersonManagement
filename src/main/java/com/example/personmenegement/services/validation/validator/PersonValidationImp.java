@@ -18,7 +18,7 @@ public class PersonValidationImp implements PersonValidation {
     public Person validate(Person person) {
 
         PersonCheckerImp personChecker = new PersonCheckerImp();
-        PersonInitializerImp personErrorMessage = new PersonInitializerImp();
+        PersonInitializerImp personErrorMessage = new PersonInitializerImp(person);
 
         personErrorMessage.addFieldsEmpty(personChecker.checkRequiredFields(person));
 

@@ -18,8 +18,8 @@ public class PersonInitializerImp implements PersonInitializer {
     private final Person personError;
     private final ResourceBundleService messageService;
 
-    public PersonInitializerImp() {
-        this.personError = new Person();
+    public PersonInitializerImp(Person person) {
+        this.personError = person;
         this.messageService = new ResourceBundleServiceImp();
     }
 
