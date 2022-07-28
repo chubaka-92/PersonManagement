@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 @RequiredArgsConstructor
-public class PersonDaoImp implements PersonDAO { //todo создать интерфейс и обращаться через него  //  DONE
+public class PersonDaoImp implements PersonDAO {
     private final PersonRepository personRepository;
 
     public PersonEntity findPersonById(Long id) {

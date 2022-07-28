@@ -7,5 +7,3 @@
 
 @javax.xml.bind.annotation.XmlSchema(namespace = "http://example.com/personmenegement/persons", elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED)
 package com.example.personmenegement.soap.person;
-//todo зачем этот файл ?
-//  Сгенерирован JAXB. если его убрать, запросы падают начинают.

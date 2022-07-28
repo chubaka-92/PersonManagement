@@ -9,7 +9,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 @Configuration
 @EnableScheduling
 @RequiredArgsConstructor
-public class DataBaseCleanerTaskConfig { //todo добавить суффикс к названию класса Config  // DONE
+public class DataBaseCleanerTaskConfig {
     private final PersonRepository personRepository;
 
     @Scheduled(cron = "${cron.expression}")

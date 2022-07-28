@@ -63,7 +63,7 @@ public class PersonCheckerImp implements PersonChecker {
     public Map<String, String> checkSalary(Position position, String salary) {
         Map<String, String> response = new HashMap<>();
         if (!checkSalaryMatchingPosition(position, new BigDecimal(salary))) {
-            String message = MessageFormat.format(messageService.getString(INCORRECT_SALARY), position.getTranslation(),
+            String message = MessageFormat.format(messageService.getString(INCORRECT_SALARY), position.getTranslation(), //todo плохой перенос, если начал переносить аргументы, то переноси каждый
                     position.getSalaryMin(), position.getSalaryMax());
             response.put(SALARY, message);
         }
@@ -82,7 +82,7 @@ public class PersonCheckerImp implements PersonChecker {
     public Map<String, String> checkExperience(Position position, String experience) {
         Map<String, String> response = new HashMap<>();
         if (!checkExperienceMatchingPosition(position, experience)) {
-            String message = MessageFormat.format(messageService.getString(LITTLE_WORK_EXPERIENCE),
+            String message = MessageFormat.format(messageService.getString(LITTLE_WORK_EXPERIENCE),//todo плохой перенос, если начал переносить аргументы, то переноси каждый
                     position.getWorkExperience(), position.getTranslation());
             response.put(EXPERIENCE, message);
         }

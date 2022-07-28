@@ -9,6 +9,5 @@ create table if not exists person (
 
                          PRIMARY KEY (id)
 );
---todo начало версии какое то странное)) + название
---  done
+--todo название некорректно. ALTER - это изменение, а у тебя CREATE + лучше добавить в название конкрентную созданную таблицу __CREATE_PERSON_TABLE
 

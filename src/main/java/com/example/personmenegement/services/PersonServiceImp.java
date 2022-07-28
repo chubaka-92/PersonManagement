@@ -17,9 +17,7 @@ public class PersonServiceImp implements PersonService {
     private final PersonMapper personMapper;
     private final PersonValidation personValidation;
 
-    //todo ResourceBundle используется PersonCheckerImp, сделать отдельный сервис работающий с ResourceBundle
-    //  Done
-    private final ResourceBundleService errorMsg;
+    private final ResourceBundleService errorMsg; //todo назвать переменную, как название класса. + нежелательно сокращать слова в переменных
 
     public GetPersonByIdResponse getPersonById(Long id) {
         GetPersonByIdResponse response = new GetPersonByIdResponse();
@@ -45,7 +43,7 @@ public class PersonServiceImp implements PersonService {
         if (response.getPerson() == null) {
             serviceStatus.setStatus(Status.SUCCESS.name());
             response.setPerson(personMapper.personEntityToPerson(
-                    personDao.addPerson(personMapper.personToPersonEntity(person)))); //todo плохой перенос  // DONE
+                    personDao.addPerson(personMapper.personToPersonEntity(person)))); //todo много вложенных вызовов внутри метода. Так ухудшается читаемость кода
         } else {
             serviceStatus.setStatus(Status.ERROR.name());
         }
@@ -61,7 +59,7 @@ public class PersonServiceImp implements PersonService {
         if (response.getPerson() == null) {
             serviceStatus.setStatus(Status.SUCCESS.name());
             response.setPerson(personMapper.personEntityToPerson(
-                    personDao.updatePerson(personMapper.personToPersonEntity(person)))); //todo плохой перенос  // DONE
+                    personDao.updatePerson(personMapper.personToPersonEntity(person)))); //todo много вложенных вызовов внутри метода
         } else {
             serviceStatus.setStatus(Status.ERROR.name());
         }
@@ -77,7 +75,7 @@ public class PersonServiceImp implements PersonService {
 
     private ServiceStatus processDeletePerson(long id) {
         ServiceStatus serviceStatus = new ServiceStatus();
-        if (personDao.findPersonById(id) == null) { //todo в методе delete какая доп логика, либо перенести, либо разбить на приватные методы // DONE
+        if (personDao.findPersonById(id) == null) {
             serviceStatus.setStatus(Status.ERROR.name());
             serviceStatus.setMessage(MessageFormat.format(errorMsg.getString(PERSON_NOT_FOUND), id));
         } else {

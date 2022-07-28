@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 @ToString
 public enum Position {
 
-    INTERN(BigDecimal.valueOf(15000), BigDecimal.valueOf(20000), "Стажер", 0.0),
+    INTERN(BigDecimal.valueOf(15000), BigDecimal.valueOf(20000), "Стажер", 0.0), //todo кириллица в коде, вынести в ResourceBundle
     TECHNOLOGIST(BigDecimal.valueOf(20000), BigDecimal.valueOf(30000), "Технолог", 1.0),
     ENGINEER(BigDecimal.valueOf(30000), BigDecimal.valueOf(40000), "Инженер", 2.0),
     LEAD_ENGINEER(BigDecimal.valueOf(40000), BigDecimal.valueOf(55000), "Ведущий инженер", 10.0),
@@ -38,9 +38,6 @@ public enum Position {
             return UNDEFINED;
         }
     }
-    //todo почему не аннотация lombok ?
-    //  Done
-
 
     public static boolean checkExperienceMatchingPosition(Position positionPerson, String experience) {
         if (positionPerson.getWorkExperience().compareTo(Double.valueOf(experience)) > 0) {
