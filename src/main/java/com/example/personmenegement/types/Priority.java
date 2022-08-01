@@ -31,6 +31,8 @@ public enum Priority {
         }
     }
 
+    //todo получается, что этот метод переопределяет аннотацию @Getter + то есть аннотацию можно убрать она работает, как пустышка
+    //todo не стоит использовать бины, не как бины. Посмотри как можно реализовать такой же функционал в fccr класс MessageService там есть спец метод для Enum. Используй бины, как бины)
     public String getTranslation() {
         return new ResourceBundleServiceImp().getString(translation);
     }

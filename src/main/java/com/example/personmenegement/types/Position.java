@@ -29,7 +29,7 @@ public enum Position {
     private final Double workExperience;
     private final Integer countTasks;
 
-    public static Position getDefine(String position) {
+    public static Position getDefine(String position) { //todo название definePosition
         if (INTERN.getTranslation().equals(position)) {
             return INTERN;
         } else if (TECHNOLOGIST.getTranslation().equals(position)) {
@@ -67,6 +67,9 @@ public enum Position {
     public static boolean checkAvailableCountTasksToPerson(int countTasks, PersonEntity personEntity) {
         log.info("Was calling checkAvailableCountTasksToPerson. Input personEntity: " + personEntity.toString()
                 + " countTasks: " + countTasks);
+        log.info("Was calling checkAvailableCountTasksToPerson. Input personEntity: {} countTasks: {}",
+                personEntity,
+                countTasks); //todo вот так опрятнее выглядит. не нравится использование "+" в логах (много места занимает и выглядит не оч). Везде где есть вставка значений в логи сделать такой вид. + желательно, делать лог в одну строку, но если не получается, то сделать, как здесь
         if (personEntity.getTasks().size() < personEntity.getPosition().getCountTasks()
                 && personEntity.getCountAvailableTasks() >= countTasks) {
             return false;
