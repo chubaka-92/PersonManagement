@@ -17,7 +17,7 @@ public class PersonDAOImp implements PersonDAO {
     private final PersonRepository personRepository;
 
     public PersonEntity findPersonById(Long id) {
-        log.info("Was calling findPersonById. Input id: "+ id);
+        log.info("Was calling findPersonById. Input id: {}", id);
         return personRepository.findById(id).orElse(null);
     }
 
@@ -28,19 +28,19 @@ public class PersonDAOImp implements PersonDAO {
 
     @Transactional
     public PersonEntity addPerson(PersonEntity personEntity) {
-        log.info("Was calling addPerson. Input id: "+ personEntity.toString());
+        log.info("Was calling addPerson. Input personEntity: {}", personEntity.toString());
         return personRepository.save(personEntity);
     }
 
     @Transactional
     public PersonEntity updatePerson(PersonEntity personEntity) {
-        log.info("Was calling updatePerson. Input id: "+ personEntity.toString());
+        log.info("Was calling updatePerson. Input personEntity: {}", personEntity.toString());
         return personRepository.save(personEntity);
     }
 
     @Transactional
     public void deletePersonById(long personId) {
-        log.info("Was calling deletePersonById. Input id: "+ personId);
+        log.info("Was calling deletePersonById. Input personId: {}", personId);
         personRepository.deleteById(personId);
     }
 }

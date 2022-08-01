@@ -1,5 +1,6 @@
 package com.example.personmenegement.services.mapper;
 
+import com.example.personmenegement.api.MessageService;
 import com.example.personmenegement.api.PersonMapper;
 import com.example.personmenegement.api.TaskMapper;
 import com.example.personmenegement.dto.Person;
@@ -20,31 +21,32 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class PersonMapperImp implements PersonMapper {
 
+    private final MessageService messageService;
     private final TaskMapper taskMapper;
 
     public Person personEntityToPerson(PersonEntity personEntity) {
-        log.info("Was calling personEntityToPerson. Input personEntity: " + personEntity.toString());
+        log.info("Was calling personEntityToPerson. Input personEntity: {}", personEntity.toString());
         return Person.builder()
                 .id(String.valueOf(personEntity.getId()))
                 .name(personEntity.getName())
                 .age(String.valueOf(personEntity.getAge()))
                 .email(personEntity.getEmail())
                 .salary(String.valueOf(personEntity.getSalary()))
-                .position(personEntity.getPosition().getTranslation())
+                .position(messageService.getMessage(personEntity.getPosition()))
                 .experience(personEntity.getExperience().toString())
                 .tasks(getTasks(personEntity.getTasks()))
                 .build();
     }
 
     public PersonEntity personToPersonEntity(Person person) {
-        log.info("Was calling personToPersonEntity. Input id: " + person.toString());
+        log.info("Was calling personToPersonEntity. Input id: {}", person.toString());
         return PersonEntity.builder()
                 .id(getId(person))
                 .name(person.getName())
                 .age(Integer.valueOf(person.getAge()))
                 .email(person.getEmail())
                 .salary(new BigDecimal(person.getSalary()))
-                .position(Position.getDefine(person.getPosition()))
+                .position(Position.definePosition(person.getPosition()))
                 .experience(Double.valueOf(person.getExperience()))
                 .build();
     }

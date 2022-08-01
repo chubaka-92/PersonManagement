@@ -26,4 +26,9 @@ public class TaskEntity {
     @ManyToOne
     @JoinColumn(name = "id_person")
     private PersonEntity person;
+
+    @Override
+    public String toString() {
+        return "TaskEntity[ id: " + id + ", uid: " + uid + ", description: " + description + ", priority: " + priority + " ]";
+    }
 }

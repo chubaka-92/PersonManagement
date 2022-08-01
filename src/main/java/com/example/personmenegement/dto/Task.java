@@ -6,7 +6,6 @@ import lombok.*;
 @Getter
 @Setter
 @Builder
-@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 public class Task {
@@ -18,4 +17,9 @@ public class Task {
 
     @JsonIgnore
     private boolean valid = true;
+
+    @Override
+    public String toString() {
+        return "TaskEntity[id: " + id + ", uid: " + uid + ", description: " + description + ", priority: " + priority + "]";
+    }
 }

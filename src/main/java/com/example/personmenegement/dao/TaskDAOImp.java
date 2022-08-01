@@ -17,7 +17,7 @@ public class TaskDAOImp implements TaskDAO {
     private final TaskRepository taskRepository;
 
     public TaskEntity findTaskById(Long id) {
-        log.info("Was calling findTaskById. Input id: " + id);
+        log.info("Was calling findTaskById. Input id: {}", id);
         return taskRepository.findById(id).orElse(null);
     }
 
@@ -28,19 +28,19 @@ public class TaskDAOImp implements TaskDAO {
 
     @Transactional
     public TaskEntity addTask(TaskEntity taskEntity) {
-        log.info("Was calling addTask. Input id: " + taskEntity.toString());
+        log.info("Was calling addTask. Input taskEntity: {}", taskEntity.toString());
         return taskRepository.save(taskEntity);
     }
 
     @Transactional
     public TaskEntity updateTask(TaskEntity taskEntity) {
-        log.info("Was calling updateTask. Input id: " + taskEntity.toString());
+        log.info("Was calling updateTask. Input taskEntity: {}", taskEntity.toString());
         return taskRepository.save(taskEntity);
     }
 
     @Transactional
     public void deleteTaskById(long id) {
-        log.info("Was calling deleteTaskById. Input id: " + id);
+        log.info("Was calling deleteTaskById. Input id: {}", id);
         taskRepository.deleteById(id);
     }
 }

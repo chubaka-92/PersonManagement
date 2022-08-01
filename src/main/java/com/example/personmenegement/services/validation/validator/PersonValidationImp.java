@@ -5,12 +5,11 @@ import com.example.personmenegement.dto.Person;
 import com.example.personmenegement.services.validation.cheker.PersonCheckerImp;
 import com.example.personmenegement.services.validation.initializer.PersonInitializerImp;
 import com.example.personmenegement.types.Position;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import static com.example.personmenegement.types.Position.UNDEFINED;
-import static com.example.personmenegement.types.Position.getDefine;
+import static com.example.personmenegement.types.Position.definePosition;
 
 @Slf4j
 @Service
@@ -23,7 +22,7 @@ public class PersonValidationImp implements PersonValidation {
 
         personErrorMessage.addFieldsEmpty(personChecker.checkRequiredFields(person));
 
-        Position position = getDefine(person.getPosition());
+        Position position = definePosition(person.getPosition());
 
         if (!personErrorMessage.hasErrors()) {
             if (position != UNDEFINED) {

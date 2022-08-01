@@ -19,7 +19,7 @@ public class PersonController {
 
     @GetMapping("/{id}")
     public ResponseEntity getPerson(@PathVariable("id") Long id) {
-        log.info("Was calling getPerson. Input id: " + id);
+        log.info("Was calling getPerson. Input id: {}", id);
         return personService.getPersonById(Long.valueOf(id));
     }
 
@@ -31,25 +31,25 @@ public class PersonController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity deletePerson(@PathVariable("id") Long id) {
-        log.info("Was calling deletePerson. Input id: " + id);
+        log.info("Was calling deletePerson. Input id: {}", id);
         return personService.deletePerson(Long.valueOf(id));
     }
 
     @PostMapping("/person")
     public ResponseEntity createPerson(@RequestBody Person person) {
-        log.info("Was calling createPerson. Input person: " + person.toString());
+        log.info("Was calling createPerson. Input person: {}", person.toString());
         return personService.addNewPerson(person);
     }
 
     @PutMapping()
     public ResponseEntity updatePerson(@RequestBody Person person) {
-        log.info("Was calling updatePerson. Input person: " + person.toString());
+        log.info("Was calling updatePerson. Input person: {}", person.toString());
         return personService.updatePerson(person);
     }
 
     @PostMapping()
     public ResponseEntity createPersons(@RequestBody List<Person> persons) {
-        log.info("Was calling createPersons.Input persons: " + persons.toString());
+        log.info("Was calling createPersons.Input persons: {}", persons.toString());
         return personService.addNewPersons(persons);
     }
 }
