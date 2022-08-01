@@ -17,8 +17,7 @@ public class PersonServiceImp implements PersonService {
     private final PersonMapper personMapper;
     private final PersonValidation personValidation;
 
-    private final ResourceBundleService resourceBundleService; //todo назвать переменную, как название класса. + нежелательно сокращать слова в переменных
-                                                               //  Done
+    private final ResourceBundleService resourceBundleService;
 
     public GetPersonByIdResponse getPersonById(Long id) {
         GetPersonByIdResponse response = new GetPersonByIdResponse();
@@ -45,8 +44,7 @@ public class PersonServiceImp implements PersonService {
             serviceStatus.setStatus(Status.SUCCESS.name());
             PersonEntity personEntity = personDao.addPerson(personMapper.personToPersonEntity(person));
             Person personResponse = personMapper.personEntityToPerson(personEntity);
-            response.setPerson(personResponse); //todo много вложенных вызовов внутри метода. Так ухудшается читаемость кода
-        } else {                                //  Done
+            response.setPerson(personResponse);
             serviceStatus.setStatus(Status.ERROR.name());
         }
         response.setServiceStatus(serviceStatus);
@@ -62,8 +60,7 @@ public class PersonServiceImp implements PersonService {
             serviceStatus.setStatus(Status.SUCCESS.name());
             PersonEntity personEntity = personDao.updatePerson(personMapper.personToPersonEntity(person));
             Person personResponse = personMapper.personEntityToPerson(personEntity);
-            response.setPerson(personResponse); //todo много вложенных вызовов внутри метода
-        } else {                                //  Done
+            response.setPerson(personResponse);
             serviceStatus.setStatus(Status.ERROR.name());
         }
         response.setServiceStatus(serviceStatus);

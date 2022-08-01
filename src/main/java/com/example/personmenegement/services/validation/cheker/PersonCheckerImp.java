@@ -65,8 +65,8 @@ public class PersonCheckerImp implements PersonChecker {
         if (!checkSalaryMatchingPosition(position, new BigDecimal(salary))) {
             String message = MessageFormat.format(
                     messageService.getString(INCORRECT_SALARY),
-                    position.getTranslation(), //todo плохой перенос, если начал переносить аргументы, то переноси каждый
-                    position.getSalaryMin(),   // Done
+                    position.getTranslation(),
+                    position.getSalaryMin(),
                     position.getSalaryMax());
             response.put(SALARY, message);
         }
@@ -86,8 +86,8 @@ public class PersonCheckerImp implements PersonChecker {
         Map<String, String> response = new HashMap<>();
         if (!checkExperienceMatchingPosition(position, experience)) {
             String message = MessageFormat.format(
-                    messageService.getString(LITTLE_WORK_EXPERIENCE),//todo плохой перенос, если начал переносить аргументы, то переноси каждый
-                    position.getWorkExperience(),                    //  Done
+                    messageService.getString(LITTLE_WORK_EXPERIENCE),
+                    position.getWorkExperience(),
                     position.getTranslation());
             response.put(EXPERIENCE, message);
         }

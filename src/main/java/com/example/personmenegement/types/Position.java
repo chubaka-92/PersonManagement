@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 public enum Position {
 
 
-    INTERN(BigDecimal.valueOf(15000), BigDecimal.valueOf(20000), "intern", 0.0), //todo кириллица в коде, вынести в ResourceBundle  //  DONE
+    INTERN(BigDecimal.valueOf(15000), BigDecimal.valueOf(20000), "intern", 0.0),
     TECHNOLOGIST(BigDecimal.valueOf(20000), BigDecimal.valueOf(30000), "technologist", 1.0),
     ENGINEER(BigDecimal.valueOf(30000), BigDecimal.valueOf(40000), "engineer", 2.0),
     LEAD_ENGINEER(BigDecimal.valueOf(40000), BigDecimal.valueOf(55000), "lead_engineer", 10.0),
