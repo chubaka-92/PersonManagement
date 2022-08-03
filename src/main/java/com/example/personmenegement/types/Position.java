@@ -46,6 +46,7 @@ public enum Position {
         }
     }
 
+    // todo методы для валидации не должны быть в Enum, у тебя есть отдельный сервис, который за это отвечает
     public static boolean checkExperienceMatchingPosition(Position positionPerson, String experience) {
         log.info("Was calling checkExperienceMatchingPosition. Input positionPerson: {} experience: {}",
                 positionPerson,

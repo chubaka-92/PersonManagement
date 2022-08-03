@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.transaction.annotation.Transactional;
 
-public interface PersonRepository extends CrudRepository<PersonEntity, Long> {
+public interface PersonRepository extends CrudRepository<PersonEntity, Long> {// todo лучше используй JpaRepository
     @Modifying
     @Transactional
     @Query(value = "DELETE FROM person p WHERE p.id = (SELECT min(pe.id) FROM person pe)", nativeQuery = true)

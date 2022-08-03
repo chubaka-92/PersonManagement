@@ -19,6 +19,7 @@ public class PersonInitializerImp implements PersonInitializer {
     private final Person personError;
     private final MessageService messageService;
 
+    // todo выбери один стиль, либо писать руками конструктор, либо lombok
     public PersonInitializerImp(Person person) {
         this.personError = person;
         this.messageService = new MessageServiceImp();

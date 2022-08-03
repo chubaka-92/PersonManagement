@@ -19,6 +19,7 @@ public class TaskInitializerImp implements TaskInitializer {
     private final Task taskError;
     private final MessageService messageService;
 
+    // todo выбери один стиль, либо писать руками конструктор, либо lombok
     public TaskInitializerImp(Task task) {
         this.taskError = task;
         this.messageService = new MessageServiceImp();

@@ -23,23 +23,23 @@ public class TaskDAOImp implements TaskDAO {
 
     public List<TaskEntity> findTasks() {
         log.info("Was calling findTasks.");
-        return (List<TaskEntity>) taskRepository.findAll();
+        return (List<TaskEntity>) taskRepository.findAll();// todo лучше используй JpaRepository не нужны будут лишние касты
     }
 
     @Transactional
     public TaskEntity addTask(TaskEntity taskEntity) {
-        log.info("Was calling addTask. Input taskEntity: {}", taskEntity.toString());
+        log.info("Was calling addTask. Input taskEntity: {}", taskEntity.toString());// todo toString не обязательно писать
         return taskRepository.save(taskEntity);
     }
 
     @Transactional
     public TaskEntity updateTask(TaskEntity taskEntity) {
-        log.info("Was calling updateTask. Input taskEntity: {}", taskEntity.toString());
+        log.info("Was calling updateTask. Input taskEntity: {}", taskEntity.toString());// todo toString не обязательно писать
         return taskRepository.save(taskEntity);
     }
 
     @Transactional
-    public void deleteTaskById(long id) {
+    public void deleteTaskById(long id) {// todo используй лучше Long-обертку. Тебе по сути она сюда и передается, но кастится в примитив
         log.info("Was calling deleteTaskById. Input id: {}", id);
         taskRepository.deleteById(id);
     }

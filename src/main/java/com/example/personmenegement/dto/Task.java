@@ -18,6 +18,7 @@ public class Task {
     @JsonIgnore
     private boolean valid = true;
 
+    // todo используй lombok
     @Override
     public String toString() {
         return "TaskEntity[id: " + id + ", uid: " + uid + ", description: " + description + ", priority: " + priority + "]";

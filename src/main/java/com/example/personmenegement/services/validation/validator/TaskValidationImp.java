@@ -24,7 +24,7 @@ public class TaskValidationImp  implements TaskValidation {
         }
 
         if (taskErrorMessage.hasErrors()) {
-            return ((TaskInitializerImp) taskErrorMessage).getTaskError();
+            return ((TaskInitializerImp) taskErrorMessage).getTaskError();// todo так нельзя, лучше добавь этот метод в интерфейс
         }
         return null;
     }

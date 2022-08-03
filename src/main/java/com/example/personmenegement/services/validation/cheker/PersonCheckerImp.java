@@ -27,6 +27,7 @@ public class PersonCheckerImp implements PersonChecker {
     private static final int WORK_MIN_AGE = 16;
     private final MessageService messageService;
 
+    // todo выбери один стиль, либо писать руками конструктор, либо lombok
     public PersonCheckerImp() {
         this.messageService = new MessageServiceImp();
     }
@@ -34,19 +35,19 @@ public class PersonCheckerImp implements PersonChecker {
     public List<String> checkRequiredFields(Person person) {
         log.info("Was calling checkRequiredFields. Input person: {}", person.toString());
         List<String> invalidFields = new ArrayList<>();
-        if (person.getName() == null || person.getName().trim().equals("")) {
+        if (person.getName() == null || person.getName().trim().equals("")) {// todo isBlank
             invalidFields.add(NAME);
         }
-        if (person.getPosition() == null || person.getPosition().trim().equals("")) {
+        if (person.getPosition() == null || person.getPosition().trim().equals("")) {// todo isBlank
             invalidFields.add(POSITION);
         }
-        if (person.getAge() == null || person.getAge().trim().equals("")) {
+        if (person.getAge() == null || person.getAge().trim().equals("")) {// todo isBlank
             invalidFields.add(AGE);
         }
-        if (person.getSalary() == null || person.getSalary().trim().equals("")) {
+        if (person.getSalary() == null || person.getSalary().trim().equals("")) {// todo isBlank
             invalidFields.add(SALARY);
         }
-        if (person.getExperience() == null || person.getExperience().trim().equals("")) {
+        if (person.getExperience() == null || person.getExperience().trim().equals("")) {// todo isBlank
             invalidFields.add(EXPERIENCE);
         }
         return invalidFields;

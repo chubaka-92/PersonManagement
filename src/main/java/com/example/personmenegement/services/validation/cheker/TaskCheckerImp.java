@@ -20,6 +20,7 @@ public class TaskCheckerImp implements TaskChecker {
     private static final String INCORRECT_PRIORITY = "incorrectPriority";
     private final MessageService messageService;
 
+    // todo выбери один стиль, либо писать руками конструктор, либо lombok
     public TaskCheckerImp() {
         this.messageService = new MessageServiceImp();
     }
@@ -27,10 +28,10 @@ public class TaskCheckerImp implements TaskChecker {
     public List<String> checkRequiredFields(Task task) {
         log.info("Was calling checkRequiredFields. Input task: {}", task.toString());
         List<String> invalidFields = new ArrayList<>();
-        if (task.getDescription() == null || task.getDescription().trim().equals("")) {
+        if (task.getDescription() == null || task.getDescription().trim().equals("")) {// todo isBlank
             invalidFields.add(DESCRIPTION);
         }
-        if (task.getPriority() == null || task.getPriority().equals("")) {
+        if (task.getPriority() == null || task.getPriority().equals("")) {// todo isBlank
             invalidFields.add(PRIORITY);
         }
         return invalidFields;
