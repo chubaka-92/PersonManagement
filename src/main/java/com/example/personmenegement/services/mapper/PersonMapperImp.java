@@ -3,8 +3,8 @@ package com.example.personmenegement.services.mapper;
 import com.example.personmenegement.api.MessageService;
 import com.example.personmenegement.api.PersonMapper;
 import com.example.personmenegement.api.TaskMapper;
-import com.example.personmenegement.dto.Person;
-import com.example.personmenegement.dto.Task;
+import com.example.personmenegement.dto.PersonDto;
+import com.example.personmenegement.dto.TaskDto;
 import com.example.personmenegement.entity.PersonEntity;
 import com.example.personmenegement.entity.TaskEntity;
 import com.example.personmenegement.types.Position;
@@ -24,42 +24,42 @@ public class PersonMapperImp implements PersonMapper {
     private final MessageService messageService;
     private final TaskMapper taskMapper;
 
-    public Person personEntityToPerson(PersonEntity personEntity) {
+    public PersonDto personEntityToPerson(PersonEntity personEntity) {
         log.info("Was calling personEntityToPerson. Input personEntity: {}", personEntity.toString());
-        return Person.builder()
-                .id(String.valueOf(personEntity.getId()))
+        return PersonDto.builder()
+                .id(personEntity.getId().toString())
                 .name(personEntity.getName())
-                .age(String.valueOf(personEntity.getAge()))
+                .age(personEntity.getAge().toString())
                 .email(personEntity.getEmail())
-                .salary(String.valueOf(personEntity.getSalary()))
+                .salary(personEntity.getSalary().toString())
                 .position(messageService.getMessage(personEntity.getPosition()))
                 .experience(personEntity.getExperience().toString())
-                .tasks(getTasks(personEntity.getTasks()))
+                .tasksDto(getTasks(personEntity.getTasks()))
                 .build();
     }
 
-    public PersonEntity personToPersonEntity(Person person) {
-        log.info("Was calling personToPersonEntity. Input id: {}", person.toString());
+    public PersonEntity personToPersonEntity(PersonDto personDto) {
+        log.info("Was calling personToPersonEntity. Input id: {}", personDto.toString());
         return PersonEntity.builder()
-                .id(getId(person))
-                .name(person.getName())
-                .age(Integer.valueOf(person.getAge()))
-                .email(person.getEmail())
-                .salary(new BigDecimal(person.getSalary()))
-                .position(Position.definePosition(person.getPosition()))
-                .experience(Double.valueOf(person.getExperience()))
+                .id(getId(personDto))
+                .name(personDto.getName())
+                .age(Integer.valueOf(personDto.getAge()))
+                .email(personDto.getEmail())
+                .salary(new BigDecimal(personDto.getSalary()))
+                .position(Position.definePosition(personDto.getPosition()))
+                .experience(Double.valueOf(personDto.getExperience()))
                 .build();
     }
 
-    private Long getId(Person person) {
+    private Long getId(PersonDto personDto) {
         log.debug("Was calling getId.");
-        if (person.getId() == null) {
+        if (personDto.getId() == null) {
             return null;
         }
-        return Long.valueOf(person.getId());
+        return Long.valueOf(personDto.getId());
     }
 
-    private List<Task> getTasks(List<TaskEntity> taskEntities) {
+    private List<TaskDto> getTasks(List<TaskEntity> taskEntities) {
         log.debug("Was calling getTasks.");
         if (taskEntities == null) {
             return null;

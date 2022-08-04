@@ -1,7 +1,10 @@
 package com.example.personmenegement.services.validation.validator;
 
+import com.example.personmenegement.api.PersonChecker;
+import com.example.personmenegement.api.PersonInitializer;
 import com.example.personmenegement.api.PersonValidation;
-import com.example.personmenegement.dto.Person;
+import com.example.personmenegement.dto.PersonDto;
+import com.example.personmenegement.services.MessageServiceImp;
 import com.example.personmenegement.services.validation.cheker.PersonCheckerImp;
 import com.example.personmenegement.services.validation.initializer.PersonInitializerImp;
 import com.example.personmenegement.types.Position;
@@ -15,31 +18,31 @@ import static com.example.personmenegement.types.Position.definePosition;
 @Service
 public class PersonValidationImp implements PersonValidation {
 
-    public Person validate(Person person) {
-        log.info("Was calling validate. Input person: " + person.toString());// todo toString необязателен
-        PersonCheckerImp personChecker = new PersonCheckerImp();
-        PersonInitializerImp personErrorMessage = new PersonInitializerImp(person);
+    public PersonDto validate(PersonDto personDto) {
+        log.info("Was calling validate. Input person: " + personDto);// todo toString необязателен   //  DONE
+        PersonChecker personChecker = new PersonCheckerImp(new MessageServiceImp());
+        PersonInitializer personErrorMessage = new PersonInitializerImp(personDto, new MessageServiceImp());
 
-        personErrorMessage.addFieldsEmpty(personChecker.checkRequiredFields(person));
+        personErrorMessage.addFieldsEmpty(personChecker.checkRequiredFields(personDto));
 
-        Position position = definePosition(person.getPosition());
+        Position position = definePosition(personDto.getPosition());
 
         if (!personErrorMessage.hasErrors()) {
             if (position != UNDEFINED) {
                 personErrorMessage.addIncorrectArgumentMessage(
-                        personChecker.checkAge(person.getAge()));
+                        personChecker.checkAge(personDto.getAge()));
 
                 personErrorMessage.addIncorrectArgumentMessage(
-                        personChecker.checkSalary(position, person.getSalary()));
+                        personChecker.checkSalary(position, personDto.getSalary()));
 
                 personErrorMessage.addIncorrectArgumentMessage(
-                        personChecker.checkExperience(position, person.getExperience()));
+                        personChecker.checkExperience(position, personDto.getExperience()));
             } else {
-                personErrorMessage.addIncorrectArgumentMessage(personChecker.checkPosition(person.getPosition()));
+                personErrorMessage.addIncorrectArgumentMessage(personChecker.checkPosition(personDto.getPosition()));
             }
         }
         if (personErrorMessage.hasErrors()) {
-            return personErrorMessage.getPersonError();
+            return personErrorMessage.getPersonDtoError();
         }
         return null;
     }

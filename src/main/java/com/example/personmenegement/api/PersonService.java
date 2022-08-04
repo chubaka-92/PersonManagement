@@ -1,21 +1,20 @@
 package com.example.personmenegement.api;
 
-import com.example.personmenegement.dto.Person;
-import org.springframework.http.ResponseEntity;
+import com.example.personmenegement.dto.PersonDto;
 
 import java.util.List;
 
 public interface PersonService {
 
-    ResponseEntity getPersonById(Long id);// todo сервис не должен возвращать ResponseEntity, лучше обертывать возвращаемое значение в контроллере
+    PersonDto getPersonById(Long id);// todo сервис не должен возвращать ResponseEntity, лучше обертывать возвращаемое значение в контроллере   //   DONE
 
-    ResponseEntity getPersons();// todo сервис не должен возвращать ResponseEntity
+    List<PersonDto> getPersons();// todo сервис не должен возвращать ResponseEntity   //   DONE
 
-    ResponseEntity addNewPerson(Person person);// todo сервис не должен возвращать ResponseEntity
+    PersonDto addNewPerson(PersonDto personDto);// todo сервис не должен возвращать ResponseEntity   //   DONE
 
-    ResponseEntity addNewPersons(List<Person> person);// todo сервис не должен возвращать ResponseEntity
+    List<PersonDto> addNewPersons(List<PersonDto> personsDto);// todo сервис не должен возвращать ResponseEntity   //   DONE
 
-    ResponseEntity updatePerson(Person person);// todo сервис не должен возвращать ResponseEntity
+    PersonDto updatePerson(PersonDto personDto);// todo сервис не должен возвращать ResponseEntity   //   DONE
 
-    ResponseEntity deletePerson(Long id);// todo сервис не должен возвращать ResponseEntity
+    Long deletePerson(Long id);// todo сервис не должен возвращать ResponseEntity   //   DONE
 }

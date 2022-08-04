@@ -7,20 +7,26 @@ import javax.persistence.*;
 
 @Getter
 @Setter
-@Entity// todo лучше эту аннотацию ставить ближе к классу, а то не видно сразу
 @Builder
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
+@Entity// todo лучше эту аннотацию ставить ближе к классу, а то не видно сразу //  DONE
 @Table(name = "task")
 public class TaskEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
-    private String uid;// todo пропиши аннотации @Column для лучшей читаемости
+
+    @Column(name = "uid")
+    private String uid;// todo пропиши аннотации @Column для лучшей читаемости // DONE
+
+    @Column(name = "description")
     private String description;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "priority")
     private Priority priority;
 
     @ManyToOne
@@ -28,8 +34,7 @@ public class TaskEntity {
     private PersonEntity person;
 
     // todo используй lombok
-    @Override
-    public String toString() {
-        return "TaskEntity[ id: " + id + ", uid: " + uid + ", description: " + description + ", priority: " + priority + " ]";
-    }
+    //  Done
 }
+
+

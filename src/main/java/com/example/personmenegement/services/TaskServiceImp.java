@@ -2,13 +2,14 @@ package com.example.personmenegement.services;
 
 import com.example.personmenegement.api.*;
 import com.example.personmenegement.dao.TaskDAOImp;
-import com.example.personmenegement.dto.Task;
+import com.example.personmenegement.dto.TaskDto;
 import com.example.personmenegement.entity.PersonEntity;
 import com.example.personmenegement.entity.TaskEntity;
-import com.example.personmenegement.types.Position;
+import com.example.personmenegement.exeption.ManyTasksException;
+import com.example.personmenegement.exeption.PersonNotFoundException;
+import com.example.personmenegement.exeption.TaskNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.text.MessageFormat;
@@ -32,106 +33,129 @@ public class TaskServiceImp implements TaskService {
     private final TaskValidation taskValidation;
     private final PersonDAO personDao;
 
-    public ResponseEntity getTaskById(Long id) {
+    public TaskDto getTaskById(Long id) {
         log.info("Was calling getTaskById. Input id: {}", id);
         TaskEntity taskEntity = taskDAO.findTaskById(id);
 
         if (taskEntity == null) {
             log.error(MessageFormat.format(messageService.getMessage(TASK_NOT_FOUND), id));
-            return ResponseEntity.badRequest().body(MessageFormat.format(messageService.getMessage(TASK_NOT_FOUND), id));
+            throw new TaskNotFoundException(MessageFormat.format(messageService.getMessage(TASK_NOT_FOUND), id));
         }
-        return ResponseEntity.ok(taskMapper.taskEntityToTask(taskEntity));
+        return taskMapper.taskEntityToTask(taskEntity);
     }
 
-    public ResponseEntity getTasks() {
+    public List<TaskDto> getTasks() {
         log.info("Was calling getTasks.");
-        List<TaskEntity> persons = taskDAO.findTasks();
+        List<TaskEntity> tasks = taskDAO.findTasks();
 
-        if (persons == null) {
+        if (tasks == null) {
             log.error(messageService.getMessage(TASKS_NOT_FOUND));
-            return ResponseEntity.badRequest().body(messageService.getMessage(TASKS_NOT_FOUND));
+            throw new TaskNotFoundException(messageService.getMessage(TASKS_NOT_FOUND));
+
         }
-        return ResponseEntity.ok(persons.stream()
+        return tasks.stream()
                 .map(taskMapper::taskEntityToTask)
-                .collect(Collectors.toList()));
+                .collect(Collectors.toList());
     }
 
-    public ResponseEntity deleteTask(Long id) {
+    public Long deleteTask(Long id) {
         log.info("Was calling deleteTask. Input id: {}", id);
         if (taskDAO.findTaskById(id) == null) {
             log.error(MessageFormat.format(messageService.getMessage(TASK_NOT_FOUND), id));
-            return ResponseEntity.badRequest().body(MessageFormat.format(messageService.getMessage(TASK_NOT_FOUND), id));
+            throw new TaskNotFoundException(MessageFormat.format(messageService.getMessage(TASK_NOT_FOUND), id));
         }
         taskDAO.deleteTaskById(id);
-        return ResponseEntity.ok(id);
+        return id;
     }
 
-    public ResponseEntity addNewTask(Task task, Long personId) {
-        log.info("Was calling addNewTask. Input task: {} personId: {}", task, personId);
+    public TaskDto addNewTask(TaskDto taskDto, Long personId) {
+        log.info("Was calling addNewTask. Input task: {} personId: {}", taskDto, personId);
         PersonEntity personEntity = personDao.findPersonById(personId);
         if (personEntity == null) {
             log.error(MessageFormat.format(messageService.getMessage(PERSON_NOT_FOUND), personId));
-            return ResponseEntity.badRequest().body(MessageFormat.format(messageService.getMessage(PERSON_NOT_FOUND), personId));
+            throw new PersonNotFoundException(MessageFormat.format(messageService.getMessage(PERSON_NOT_FOUND), personId));
         }
-        if (Position.checkAvailableCountTasksToPerson(ONE_TASK, personEntity)) {
-            log.error(MessageFormat.format(messageService.getMessage(TOO_MANY_TASKS), personEntity.getCountAvailableTasks()));
-            return ResponseEntity.badRequest().body(MessageFormat.format(messageService.getMessage(TOO_MANY_TASKS), personEntity.getCountAvailableTasks()));
+        if (checkAvailableCountTasksToPerson(ONE_TASK, personEntity)) {
+            log.error(MessageFormat.format(messageService.getMessage(TOO_MANY_TASKS), getCountAvailableTasks(personEntity)));
+            throw new ManyTasksException(MessageFormat.format(messageService.getMessage(TOO_MANY_TASKS), getCountAvailableTasks(personEntity)));
         }
-        Task taskTemp = taskValidation.validate(task);
-        if (taskTemp != null) {
-            log.error(taskTemp.toString());
-            return ResponseEntity.badRequest().body(taskTemp);
+        TaskDto taskDtoTemp = taskValidation.validate(taskDto);
+        if (taskDtoTemp != null) {
+            log.error(taskDtoTemp.toString());
+            return taskDtoTemp;
         }
-        return ResponseEntity.ok(getNewTask(personEntity, task));
+        return getNewTask(personEntity, taskDto);
     }
 
     @Override
-    public ResponseEntity addNewTasks(List<Task> tasks, Long personId) {
-        log.info("Was calling addNewTasks. Input tasks: {} personId: {}", tasks, personId);
+    public List<TaskDto> addNewTasks(List<TaskDto> tasksDto, Long personId) {
+        log.info("Was calling addNewTasks. Input tasks: {} personId: {}", tasksDto, personId);
         PersonEntity personEntity = personDao.findPersonById(personId);
         if (personEntity == null) {
             log.error(MessageFormat.format(messageService.getMessage(PERSON_NOT_FOUND), personId));
-            return ResponseEntity.badRequest().body(MessageFormat.format(messageService.getMessage(PERSON_NOT_FOUND), personId));
+            throw new PersonNotFoundException(MessageFormat.format(messageService.getMessage(PERSON_NOT_FOUND), personId));
         }
-        if (Position.checkAvailableCountTasksToPerson(tasks.size(), personEntity)) {
-            log.error(MessageFormat.format(messageService.getMessage(TOO_MANY_TASKS), personEntity.getCountAvailableTasks()));
-            return ResponseEntity.badRequest().body(MessageFormat.format(messageService.getMessage(TOO_MANY_TASKS), personEntity.getCountAvailableTasks()));
+        if (checkAvailableCountTasksToPerson(tasksDto.size(), personEntity)) {
+            log.error(MessageFormat.format(messageService.getMessage(TOO_MANY_TASKS), getCountAvailableTasks(personEntity)));
+            throw new ManyTasksException(MessageFormat.format(messageService.getMessage(TOO_MANY_TASKS), getCountAvailableTasks(personEntity)));
         }
-        List<Task> response = new ArrayList<>();
-        for (Task task : tasks) {
-            Task taskTemp = taskValidation.validate(task);
-            if (taskTemp == null) {
-                response.add(getNewTask(personEntity, task));
+        List<TaskDto> response = new ArrayList<>();
+        for (TaskDto taskDto : tasksDto) {
+            TaskDto taskDtoTemp = taskValidation.validate(taskDto);
+            if (taskDtoTemp == null) {
+                response.add(getNewTask(personEntity, taskDto));
             } else {
-                log.error(task.toString());
-                response.add(task);
+                log.error(taskDto.toString());
+                response.add(taskDto);
             }
         }
-        return ResponseEntity.ok(response);
+        return response;
     }
 
-    public ResponseEntity updateTask(Task task) {
-        log.info("Was calling updateTask. Input task: {}", task);
-        Task taskTemp = taskValidation.validate(task);
-        if (!taskTemp.isValid()) {
-            log.error(taskTemp.toString());
-            return ResponseEntity.badRequest().body(taskTemp);
+    public TaskDto updateTask(TaskDto taskDto, Long personId) {
+        log.info("Was calling updateTask. Input task: {} personId: {}", taskDto, personId);
+        PersonEntity personEntity = personDao.findPersonById(personId);
+        if (personEntity == null) {
+            log.error(MessageFormat.format(messageService.getMessage(PERSON_NOT_FOUND), personId));
+            throw new PersonNotFoundException(MessageFormat.format(messageService.getMessage(PERSON_NOT_FOUND), personId));
         }
-        return ResponseEntity.ok(getUpdateTask(taskTemp));
+        TaskDto taskDtoTemp = taskValidation.validate(taskDto);
+        if (!(taskDtoTemp == null)) {
+            log.error(taskDtoTemp.toString());
+            return taskDtoTemp;
+        }
+        return getUpdateTask(personEntity, taskDto);
     }
 
-    private Task getNewTask(PersonEntity personEntity, Task taskTemp) {
-        log.debug("Was calling addNewTasks. Input personEntity: {} taskTemp: {}", personEntity, taskTemp);
-        TaskEntity taskEntity = taskMapper.taskToTaskEntity(taskTemp);
+    private TaskDto getNewTask(PersonEntity personEntity, TaskDto taskDto) {
+        log.debug("Was calling addNewTasks. Input personEntity: {} taskTemp: {}", personEntity, taskDto);
+        TaskEntity taskEntity = taskMapper.taskToTaskEntity(taskDto);
         taskEntity.setPerson(personEntity);
         taskEntity.setId(taskDAO.addTask(taskEntity).getId());
         return taskMapper.taskEntityToTask(taskEntity);
     }
 
-    private Object getUpdateTask(Task taskTemp) {
-        log.debug("Was calling getUpdateTask. Input taskTemp: {}", taskTemp);
-        TaskEntity taskEntity = taskMapper.taskToTaskEntity(taskTemp);
+    private TaskDto getUpdateTask(PersonEntity personEntity, TaskDto taskDto) {
+        log.debug("Was calling getUpdateTask. Input personEntity: {} taskTemp: {}", personEntity, taskDto);
+        TaskEntity taskEntity = taskMapper.taskToTaskEntity(taskDto);
+        taskEntity.setPerson(personEntity);
         taskEntity.setId(taskDAO.updateTask(taskEntity).getId());
         return taskMapper.taskEntityToTask(taskEntity);
+    }
+
+    private static Integer getCountAvailableTasks(PersonEntity personEntity) {
+        return personEntity.getPosition().getCountTasks() - personEntity.getTasks().size();
+    }
+
+    private boolean checkAvailableCountTasksToPerson(int countTasks, PersonEntity personEntity) {
+        log.info("Was calling checkAvailableCountTasksToPerson. Input personEntity: {} countTasks: {}",
+                personEntity,
+                countTasks); //todo вот так опрятнее выглядит. не нравится использование "+" в логах (много места занимает и выглядит не оч). Везде где есть вставка значений в логи сделать такой вид. + желательно, делать лог в одну строку, но если не получается, то сделать, как здесь
+                            //  done
+        if (personEntity.getTasks().size() < personEntity.getPosition().getCountTasks()
+                && getCountAvailableTasks(personEntity) >= countTasks) {
+            return false;
+        }
+        return true;
     }
 }

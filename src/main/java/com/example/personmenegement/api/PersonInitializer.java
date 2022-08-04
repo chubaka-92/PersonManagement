@@ -1,5 +1,7 @@
 package com.example.personmenegement.api;
 
+import com.example.personmenegement.dto.PersonDto;
+
 import java.util.List;
 import java.util.Map;
 
@@ -10,4 +12,6 @@ public interface PersonInitializer {
     void addIncorrectArgumentMessage(Map<String, String> incorrectArguments);
 
     boolean hasErrors();
+
+    PersonDto getPersonDtoError();
 }

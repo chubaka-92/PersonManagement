@@ -1,8 +1,8 @@
 package com.example.personmenegement.api;
 
-import com.example.personmenegement.dto.Person;
+import com.example.personmenegement.dto.PersonDto;
 
 public interface PersonValidation {
 
-    Person validate(Person person);
+    PersonDto validate(PersonDto personDto);
 }

@@ -2,7 +2,7 @@ package com.example.personmenegement.services.mapper;
 
 import com.example.personmenegement.api.MessageService;
 import com.example.personmenegement.api.TaskMapper;
-import com.example.personmenegement.dto.Task;
+import com.example.personmenegement.dto.TaskDto;
 import com.example.personmenegement.entity.TaskEntity;
 import com.example.personmenegement.types.Priority;
 import lombok.RequiredArgsConstructor;
@@ -18,40 +18,40 @@ public class TaskMapperImp implements TaskMapper {
 
     private final MessageService messageService;
 
-    public Task taskEntityToTask(TaskEntity taskEntity) {
-        log.info("Was calling taskEntityToTask. Input taskEntity: {}", taskEntity.toString());
-        return Task.builder()
+    public TaskDto taskEntityToTask(TaskEntity taskEntity) {
+        log.info("Was calling taskEntityToTask. Input taskEntity: {}", taskEntity);
+        return TaskDto.builder()
                 .id(taskEntity.getId().toString())// todo где-то используешь valueOf, где-то toString Лучше писать в одном стиле
-                .uid(taskEntity.getUid())
+                .uid(taskEntity.getUid())         //   Done
                 .description(taskEntity.getDescription())
                 .priority(messageService.getMessage(taskEntity.getPriority()))
                 .build();
     }
 
-    public TaskEntity taskToTaskEntity(Task task) {
-        log.info("Was calling taskToTaskEntity. Input task: {}", task.toString());
+    public TaskEntity taskToTaskEntity(TaskDto taskDto) {
+        log.info("Was calling taskToTaskEntity. Input task: {}", taskDto);
         return TaskEntity.builder()
-                .id(getId(task))
-                .uid(getUid(task))
-                .description(task.getDescription())
-                .priority(Priority.definePriority(task.getPriority()))
+                .id(getId(taskDto))
+                .uid(getUid(taskDto))
+                .description(taskDto.getDescription())
+                .priority(Priority.definePriority(taskDto.getPriority()))
                 .build();
     }
 
-    private Long getId(Task task) {
-        log.debug("Was calling getId. Input task: {}", task.toString());
-        if (task.getId() == null) {
+    private Long getId(TaskDto taskDto) {
+        log.debug("Was calling getId. Input task: {}", taskDto);
+        if (taskDto.getId() == null) {
             return null;
         }
-        return Long.valueOf(task.getId());
+        return Long.valueOf(taskDto.getId());
     }
 
-    private String getUid(Task task) {
-        log.debug("Was calling getUid. Input task: {}", task.toString());
-        if (task.getUid() == null) {
+    private String getUid(TaskDto taskDto) {
+        log.debug("Was calling getUid. Input task: {}", taskDto);
+        if (taskDto.getUid() == null) {
             return UUID.randomUUID().toString();
         }
-        return task.getUid();
+        return taskDto.getUid();
     }
 
 }

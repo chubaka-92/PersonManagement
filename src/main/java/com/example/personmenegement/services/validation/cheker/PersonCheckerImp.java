@@ -2,9 +2,9 @@ package com.example.personmenegement.services.validation.cheker;
 
 import com.example.personmenegement.api.MessageService;
 import com.example.personmenegement.api.PersonChecker;
-import com.example.personmenegement.dto.Person;
-import com.example.personmenegement.services.MessageServiceImp;
+import com.example.personmenegement.dto.PersonDto;
 import com.example.personmenegement.types.Position;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.math.BigDecimal;
@@ -15,10 +15,9 @@ import java.util.List;
 import java.util.Map;
 
 import static com.example.personmenegement.types.PersonFieldName.*;
-import static com.example.personmenegement.types.Position.checkExperienceMatchingPosition;
-import static com.example.personmenegement.types.Position.checkSalaryMatchingPosition;
 
 @Slf4j
+@RequiredArgsConstructor
 public class PersonCheckerImp implements PersonChecker {
     private static final String INCORRECT_AGE = "incorrectAge";
     private static final String INCORRECT_POSITION = "incorrectPosition";
@@ -28,26 +27,24 @@ public class PersonCheckerImp implements PersonChecker {
     private final MessageService messageService;
 
     // todo выбери один стиль, либо писать руками конструктор, либо lombok
-    public PersonCheckerImp() {
-        this.messageService = new MessageServiceImp();
-    }
+    //  Done
 
-    public List<String> checkRequiredFields(Person person) {
-        log.info("Was calling checkRequiredFields. Input person: {}", person.toString());
+    public List<String> checkRequiredFields(PersonDto personDto) {
+        log.info("Was calling checkRequiredFields. Input person: {}", personDto);
         List<String> invalidFields = new ArrayList<>();
-        if (person.getName() == null || person.getName().trim().equals("")) {// todo isBlank
+        if (personDto.getName().isBlank()) {// todo isBlank  //   DONE
             invalidFields.add(NAME);
         }
-        if (person.getPosition() == null || person.getPosition().trim().equals("")) {// todo isBlank
+        if (personDto.getPosition().isBlank()) {// todo isBlank  //   DONE
             invalidFields.add(POSITION);
         }
-        if (person.getAge() == null || person.getAge().trim().equals("")) {// todo isBlank
+        if (personDto.getAge().isBlank()) {// todo isBlank  //   DONE
             invalidFields.add(AGE);
         }
-        if (person.getSalary() == null || person.getSalary().trim().equals("")) {// todo isBlank
+        if (personDto.getSalary().isBlank()) {// todo isBlank  //   DONE
             invalidFields.add(SALARY);
         }
-        if (person.getExperience() == null || person.getExperience().trim().equals("")) {// todo isBlank
+        if (personDto.getExperience().isBlank()) {// todo isBlank  //   DONE
             invalidFields.add(EXPERIENCE);
         }
         return invalidFields;
@@ -98,5 +95,26 @@ public class PersonCheckerImp implements PersonChecker {
             response.put(EXPERIENCE, message);
         }
         return response;
+    }
+
+    private boolean checkExperienceMatchingPosition(Position positionPerson, String experience) {
+        log.info("Was calling checkExperienceMatchingPosition. Input positionPerson: {} experience: {}",
+                positionPerson,
+                experience);
+        if (positionPerson.getWorkExperience().compareTo(Double.valueOf(experience)) > 0) {
+            return false;
+        }
+        return true;
+    }
+
+    private boolean checkSalaryMatchingPosition(Position positionPerson, BigDecimal salaryPerson) {
+        log.info("Was calling checkSalaryMatchingPosition. Input positionPerson: {} salaryPerson: {}",
+                positionPerson,
+                salaryPerson);
+        if (positionPerson.getSalaryMin().compareTo(salaryPerson) > 0
+                || positionPerson.getSalaryMax().compareTo(salaryPerson) < 0) {
+            return false;
+        }
+        return true;
     }
 }

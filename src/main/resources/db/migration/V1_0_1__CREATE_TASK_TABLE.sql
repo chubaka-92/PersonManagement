@@ -1,4 +1,4 @@
-create table if not exists task (
+create table if not exists taskDto (
                          id             bigserial    not null,
                          id_person      bigserial,
                          uid            varchar(100),       -- уникальный код задачи персоны

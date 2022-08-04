@@ -1,7 +1,6 @@
 package com.example.personmenegement.types;
 
 import com.example.personmenegement.api.MessageService;
-import com.example.personmenegement.entity.PersonEntity;
 import com.example.personmenegement.services.MessageServiceImp;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -47,37 +46,5 @@ public enum Position {
     }
 
     // todo методы для валидации не должны быть в Enum, у тебя есть отдельный сервис, который за это отвечает
-    public static boolean checkExperienceMatchingPosition(Position positionPerson, String experience) {
-        log.info("Was calling checkExperienceMatchingPosition. Input positionPerson: {} experience: {}",
-                positionPerson,
-                experience);
-        if (positionPerson.getWorkExperience().compareTo(Double.valueOf(experience)) > 0) {
-            return false;
-        }
-        return true;
-    }
-
-    public static boolean checkSalaryMatchingPosition(Position positionPerson, BigDecimal salaryPerson) {
-        log.info("Was calling checkSalaryMatchingPosition. Input positionPerson: {} salaryPerson: {}",
-                positionPerson,
-                salaryPerson);
-        if (positionPerson.getSalaryMin().compareTo(salaryPerson) > 0
-                || positionPerson.getSalaryMax().compareTo(salaryPerson) < 0) {
-            return false;
-        }
-        return true;
-    }
-
-    public static boolean checkAvailableCountTasksToPerson(int countTasks, PersonEntity personEntity) {
-        log.info("Was calling checkAvailableCountTasksToPerson. Input personEntity: {} countTasks: {}",
-                personEntity,
-                countTasks); //todo вот так опрятнее выглядит. не нравится использование "+" в логах (много места занимает и выглядит не оч). Везде где есть вставка значений в логи сделать такой вид. + желательно, делать лог в одну строку, но если не получается, то сделать, как здесь
-                            //  done
-        if (personEntity.getTasks().size() < personEntity.getPosition().getCountTasks()
-                && personEntity.getCountAvailableTasks() >= countTasks) {
-            return false;
-        }
-        return true;
-    }
-
+    //  Done. Перенес обратно в класс с валидацией
 }

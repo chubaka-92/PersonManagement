@@ -1,6 +1,6 @@
 package com.example.personmenegement.api;
 
-import com.example.personmenegement.dto.Person;
+import com.example.personmenegement.dto.PersonDto;
 import com.example.personmenegement.types.Position;
 
 import java.util.List;
@@ -8,7 +8,7 @@ import java.util.Map;
 
 public interface PersonChecker {
 
-    List<String> checkRequiredFields(Person person);
+    List<String> checkRequiredFields(PersonDto personDto);
 
     Map<String, String> checkAge(String age);
 

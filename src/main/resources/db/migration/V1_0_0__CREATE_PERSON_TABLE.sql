@@ -1,4 +1,4 @@
-create table if not exists person (
+create table if not exists personDto (
                          id       bigserial    not null,
                          name     varchar(50),             -- Имя персоны
                          age      integer,                 -- возраст персоны

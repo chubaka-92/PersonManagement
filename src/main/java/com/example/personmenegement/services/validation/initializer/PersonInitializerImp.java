@@ -2,10 +2,10 @@ package com.example.personmenegement.services.validation.initializer;
 
 import com.example.personmenegement.api.MessageService;
 import com.example.personmenegement.api.PersonInitializer;
-import com.example.personmenegement.dto.Person;
-import com.example.personmenegement.services.MessageServiceImp;
+import com.example.personmenegement.dto.PersonDto;
 import com.example.personmenegement.types.PersonFieldName;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
@@ -13,43 +13,41 @@ import java.util.Map;
 
 @Slf4j
 @Getter
+@RequiredArgsConstructor
 public class PersonInitializerImp implements PersonInitializer {
     private static final String EMPTY_FIELD = "emptyField";
 
-    private final Person personError;
+    private final PersonDto personDtoError;
     private final MessageService messageService;
 
     // todo выбери один стиль, либо писать руками конструктор, либо lombok
-    public PersonInitializerImp(Person person) {
-        this.personError = person;
-        this.messageService = new MessageServiceImp();
-    }
+    //   Done
 
     public void addFieldsEmpty(List<String> incorrectFields) {
         log.info("Was calling addFieldsEmpty. Input incorrectFields: " + incorrectFields.toString());
         if (!incorrectFields.isEmpty()) {
-            personError.setValid(false);
+            personDtoError.setValid(false);
         }
         for (String field : incorrectFields) {
             switch (field) {
                 case PersonFieldName.NAME: {
-                    personError.setName(messageService.getMessage(EMPTY_FIELD));
+                    personDtoError.setName(messageService.getMessage(EMPTY_FIELD));
                     break;
                 }
                 case PersonFieldName.AGE: {
-                    personError.setAge(messageService.getMessage(EMPTY_FIELD));
+                    personDtoError.setAge(messageService.getMessage(EMPTY_FIELD));
                     break;
                 }
                 case PersonFieldName.POSITION: {
-                    personError.setPosition(messageService.getMessage(EMPTY_FIELD));
+                    personDtoError.setPosition(messageService.getMessage(EMPTY_FIELD));
                     break;
                 }
                 case PersonFieldName.SALARY: {
-                    personError.setSalary(messageService.getMessage(EMPTY_FIELD));
+                    personDtoError.setSalary(messageService.getMessage(EMPTY_FIELD));
                     break;
                 }
                 case PersonFieldName.EXPERIENCE: {
-                    personError.setExperience(messageService.getMessage(EMPTY_FIELD));
+                    personDtoError.setExperience(messageService.getMessage(EMPTY_FIELD));
                     break;
                 }
                 default:
@@ -61,28 +59,28 @@ public class PersonInitializerImp implements PersonInitializer {
     public void addIncorrectArgumentMessage(Map<String, String> incorrectArguments) {
         log.info("Was calling addIncorrectArgumentMessage. Input incorrectArguments: " + incorrectArguments.toString());
         if (!incorrectArguments.isEmpty()) {
-            personError.setValid(false);
+            personDtoError.setValid(false);
         }
         for (Map.Entry<String, String> entry : incorrectArguments.entrySet()) {
             switch (entry.getKey()) {
                 case PersonFieldName.NAME: {
-                    personError.setName(entry.getValue());
+                    personDtoError.setName(entry.getValue());
                     break;
                 }
                 case PersonFieldName.AGE: {
-                    personError.setAge(entry.getValue());
+                    personDtoError.setAge(entry.getValue());
                     break;
                 }
                 case PersonFieldName.POSITION: {
-                    personError.setPosition(entry.getValue());
+                    personDtoError.setPosition(entry.getValue());
                     break;
                 }
                 case PersonFieldName.SALARY: {
-                    personError.setSalary(entry.getValue());
+                    personDtoError.setSalary(entry.getValue());
                     break;
                 }
                 case PersonFieldName.EXPERIENCE: {
-                    personError.setExperience(entry.getValue());
+                    personDtoError.setExperience(entry.getValue());
                     break;
                 }
                 default:
@@ -93,6 +91,6 @@ public class PersonInitializerImp implements PersonInitializer {
 
     public boolean hasErrors() {
         log.info("Was calling hasErrors.");
-        return !personError.isValid();
+        return !personDtoError.isValid();
     }
 }
