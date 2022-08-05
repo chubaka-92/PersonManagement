@@ -11,7 +11,7 @@ import javax.persistence.*;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity// todo лучше эту аннотацию ставить ближе к классу, а то не видно сразу //  DONE
+@Entity
 @Table(name = "task")
 public class TaskEntity {
     @Id
@@ -20,7 +20,7 @@ public class TaskEntity {
     private Long id;
 
     @Column(name = "uid")
-    private String uid;// todo пропиши аннотации @Column для лучшей читаемости // DONE
+    private String uid;
 
     @Column(name = "description")
     private String description;
@@ -33,8 +33,6 @@ public class TaskEntity {
     @JoinColumn(name = "id_person")
     private PersonEntity person;
 
-    // todo используй lombok
-    //  Done
 }
 
 

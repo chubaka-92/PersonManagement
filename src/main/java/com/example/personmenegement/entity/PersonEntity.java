@@ -13,8 +13,6 @@ import java.util.List;
 @Setter
 @Builder
 @ToString(exclude = "tasks")
-// todo при вызове toString у тебя полетят запросы в базу для подтягивания тасков, так как они по умолчанию Lazy. Сделай exclude
-//  DONE
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "person")
@@ -25,7 +23,7 @@ public class PersonEntity {
     private Long id;
 
     @Column(name = "name")
-    private String name;// todo пропиши аннотации @Column для лучшей читаемости  //  DONE
+    private String name;
 
     @Column(name = "age")
     private Integer age;
@@ -44,11 +42,6 @@ public class PersonEntity {
     private Double experience;
 
     @OneToMany(mappedBy = "person")
-    // todo cascade лучше не использовать, так как это может привести к нежелательным удалениям. Лучше процедуру удаления делать в несколько этапов
-    //  DONE
-    private List<TaskEntity> tasks = new ArrayList<>();//todo лучше инициализировать : private List<TaskEntity> tasks = new ArrayList<>(); чтобы не словить NPE  //  DONE
-
-    // todo какая-то логика в классе Entity это нехорошо. Вынести в класс валидации + у тебя будет тут могут дополнительно тянуться таски отдельным запросом
-    //  Done. перенес метод в те классы где он используется
+    private List<TaskEntity> tasks = new ArrayList<>();
 
 }

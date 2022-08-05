@@ -19,9 +19,9 @@ public class ExceptionController {
     public ResponseEntity<?> handlePersonNotFoundException(PersonNotFoundException exception, WebRequest request) {
         ErrorDetails errorDetails = ErrorDetails.builder()
                 .timeStamp(LocalDate.now())
-                .status(HttpStatus.BAD_REQUEST.value())
+                .status(HttpStatus.BAD_REQUEST.value())// todo есть HttpStatus NotFound или NoContent. BadRequest не очень правильно
                 .message(exception.getMessage())
-                .details(request.getDescription(false)).build();
+                .details(request.getDescription(false)).build();// todo дубликат кода, можно вынести в один общий метод
         return new ResponseEntity(errorDetails, HttpStatus.BAD_REQUEST);
     }
 

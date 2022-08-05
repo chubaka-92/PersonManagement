@@ -18,6 +18,4 @@ public class TaskDto {
 
     @JsonIgnore
     private boolean valid = true;
-    // todo используй lombok
-    //  DONE
 }

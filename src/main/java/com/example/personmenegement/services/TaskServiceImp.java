@@ -150,8 +150,7 @@ public class TaskServiceImp implements TaskService {
     private boolean checkAvailableCountTasksToPerson(int countTasks, PersonEntity personEntity) {
         log.info("Was calling checkAvailableCountTasksToPerson. Input personEntity: {} countTasks: {}",
                 personEntity,
-                countTasks); //todo вот так опрятнее выглядит. не нравится использование "+" в логах (много места занимает и выглядит не оч). Везде где есть вставка значений в логи сделать такой вид. + желательно, делать лог в одну строку, но если не получается, то сделать, как здесь
-                            //  done
+                countTasks);
         if (personEntity.getTasks().size() < personEntity.getPosition().getCountTasks()
                 && getCountAvailableTasks(personEntity) >= countTasks) {
             return false;
