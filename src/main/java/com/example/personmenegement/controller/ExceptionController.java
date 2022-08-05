@@ -17,31 +17,38 @@ public class ExceptionController {
 
     @ExceptionHandler(PersonNotFoundException.class)
     public ResponseEntity<?> handlePersonNotFoundException(PersonNotFoundException exception, WebRequest request) {
-        ErrorDetails errorDetails = ErrorDetails.builder()
-                .timeStamp(LocalDate.now())
-                .status(HttpStatus.BAD_REQUEST.value())// todo есть HttpStatus NotFound или NoContent. BadRequest не очень правильно
-                .message(exception.getMessage())
-                .details(request.getDescription(false)).build();// todo дубликат кода, можно вынести в один общий метод
-        return new ResponseEntity(errorDetails, HttpStatus.BAD_REQUEST);
+        ErrorDetails errorDetails = getErrorDetails(
+                exception.getMessage(),
+                HttpStatus.NOT_FOUND.value(),
+                request.getDescription(false));
+        // todo есть HttpStatus NotFound или NoContent. BadRequest не очень правильно  //   DONE
+        // todo дубликат кода, можно вынести в один общий метод  //   DONE
+        return new ResponseEntity(errorDetails, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(TaskNotFoundException.class)
     public ResponseEntity<?> handleTaskNotFoundExceptionException(TaskNotFoundException exception, WebRequest request) {
-        ErrorDetails errorDetails = ErrorDetails.builder()
-                .timeStamp(LocalDate.now())
-                .status(HttpStatus.BAD_REQUEST.value())
-                .message(exception.getMessage())
-                .details(request.getDescription(false)).build();
-        return new ResponseEntity(errorDetails, HttpStatus.BAD_REQUEST);
+        ErrorDetails errorDetails = getErrorDetails(
+                exception.getMessage(),
+                HttpStatus.NOT_FOUND.value(),
+                request.getDescription(false));
+        return new ResponseEntity(errorDetails, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(ManyTasksException.class)
     public ResponseEntity<?> handleManyTasksExceptionException(ManyTasksException exception, WebRequest request) {
-        ErrorDetails errorDetails = ErrorDetails.builder()
-                .timeStamp(LocalDate.now())
-                .status(HttpStatus.BAD_REQUEST.value())
-                .message(exception.getMessage())
-                .details(request.getDescription(false)).build();
+        ErrorDetails errorDetails = getErrorDetails(
+                exception.getMessage(),
+                HttpStatus.BAD_REQUEST.value(),
+                request.getDescription(false));
         return new ResponseEntity(errorDetails, HttpStatus.BAD_REQUEST);
+    }
+
+    private ErrorDetails getErrorDetails(String exception, Integer statusCode, String request) {
+        return ErrorDetails.builder()
+                .timeStamp(LocalDate.now())
+                .status(statusCode)
+                .message(exception)
+                .details(request).build();
     }
 }

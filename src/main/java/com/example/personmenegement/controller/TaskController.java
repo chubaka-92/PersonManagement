@@ -43,7 +43,7 @@ public class TaskController {
 
     @PostMapping("/person/{id}")
     public ResponseEntity<List<TaskDto>> createTasks(@RequestBody List<TaskDto> tasksDto, @PathVariable("id") Long personId) {
-        log.info("Was calling createTasks. Input tasks: {} personId: {}", tasksDto.toString(), personId);// todo toString
+        log.info("Was calling createTasks. Input tasks: {} personId: {}", tasksDto, personId);// todo toString   //  DONE
         return ResponseEntity.ok(taskService.addNewTasks(tasksDto, personId));
     }
 

@@ -28,13 +28,13 @@ public class PersonDAOImp implements PersonDAO {
 
     @Transactional
     public PersonEntity addPerson(PersonEntity personEntity) {
-        log.info("Was calling addPerson. Input personEntity: {}", personEntity.toString());// todo toString
+        log.info("Was calling addPerson. Input personEntity: {}", personEntity);// todo toString  //  DONE
         return personRepository.save(personEntity);
     }
 
     @Transactional
     public PersonEntity updatePerson(PersonEntity personEntity) {
-        log.info("Was calling updatePerson. Input personEntity: {}", personEntity.toString());// todo toString
+        log.info("Was calling updatePerson. Input personEntity: {}", personEntity);// todo toString  //  DONE
         return personRepository.save(personEntity);
     }
 

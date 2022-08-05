@@ -34,7 +34,7 @@ public class PersonMapperImp implements PersonMapper {
                 .salary(personEntity.getSalary().toString())
                 .position(messageService.getMessage(personEntity.getPosition()))
                 .experience(personEntity.getExperience().toString())
-                .tasksDto(getTasks(personEntity.getTasks()))
+                .tasksDto(mapTaskEntityToTaskDto(personEntity.getTasks()))
                 .build();
     }
 
@@ -59,7 +59,7 @@ public class PersonMapperImp implements PersonMapper {
         return Long.valueOf(personDto.getId());
     }
 
-    private List<TaskDto> getTasks(List<TaskEntity> taskEntities) {// todo лучше назвать метод mapTaskEntityToTaskDto
+    private List<TaskDto> mapTaskEntityToTaskDto(List<TaskEntity> taskEntities) {// todo лучше назвать метод mapTaskEntityToTaskDto  //  DONE
         log.debug("Was calling getTasks.");
         if (taskEntities == null) {
             return null;
