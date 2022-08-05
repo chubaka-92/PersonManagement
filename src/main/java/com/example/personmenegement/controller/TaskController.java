@@ -2,6 +2,7 @@ package com.example.personmenegement.controller;
 
 import com.example.personmenegement.api.TaskService;
 import com.example.personmenegement.dto.TaskDto;
+import com.example.personmenegement.kafka.ProducerKafka;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -16,11 +17,15 @@ import java.util.List;
 public class TaskController {
 
     private final TaskService taskService;
+    private final ProducerKafka producerKafka;
+
 
     @GetMapping("/{id}")
     public ResponseEntity<TaskDto> getTask(@PathVariable("id") Long id) {// todo ResponseEntity смотри PersonController  //   DONE
         log.info("Was calling getTask. Input id: {}", id);
-        return ResponseEntity.ok(taskService.getTaskById(id));// todo зачем valueOf если и так приходит Long? убрать // DONE
+        TaskDto taskResponse =taskService.getTaskById(id);
+        producerKafka.sendTask(taskResponse);
+        return ResponseEntity.ok(taskResponse);// todo зачем valueOf если и так приходит Long? убрать // DONE
     }
 
     @GetMapping()
