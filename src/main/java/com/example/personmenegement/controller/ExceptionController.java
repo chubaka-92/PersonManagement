@@ -36,7 +36,7 @@ public class ExceptionController {
     }
 
     @ExceptionHandler(ManyTasksException.class)
-    public ResponseEntity<?> handleManyTasksExceptionException(TaskNotFoundException exception, WebRequest request) {
+    public ResponseEntity<?> handleManyTasksExceptionException(ManyTasksException exception, WebRequest request) {
         ErrorDetails errorDetails = ErrorDetails.builder()
                 .timeStamp(LocalDate.now())
                 .status(HttpStatus.BAD_REQUEST.value())

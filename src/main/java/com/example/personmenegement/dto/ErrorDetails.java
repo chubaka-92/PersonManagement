@@ -1,19 +1,17 @@
 package com.example.personmenegement.dto;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 
 @Getter
 @Setter
 @Builder
-@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 public class ErrorDetails {
     private LocalDate timeStamp;
-    private int status;
+    private Integer status;
     private String message;
     private String details;
 }
