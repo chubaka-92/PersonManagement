@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -27,14 +28,15 @@ public class PersonMapperImp implements PersonMapper {
     public PersonDto personEntityToPerson(PersonEntity personEntity) {
         log.info("Was calling personEntityToPerson. Input personEntity: {}", personEntity.toString());
         return PersonDto.builder()
-                .id(personEntity.getId().toString())
+                .id(getId(personEntity))
+                .uid(personEntity.getUid())
                 .name(personEntity.getName())
                 .age(personEntity.getAge().toString())
                 .email(personEntity.getEmail())
                 .salary(personEntity.getSalary().toString())
                 .position(messageService.getMessage(personEntity.getPosition()))
                 .experience(personEntity.getExperience().toString())
-                .tasksDto(getTasks(personEntity.getTasks()))
+                .tasks(getTasks(personEntity.getTasks()))
                 .build();
     }
 
@@ -42,6 +44,7 @@ public class PersonMapperImp implements PersonMapper {
         log.info("Was calling personToPersonEntity. Input id: {}", personDto.toString());
         return PersonEntity.builder()
                 .id(getId(personDto))
+                .uid(getUid(personDto))
                 .name(personDto.getName())
                 .age(Integer.valueOf(personDto.getAge()))
                 .email(personDto.getEmail())
@@ -59,6 +62,14 @@ public class PersonMapperImp implements PersonMapper {
         return Long.valueOf(personDto.getId());
     }
 
+    private String getId(PersonEntity personEntity) {
+        log.debug("Was calling getId.");
+        if (personEntity.getId() == null) {
+            return null;
+        }
+        return personEntity.getId().toString();
+    }
+
     private List<TaskDto> getTasks(List<TaskEntity> taskEntities) {
         log.debug("Was calling getTasks.");
         if (taskEntities == null) {
@@ -68,5 +79,13 @@ public class PersonMapperImp implements PersonMapper {
                 .stream()
                 .map(taskMapper::taskEntityToTask)
                 .collect(Collectors.toList());
+    }
+
+    private String getUid(PersonDto personDto) {
+        log.debug("Was calling getUid. Input personDto: {}", personDto);
+        if (personDto.getUid() == null) {
+            return UUID.randomUUID().toString();
+        }
+        return personDto.getUid();
     }
 }

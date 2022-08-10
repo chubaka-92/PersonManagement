@@ -24,6 +24,9 @@ public class PersonEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "uid")
+    private String uid;
+
     @Column(name = "name")
     private String name;// todo пропиши аннотации @Column для лучшей читаемости  //  DONE
 
@@ -43,7 +46,11 @@ public class PersonEntity {
     @Column(name = "experience")
     private Double experience;
 
-    @OneToMany(mappedBy = "person")
+    @OneToMany()
+    @JoinTable(
+            name = "task",
+            joinColumns = @JoinColumn(name = "id_person"),
+            inverseJoinColumns = @JoinColumn(name = "id"))
     // todo cascade лучше не использовать, так как это может привести к нежелательным удалениям. Лучше процедуру удаления делать в несколько этапов
     //  DONE
     private List<TaskEntity> tasks = new ArrayList<>();//todo лучше инициализировать : private List<TaskEntity> tasks = new ArrayList<>(); чтобы не словить NPE  //  DONE

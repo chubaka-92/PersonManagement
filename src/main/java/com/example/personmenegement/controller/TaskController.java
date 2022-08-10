@@ -2,7 +2,6 @@ package com.example.personmenegement.controller;
 
 import com.example.personmenegement.api.TaskService;
 import com.example.personmenegement.dto.TaskDto;
-import com.example.personmenegement.kafka.ProducerKafka;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -17,14 +16,11 @@ import java.util.List;
 public class TaskController {
 
     private final TaskService taskService;
-    private final ProducerKafka producerKafka;
 
-
-    @GetMapping("/{id}")
-    public ResponseEntity<TaskDto> getTask(@PathVariable("id") Long id) {// todo ResponseEntity смотри PersonController  //   DONE
-        log.info("Was calling getTask. Input id: {}", id);
-        TaskDto taskResponse =taskService.getTaskById(id);
-        producerKafka.sendTask(taskResponse);
+    @GetMapping("/{uid}")
+    public ResponseEntity<TaskDto> getTask(@PathVariable("uid") String uid) {// todo ResponseEntity смотри PersonController  //   DONE
+        log.info("Was calling getTask. Input uid: {}", uid);
+        TaskDto taskResponse =taskService.getTaskByUid(uid);
         return ResponseEntity.ok(taskResponse);// todo зачем valueOf если и так приходит Long? убрать // DONE
     }
 
@@ -52,7 +48,7 @@ public class TaskController {
         return ResponseEntity.ok(taskService.addNewTasks(tasksDto, personId));
     }
 
-    @PutMapping("/person/{id}")
+    @PutMapping("/task/person/{id}")
     public ResponseEntity<TaskDto> updateTask(@RequestBody TaskDto taskDto, @PathVariable("id") Long personId) {// todo ResponseEntity смотри PersonController  //   DONE
         log.info("Was calling updateTask. Input task: {} personId: {}", taskDto, personId);
         return ResponseEntity.ok(taskService.updateTask(taskDto, personId));

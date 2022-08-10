@@ -14,13 +14,14 @@ import java.util.List;
 public class PersonDto {
 
     private String id;
+    private String uid;
     private String name;
     private String age;
     private String email;
     private String position;
     private String salary;
     private String experience;
-    private List<TaskDto> tasksDto;
+    private List<TaskDto> tasks;
     @JsonIgnore
     private boolean valid = true;
     @JsonIgnore

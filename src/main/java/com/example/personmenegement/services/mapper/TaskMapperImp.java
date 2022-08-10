@@ -21,8 +21,8 @@ public class TaskMapperImp implements TaskMapper {
     public TaskDto taskEntityToTask(TaskEntity taskEntity) {
         log.info("Was calling taskEntityToTask. Input taskEntity: {}", taskEntity);
         return TaskDto.builder()
-                .id(taskEntity.getId().toString())// todo где-то используешь valueOf, где-то toString Лучше писать в одном стиле
-                .uid(taskEntity.getUid())         //   Done
+                .id(getId(taskEntity))// todo где-то используешь valueOf, где-то toString Лучше писать в одном стиле  //   Done
+                .uid(taskEntity.getUid())
                 .description(taskEntity.getDescription())
                 .priority(messageService.getMessage(taskEntity.getPriority()))
                 .build();
@@ -36,6 +36,14 @@ public class TaskMapperImp implements TaskMapper {
                 .description(taskDto.getDescription())
                 .priority(Priority.definePriority(taskDto.getPriority()))
                 .build();
+    }
+
+    private String getId(TaskEntity taskEntity) {
+        log.debug("Was calling getId. Input taskEntity: {}", taskEntity);
+        if (taskEntity.getId() == null) {
+            return null;
+        }
+        return taskEntity.getId().toString();
     }
 
     private Long getId(TaskDto taskDto) {

@@ -32,14 +32,15 @@ public class TaskServiceImp implements TaskService {
     private final TaskMapper taskMapper;
     private final TaskValidation taskValidation;
     private final PersonDAO personDao;
+    private final TaskProducer taskProducer;
 
-    public TaskDto getTaskById(Long id) {
-        log.info("Was calling getTaskById. Input id: {}", id);
-        TaskEntity taskEntity = taskDAO.findTaskById(id);
-
+    @Override
+    public TaskDto getTaskByUid(String uid) {
+        log.info("Was calling getTaskByUid. Input id: {}", uid);
+        TaskEntity taskEntity = taskDAO.findTaskByUid(uid);
         if (taskEntity == null) {
-            log.error(MessageFormat.format(messageService.getMessage(TASK_NOT_FOUND), id));
-            throw new TaskNotFoundException(MessageFormat.format(messageService.getMessage(TASK_NOT_FOUND), id));
+            log.error(MessageFormat.format(messageService.getMessage(TASK_NOT_FOUND), uid));
+            throw new TaskNotFoundException(MessageFormat.format(messageService.getMessage(TASK_NOT_FOUND), uid));
         }
         return taskMapper.taskEntityToTask(taskEntity);
     }
@@ -130,15 +131,16 @@ public class TaskServiceImp implements TaskService {
     private TaskDto getNewTask(PersonEntity personEntity, TaskDto taskDto) {
         log.debug("Was calling addNewTasks. Input personEntity: {} taskTemp: {}", personEntity, taskDto);
         TaskEntity taskEntity = taskMapper.taskToTaskEntity(taskDto);
-        taskEntity.setPerson(personEntity);
-        taskEntity.setId(taskDAO.addTask(taskEntity).getId());
+        taskEntity.setPersonId(personEntity.getId());
+        taskProducer.sendTask(taskEntity);
         return taskMapper.taskEntityToTask(taskEntity);
     }
 
     private TaskDto getUpdateTask(PersonEntity personEntity, TaskDto taskDto) {
         log.debug("Was calling getUpdateTask. Input personEntity: {} taskTemp: {}", personEntity, taskDto);
         TaskEntity taskEntity = taskMapper.taskToTaskEntity(taskDto);
-        taskEntity.setPerson(personEntity);
+        taskEntity.setPersonId(personEntity.getId());
+        taskEntity.setPersonId(personEntity.getId());
         taskEntity.setId(taskDAO.updateTask(taskEntity).getId());
         return taskMapper.taskEntityToTask(taskEntity);
     }
@@ -151,7 +153,7 @@ public class TaskServiceImp implements TaskService {
         log.info("Was calling checkAvailableCountTasksToPerson. Input personEntity: {} countTasks: {}",
                 personEntity,
                 countTasks); //todo вот так опрятнее выглядит. не нравится использование "+" в логах (много места занимает и выглядит не оч). Везде где есть вставка значений в логи сделать такой вид. + желательно, делать лог в одну строку, но если не получается, то сделать, как здесь
-                            //  done
+        //  done
         if (personEntity.getTasks().size() < personEntity.getPosition().getCountTasks()
                 && getCountAvailableTasks(personEntity) >= countTasks) {
             return false;

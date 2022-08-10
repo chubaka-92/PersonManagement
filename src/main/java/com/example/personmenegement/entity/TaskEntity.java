@@ -29,9 +29,9 @@ public class TaskEntity {
     @Column(name = "priority")
     private Priority priority;
 
-    @ManyToOne
-    @JoinColumn(name = "id_person")
-    private PersonEntity person;
+    @Column(name = "id_person")
+    private Long personId;
+
 
     // todo используй lombok
     //  Done

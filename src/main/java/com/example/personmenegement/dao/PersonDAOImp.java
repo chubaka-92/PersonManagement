@@ -43,4 +43,10 @@ public class PersonDAOImp implements PersonDAO {
         log.info("Was calling deletePersonById. Input personId: {}", personId);
         personRepository.deleteById(personId);
     }
+
+    @Override
+    public PersonEntity findPersonByUid(String uid) {
+        log.info("Was calling findPersonByUid. Input id: {}", uid);
+        return personRepository.findByUid(uid).orElse(null);
+    }
 }

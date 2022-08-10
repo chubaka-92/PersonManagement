@@ -17,10 +17,10 @@ public class PersonController {
 
     private final PersonService personService;
 
-    @GetMapping("/{id}")
-    public ResponseEntity<PersonDto> getPerson(@PathVariable("id") Long id) { // todo ResponseEntity без параметризации выглядит некрасиво, лушче сделать ResponseEntity<Long> или для простоты ResponseEntity<?>  //   DONE
-        log.info("Was calling getPerson. Input id: {}", id);
-        return ResponseEntity.ok(personService.getPersonById(id)); // todo зачем valueOf если и так приходит Long? убрать // DONE
+    @GetMapping("/{uid}")
+    public ResponseEntity<PersonDto> getPerson(@PathVariable("uid") String uid) { // todo ResponseEntity без параметризации выглядит некрасиво, лушче сделать ResponseEntity<Long> или для простоты ResponseEntity<?>  //   DONE
+        log.info("Was calling getPerson. Input uid: {}", uid);
+        return ResponseEntity.ok(personService.getPersonByUid(uid)); // todo зачем valueOf если и так приходит Long? убрать // DONE
     }
 
     @GetMapping()

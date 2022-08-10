@@ -6,8 +6,6 @@ import java.util.List;
 
 public interface PersonService {
 
-    PersonDto getPersonById(Long id);// todo сервис не должен возвращать ResponseEntity, лучше обертывать возвращаемое значение в контроллере   //   DONE
-
     List<PersonDto> getPersons();// todo сервис не должен возвращать ResponseEntity   //   DONE
 
     PersonDto addNewPerson(PersonDto personDto);// todo сервис не должен возвращать ResponseEntity   //   DONE
@@ -17,4 +15,6 @@ public interface PersonService {
     PersonDto updatePerson(PersonDto personDto);// todo сервис не должен возвращать ResponseEntity   //   DONE
 
     Long deletePerson(Long id);// todo сервис не должен возвращать ResponseEntity   //   DONE
+
+    PersonDto getPersonByUid(String uid);
 }

@@ -43,4 +43,10 @@ public class TaskDAOImp implements TaskDAO {
         log.info("Was calling deleteTaskById. Input id: {}", id);
         taskRepository.deleteById(id);
     }
+
+    @Override
+    public TaskEntity findTaskByUid(String uid) {
+        log.info("Was calling findTaskByUid. Input uid: {}", uid);
+        return taskRepository.findByUid(uid).orElse(null);
+    }
 }
