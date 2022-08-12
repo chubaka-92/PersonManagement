@@ -21,16 +21,14 @@ public class TaskCheckerImp implements TaskChecker {
     private static final String INCORRECT_PRIORITY = "incorrectPriority";
     private final MessageService messageService;
 
-    // todo выбери один стиль, либо писать руками конструктор, либо lombok
-    //  Done
 
     public List<String> checkRequiredFields(TaskDto taskDto) {
         log.info("Was calling checkRequiredFields. Input task: {}", taskDto);
         List<String> invalidFields = new ArrayList<>();
-        if (taskDto.getDescription().isBlank()) {// todo isBlank  //   DONE
+        if (taskDto.getDescription().isBlank()) {// todo а если null?
             invalidFields.add(DESCRIPTION);
         }
-        if (taskDto.getPriority().isBlank()) {// todo isBlank  //   DONE
+        if (taskDto.getPriority().isBlank()) {// todo а если null?
             invalidFields.add(PRIORITY);
         }
         return invalidFields;

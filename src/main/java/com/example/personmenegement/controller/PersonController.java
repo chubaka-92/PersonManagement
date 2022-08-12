@@ -37,7 +37,7 @@ public class PersonController {
 
     @PostMapping("/add")
     public ResponseEntity<PersonDto> createPerson(@RequestBody PersonDto personDto) {
-        log.info("Was calling createPerson. Input person: {}", personDto.toString());
+        log.info("Was calling createPerson. Input person: {}", personDto.toString());// todo toString
         return ResponseEntity.ok(personService.addNewPerson(personDto));
     }
 

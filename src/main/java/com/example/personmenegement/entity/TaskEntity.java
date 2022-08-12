@@ -31,7 +31,7 @@ public class TaskEntity {
 
     @ManyToOne
     @JoinColumn(name = "id_person")
-    private PersonEntity person;
+    private PersonEntity person;// todo нехорошо когда в коллекции ассоциации есть владелец этой же ассоциации и от жадно тянется
 
 }
 

@@ -26,25 +26,22 @@ public class PersonCheckerImp implements PersonChecker {
     private static final int WORK_MIN_AGE = 16;
     private final MessageService messageService;
 
-    // todo выбери один стиль, либо писать руками конструктор, либо lombok
-    //  Done
-
     public List<String> checkRequiredFields(PersonDto personDto) {
         log.info("Was calling checkRequiredFields. Input person: {}", personDto);
         List<String> invalidFields = new ArrayList<>();
-        if (personDto.getName().isBlank()) {// todo isBlank  //   DONE
+        if (personDto.getName().isBlank()) {// todo а если придет null?
             invalidFields.add(NAME);
         }
-        if (personDto.getPosition().isBlank()) {// todo isBlank  //   DONE
+        if (personDto.getPosition().isBlank()) {// todo а если придет null?
             invalidFields.add(POSITION);
         }
-        if (personDto.getAge().isBlank()) {// todo isBlank  //   DONE
+        if (personDto.getAge().isBlank()) {// todo а если придет null?
             invalidFields.add(AGE);
         }
-        if (personDto.getSalary().isBlank()) {// todo isBlank  //   DONE
+        if (personDto.getSalary().isBlank()) {// todo а если придет null?
             invalidFields.add(SALARY);
         }
-        if (personDto.getExperience().isBlank()) {// todo isBlank  //   DONE
+        if (personDto.getExperience().isBlank()) {// todo а если придет null?
             invalidFields.add(EXPERIENCE);
         }
         return invalidFields;
@@ -101,20 +98,14 @@ public class PersonCheckerImp implements PersonChecker {
         log.info("Was calling checkExperienceMatchingPosition. Input positionPerson: {} experience: {}",
                 positionPerson,
                 experience);
-        if (positionPerson.getWorkExperience().compareTo(Double.valueOf(experience)) > 0) {
-            return false;
-        }
-        return true;
+        return positionPerson.getWorkExperience().compareTo(Double.valueOf(experience)) <= 0;// todo так лучше
     }
 
     private boolean checkSalaryMatchingPosition(Position positionPerson, BigDecimal salaryPerson) {
         log.info("Was calling checkSalaryMatchingPosition. Input positionPerson: {} salaryPerson: {}",
                 positionPerson,
                 salaryPerson);
-        if (positionPerson.getSalaryMin().compareTo(salaryPerson) > 0
-                || positionPerson.getSalaryMax().compareTo(salaryPerson) < 0) {
-            return false;
-        }
-        return true;
+        return positionPerson.getSalaryMin().compareTo(salaryPerson) <= 0
+                && positionPerson.getSalaryMax().compareTo(salaryPerson) >= 0;// todo так лучше
     }
 }

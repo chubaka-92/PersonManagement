@@ -59,7 +59,7 @@ public class PersonMapperImp implements PersonMapper {
         return Long.valueOf(personDto.getId());
     }
 
-    private List<TaskDto> mapTaskEntityToTaskDto(List<TaskEntity> taskEntities) {// todo лучше назвать метод mapTaskEntityToTaskDto  //  DONE
+    private List<TaskDto> mapTaskEntityToTaskDto(List<TaskEntity> taskEntities) {
         log.debug("Was calling getTasks.");
         if (taskEntities == null) {
             return null;

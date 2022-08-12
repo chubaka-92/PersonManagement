@@ -15,7 +15,7 @@ public class MessageServiceImp implements MessageService {
     private final ResourceBundle resourceBundle = ResourceBundle.getBundle(MESSAGE);
 
     public String getMessage(String constant) {
-        try {
+        try {// todo тут обязателен try/catch? Разве ResourceBundle не null возвращает?
             return resourceBundle.getString(constant);
         } catch (Exception e) {
             return constant;

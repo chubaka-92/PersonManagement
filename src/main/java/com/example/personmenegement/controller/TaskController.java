@@ -20,7 +20,7 @@ public class TaskController {
     @GetMapping("/{id}")
     public ResponseEntity<TaskDto> getTask(@PathVariable("id") Long id) {
         log.info("Was calling getTask. Input id: {}", id);
-        return ResponseEntity.ok(taskService.getTaskById(id));// todo зачем valueOf если и так приходит Long? убрать // DONE
+        return ResponseEntity.ok(taskService.getTaskById(id));
     }
 
     @GetMapping()
@@ -43,7 +43,7 @@ public class TaskController {
 
     @PostMapping("/person/{id}")
     public ResponseEntity<List<TaskDto>> createTasks(@RequestBody List<TaskDto> tasksDto, @PathVariable("id") Long personId) {
-        log.info("Was calling createTasks. Input tasks: {} personId: {}", tasksDto, personId);// todo toString   //  DONE
+        log.info("Was calling createTasks. Input tasks: {} personId: {}", tasksDto, personId);
         return ResponseEntity.ok(taskService.addNewTasks(tasksDto, personId));
     }
 

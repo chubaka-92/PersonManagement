@@ -19,11 +19,9 @@ public class ExceptionController {
     public ResponseEntity<?> handlePersonNotFoundException(PersonNotFoundException exception, WebRequest request) {
         ErrorDetails errorDetails = getErrorDetails(
                 exception.getMessage(),
-                HttpStatus.NOT_FOUND.value(),
+                HttpStatus.NOT_FOUND.value(),// todo зачем ты возвращаешь дважды HttpStatus?
                 request.getDescription(false));
-        // todo есть HttpStatus NotFound или NoContent. BadRequest не очень правильно  //   DONE
-        // todo дубликат кода, можно вынести в один общий метод  //   DONE
-        return new ResponseEntity(errorDetails, HttpStatus.NOT_FOUND);
+        return new ResponseEntity(errorDetails, HttpStatus.NOT_FOUND);// todo ResponseEntity<?> будет выглядеть красивее
     }
 
     @ExceptionHandler(TaskNotFoundException.class)
@@ -32,7 +30,7 @@ public class ExceptionController {
                 exception.getMessage(),
                 HttpStatus.NOT_FOUND.value(),
                 request.getDescription(false));
-        return new ResponseEntity(errorDetails, HttpStatus.NOT_FOUND);
+        return new ResponseEntity(errorDetails, HttpStatus.NOT_FOUND);// todo ResponseEntity<?> будет выглядеть красивее
     }
 
     @ExceptionHandler(ManyTasksException.class)
@@ -41,7 +39,7 @@ public class ExceptionController {
                 exception.getMessage(),
                 HttpStatus.BAD_REQUEST.value(),
                 request.getDescription(false));
-        return new ResponseEntity(errorDetails, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity(errorDetails, HttpStatus.BAD_REQUEST);// todo ResponseEntity<?> будет выглядеть красивее
     }
 
     private ErrorDetails getErrorDetails(String exception, Integer statusCode, String request) {

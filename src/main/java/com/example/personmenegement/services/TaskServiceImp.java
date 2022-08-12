@@ -39,7 +39,7 @@ public class TaskServiceImp implements TaskService {
 
         if (taskEntity == null) {
             log.error(MessageFormat.format(messageService.getMessage(TASK_NOT_FOUND), id));
-            throw new TaskNotFoundException(MessageFormat.format(messageService.getMessage(TASK_NOT_FOUND), id));
+            throw new TaskNotFoundException(MessageFormat.format(messageService.getMessage(TASK_NOT_FOUND), id));// todo если бросаешь Exception, то лучше бросай его сразу в TaskDAO
         }
         return taskMapper.taskEntityToTask(taskEntity);
     }
@@ -50,7 +50,7 @@ public class TaskServiceImp implements TaskService {
 
         if (tasks == null) {
             log.error(messageService.getMessage(TASKS_NOT_FOUND));
-            throw new TaskNotFoundException(messageService.getMessage(TASKS_NOT_FOUND));
+            throw new TaskNotFoundException(messageService.getMessage(TASKS_NOT_FOUND));// todo если бросаешь Exception, то лучше бросай его сразу в TaskDAO
 
         }
         return tasks.stream()
@@ -60,9 +60,9 @@ public class TaskServiceImp implements TaskService {
 
     public Long deleteTask(Long id) {
         log.info("Was calling deleteTask. Input id: {}", id);
-        if (taskDAO.findTaskById(id) == null) {
+        if (taskDAO.findTaskById(id) == null) {// todo зачем эта проверка? delete у jpa-репозитория не упадет, если id не будет найден
             log.error(MessageFormat.format(messageService.getMessage(TASK_NOT_FOUND), id));
-            throw new TaskNotFoundException(MessageFormat.format(messageService.getMessage(TASK_NOT_FOUND), id));
+            throw new TaskNotFoundException(MessageFormat.format(messageService.getMessage(TASK_NOT_FOUND), id));// todo если бросаешь Exception, то лучше бросай его сразу в TaskDAO
         }
         taskDAO.deleteTaskById(id);
         return id;
@@ -73,7 +73,7 @@ public class TaskServiceImp implements TaskService {
         PersonEntity personEntity = personDao.findPersonById(personId);
         if (personEntity == null) {
             log.error(MessageFormat.format(messageService.getMessage(PERSON_NOT_FOUND), personId));
-            throw new PersonNotFoundException(MessageFormat.format(messageService.getMessage(PERSON_NOT_FOUND), personId));
+            throw new PersonNotFoundException(MessageFormat.format(messageService.getMessage(PERSON_NOT_FOUND), personId));// todo если бросаешь Exception, то лучше бросай его сразу в TaskDAO
         }
         if (checkAvailableCountTasksToPerson(ONE_TASK, personEntity)) {
             log.error(MessageFormat.format(messageService.getMessage(TOO_MANY_TASKS), getCountAvailableTasks(personEntity)));

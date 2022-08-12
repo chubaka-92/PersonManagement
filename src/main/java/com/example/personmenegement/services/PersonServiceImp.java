@@ -31,7 +31,7 @@ public class PersonServiceImp implements PersonService {
 
         if (personEntity == null) {
             log.error(MessageFormat.format(messageService.getMessage(PERSON_NOT_FOUND), id));
-            throw new PersonNotFoundException(MessageFormat.format(messageService.getMessage(PERSON_NOT_FOUND), id));
+            throw new PersonNotFoundException(MessageFormat.format(messageService.getMessage(PERSON_NOT_FOUND), id)); // todo если бросаешь Exception, то лучше бросай его сразу в PersonDao
         }
         return personMapper.personEntityToPerson(personEntity);
 
@@ -43,7 +43,7 @@ public class PersonServiceImp implements PersonService {
 
         if (persons == null) {
             log.error(messageService.getMessage(PERSONS_NOT_FOUND));
-            throw new PersonNotFoundException(messageService.getMessage(PERSONS_NOT_FOUND));
+            throw new PersonNotFoundException(messageService.getMessage(PERSONS_NOT_FOUND));// todo если бросаешь Exception, то лучше бросай его сразу в PersonDao
         }
         return persons.stream()
                 .map(personMapper::personEntityToPerson)
@@ -81,7 +81,7 @@ public class PersonServiceImp implements PersonService {
         log.info("Was calling deletePerson. Input id: {}", id);
         if (personDao.findPersonById(id) == null) {
             log.error(MessageFormat.format(messageService.getMessage(PERSON_NOT_FOUND), id));
-            throw new PersonNotFoundException(MessageFormat.format(messageService.getMessage(PERSON_NOT_FOUND), id));
+            throw new PersonNotFoundException(MessageFormat.format(messageService.getMessage(PERSON_NOT_FOUND), id));// todo если бросаешь Exception, то лучше бросай его сразу в PersonDao
         }
         personDao.deletePersonById(id);
         return id;
