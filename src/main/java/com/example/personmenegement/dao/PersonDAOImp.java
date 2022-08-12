@@ -23,7 +23,7 @@ public class PersonDAOImp implements PersonDAO {
 
     public List<PersonEntity> findPersons() {
         log.info("Was calling findPersons.");
-        return personRepository.findAll();// todo лучше используй JpaRepository не нужны будут лишние касты   //   DONE
+        return personRepository.findAll();
     }
 
     @Transactional

@@ -91,7 +91,7 @@ public class PersonServiceImp implements PersonService {
     public List<PersonDto> addNewPersons(List<PersonDto> personsDto) {
         log.info("Was calling addNewPersons. Input persons: {}", personsDto);
         List<PersonDto> response = new ArrayList<>();
-        for (PersonDto personDto : personsDto) {
+        for (PersonDto personDto : personsDto) {// todo используй стримы
             PersonDto personDtoResponse = personValidation.validate(personDto);
             if (personDtoResponse == null) {
                 PersonEntity personEntity = personMapper.personToPersonEntity(personDto);

@@ -19,7 +19,7 @@ public class ExceptionController {
     public ResponseEntity<?> handlePersonNotFoundException(PersonNotFoundException exception, WebRequest request) {
         ErrorDetails errorDetails = ErrorDetails.builder()
                 .timeStamp(LocalDate.now())
-                .status(HttpStatus.BAD_REQUEST.value())
+                .status(HttpStatus.BAD_REQUEST.value())// todo смотри туду в rest а лучше после правок rest сделай мерж сюда, чтобы исправления влились и не приходилось делать одну и ту же работу несколько раз
                 .message(exception.getMessage())
                 .details(request.getDescription(false)).build();
         return new ResponseEntity(errorDetails, HttpStatus.BAD_REQUEST);
@@ -29,7 +29,7 @@ public class ExceptionController {
     public ResponseEntity<?> handleTaskNotFoundExceptionException(TaskNotFoundException exception, WebRequest request) {
         ErrorDetails errorDetails = ErrorDetails.builder()
                 .timeStamp(LocalDate.now())
-                .status(HttpStatus.BAD_REQUEST.value())
+                .status(HttpStatus.BAD_REQUEST.value())// todo смотри туду в rest
                 .message(exception.getMessage())
                 .details(request.getDescription(false)).build();
         return new ResponseEntity(errorDetails, HttpStatus.BAD_REQUEST);
@@ -39,7 +39,7 @@ public class ExceptionController {
     public ResponseEntity<?> handleManyTasksExceptionException(ManyTasksException exception, WebRequest request) {
         ErrorDetails errorDetails = ErrorDetails.builder()
                 .timeStamp(LocalDate.now())
-                .status(HttpStatus.BAD_REQUEST.value())
+                .status(HttpStatus.BAD_REQUEST.value())// todo смотри туду в rest
                 .message(exception.getMessage())
                 .details(request.getDescription(false)).build();
         return new ResponseEntity(errorDetails, HttpStatus.BAD_REQUEST);
