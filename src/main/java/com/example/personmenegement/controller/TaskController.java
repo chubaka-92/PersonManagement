@@ -17,10 +17,12 @@ public class TaskController {
 
     private final TaskService taskService;
 
-    @GetMapping("/{id}")
-    public ResponseEntity<TaskDto> getTask(@PathVariable("id") Long id) {
-        log.info("Was calling getTask. Input id: {}", id);
-        return ResponseEntity.ok(taskService.getTaskById(id));
+
+    @GetMapping("/{uid}")
+    public ResponseEntity<TaskDto> getTask(@PathVariable("uid") String uid) {
+        log.info("Was calling getTask. Input uid: {}", uid);
+        TaskDto taskResponse =taskService.getTaskByUid(uid);
+        return ResponseEntity.ok(taskResponse);
     }
 
     @GetMapping()
@@ -32,7 +34,7 @@ public class TaskController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Long> deleteTask(@PathVariable("id") Long id) {
         log.info("Was calling deleteTask. Input id: {}", id);
-        return ResponseEntity.ok(taskService.deleteTask(id));
+        return ResponseEntity.ok(taskService.deleteTask(id))
     }
 
     @PostMapping("/task/person/{id}")
@@ -47,7 +49,7 @@ public class TaskController {
         return ResponseEntity.ok(taskService.addNewTasks(tasksDto, personId));
     }
 
-    @PutMapping("/person/{id}")
+    @PutMapping("/task/person/{id}")
     public ResponseEntity<TaskDto> updateTask(@RequestBody TaskDto taskDto, @PathVariable("id") Long personId) {
         log.info("Was calling updateTask. Input task: {} personId: {}", taskDto, personId);
         return ResponseEntity.ok(taskService.updateTask(taskDto, personId));

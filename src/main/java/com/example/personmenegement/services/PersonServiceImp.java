@@ -24,20 +24,16 @@ public class PersonServiceImp implements PersonService {
     private final PersonMapper personMapper;
     private final PersonValidation personValidation;
 
-    public PersonDto getPersonById(Long id) {
-        log.info("Was calling getPersonById. Input id: {}", id);
-        PersonEntity personEntity = personDao.findPersonById(id);
-        // todo если бросаешь Exception, то лучше бросай его сразу в PersonDao
-        //  Done
+    @Override
+    public PersonDto getPersonByUid(String uid) {
+        log.info("Was calling getPersonByUid. Input uid: {}", uid);
+        PersonEntity personEntity = personDao.findPersonByUid(uid);
         return personMapper.personEntityToPerson(personEntity);
-
     }
 
     public List<PersonDto> getPersons() {
         log.info("Was calling getPersons.");
         List<PersonEntity> persons = personDao.findPersons();
-        // todo если бросаешь Exception, то лучше бросай его сразу в PersonDao
-        //  Done
         return persons.stream()
                 .map(personMapper::personEntityToPerson)
                 .collect(Collectors.toList());
@@ -51,9 +47,9 @@ public class PersonServiceImp implements PersonService {
             log.error(personDtoResponse.toString());
             return personDtoResponse;
         }
-        PersonEntity personEntity = personDao.addPerson(personMapper.personToPersonEntity(personDto));
-        personDtoResponse = personMapper.personEntityToPerson(personEntity);
-        return personDtoResponse;
+        PersonEntity personEntity = personMapper.personToPersonEntity(personDto);
+        personProducer.sendTask(personEntity);
+        return personMapper.personEntityToPerson(personEntity);
     }
 
     public PersonDto updatePerson(PersonDto personDto) {
@@ -78,14 +74,14 @@ public class PersonServiceImp implements PersonService {
         return id;
     }
 
-
     public List<PersonDto> addNewPersons(List<PersonDto> personsDto) {
         log.info("Was calling addNewPersons. Input persons: {}", personsDto);
         List<PersonDto> response = new ArrayList<>();
-        for (PersonDto personDto : personsDto) {
+        for (PersonDto personDto : personsDto) {// todo используй стримы
             PersonDto personDtoResponse = personValidation.validate(personDto);
             if (personDtoResponse == null) {
-                PersonEntity personEntity = personDao.addPerson(personMapper.personToPersonEntity(personDto));
+                PersonEntity personEntity = personMapper.personToPersonEntity(personDto);
+                personProducer.sendTask(personEntity);
                 personDtoResponse = personMapper.personEntityToPerson(personEntity);
                 response.add(personDtoResponse);
             } else {

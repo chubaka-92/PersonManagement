@@ -21,7 +21,7 @@ public class TaskMapperImp implements TaskMapper {
     public TaskDto taskEntityToTask(TaskEntity taskEntity) {
         log.info("Was calling taskEntityToTask. Input taskEntity: {}", taskEntity);
         return TaskDto.builder()
-                .id(taskEntity.getId().toString())
+                .id(getId(taskEntity))
                 .uid(taskEntity.getUid())
                 .description(taskEntity.getDescription())
                 .priority(messageService.getMessage(taskEntity.getPriority()))
@@ -36,6 +36,14 @@ public class TaskMapperImp implements TaskMapper {
                 .description(taskDto.getDescription())
                 .priority(Priority.definePriority(taskDto.getPriority()))
                 .build();
+    }
+
+    private String getId(TaskEntity taskEntity) {
+        log.debug("Was calling getId. Input taskEntity: {}", taskEntity);
+        if (taskEntity.getId() == null) {
+            return null;
+        }
+        return taskEntity.getId().toString();
     }
 
     private Long getId(TaskDto taskDto) {

@@ -6,8 +6,6 @@ import java.util.List;
 
 public interface PersonService {
 
-    PersonDto getPersonById(Long id);
-
     List<PersonDto> getPersons();
 
     PersonDto addNewPerson(PersonDto personDto);
@@ -17,4 +15,6 @@ public interface PersonService {
     PersonDto updatePerson(PersonDto personDto);
 
     Long deletePerson(Long id);
+
+    PersonDto getPersonByUid(String uid);
 }

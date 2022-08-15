@@ -17,10 +17,11 @@ public class PersonController {
 
     private final PersonService personService;
 
-    @GetMapping("/{id}")
-    public ResponseEntity<PersonDto> getPerson(@PathVariable("id") Long id) {
-        log.info("Was calling getPerson. Input id: {}", id);
-        return ResponseEntity.ok(personService.getPersonById(id));
+
+    @GetMapping("/{uid}")
+    public ResponseEntity<PersonDto> getPerson(@PathVariable("uid") String uid) {
+        log.info("Was calling getPerson. Input uid: {}", uid);
+        return ResponseEntity.ok(personService.getPersonByUid(uid));
     }
 
     @GetMapping()
@@ -37,7 +38,7 @@ public class PersonController {
 
     @PostMapping("/add")
     public ResponseEntity<PersonDto> createPerson(@RequestBody PersonDto personDto) {
-        log.info("Was calling createPerson. Input person: {}", personDto);// todo toString    //  DONE
+        log.info("Was calling createPerson. Input person: {}", personDto);
         return ResponseEntity.ok(personService.addNewPerson(personDto));
     }
 

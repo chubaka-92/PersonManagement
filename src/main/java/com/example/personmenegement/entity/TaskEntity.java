@@ -31,10 +31,6 @@ public class TaskEntity {
 
     @Column(name = "id_person")
     private Long personId;
-
-    // todo нехорошо когда в коллекции ассоциации есть владелец этой же ассоциации и от жадно тянется
-    //  Done.
-
 }
 
 

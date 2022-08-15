@@ -8,19 +8,22 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
 @Getter
 @Setter
 @Builder
 @ToString(exclude = "tasks")
 @AllArgsConstructor
 @NoArgsConstructor
+@Entity
 @Table(name = "person")
 public class PersonEntity {
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "uid")
+    private String uid;
 
     @Column(name = "name")
     private String name;
@@ -47,5 +50,4 @@ public class PersonEntity {
             joinColumns = @JoinColumn(name = "id_person"),
             inverseJoinColumns = @JoinColumn(name = "id"))
     private List<TaskEntity> tasks = new ArrayList<>();
-
 }

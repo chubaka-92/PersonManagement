@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface TaskService {
 
-    TaskDto getTaskById(Long id);
+    TaskDto getTaskByUid(String uid);
 
     List<TaskDto> getTasks();
 
