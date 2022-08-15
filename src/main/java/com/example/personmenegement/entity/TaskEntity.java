@@ -29,9 +29,11 @@ public class TaskEntity {
     @Column(name = "priority")
     private Priority priority;
 
-    @ManyToOne
-    @JoinColumn(name = "id_person")
-    private PersonEntity person;// todo нехорошо когда в коллекции ассоциации есть владелец этой же ассоциации и от жадно тянется
+    @Column(name = "id_person")
+    private Long personId;
+
+    // todo нехорошо когда в коллекции ассоциации есть владелец этой же ассоциации и от жадно тянется
+    //  Done.
 
 }
 

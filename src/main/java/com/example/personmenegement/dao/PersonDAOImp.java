@@ -1,29 +1,45 @@
 package com.example.personmenegement.dao;
 
+import com.example.personmenegement.api.MessageService;
 import com.example.personmenegement.api.PersonDAO;
 import com.example.personmenegement.entity.PersonEntity;
+import com.example.personmenegement.exeption.PersonNotFoundException;
 import com.example.personmenegement.repository.PersonRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.MessageFormat;
 import java.util.List;
 
 @Slf4j
 @Repository
 @RequiredArgsConstructor
 public class PersonDAOImp implements PersonDAO {
+    private static final String PERSON_NOT_FOUND = "personNotFound";
+    private static final String PERSONS_NOT_FOUND = "personsNotFound";
     private final PersonRepository personRepository;
+    private final MessageService messageService;
 
     public PersonEntity findPersonById(Long id) {
         log.info("Was calling findPersonById. Input id: {}", id);
-        return personRepository.findById(id).orElse(null);
+        PersonEntity personEntity = personRepository.findById(id).orElse(null);
+        if (personEntity == null) {
+            log.error(MessageFormat.format(messageService.getMessage(PERSON_NOT_FOUND), id));
+            throw new PersonNotFoundException(MessageFormat.format(messageService.getMessage(PERSON_NOT_FOUND), id)); // todo если бросаешь Exception, то лучше бросай его сразу в PersonDao
+        }
+        return personEntity;
     }
 
     public List<PersonEntity> findPersons() {
         log.info("Was calling findPersons.");
-        return personRepository.findAll();
+        List<PersonEntity> persons = personRepository.findAll();
+        if (persons == null) {
+            log.error(messageService.getMessage(PERSONS_NOT_FOUND));
+            throw new PersonNotFoundException(messageService.getMessage(PERSONS_NOT_FOUND));
+        }
+        return persons;
     }
 
     @Transactional

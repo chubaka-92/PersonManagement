@@ -25,10 +25,10 @@ public class TaskCheckerImp implements TaskChecker {
     public List<String> checkRequiredFields(TaskDto taskDto) {
         log.info("Was calling checkRequiredFields. Input task: {}", taskDto);
         List<String> invalidFields = new ArrayList<>();
-        if (taskDto.getDescription().isBlank()) {// todo а если null?
+        if (taskDto.getDescription() == null || taskDto.getDescription().isBlank()) {// todo а если null?  //  DONE
             invalidFields.add(DESCRIPTION);
         }
-        if (taskDto.getPriority().isBlank()) {// todo а если null?
+        if (taskDto.getPriority() == null || taskDto.getPriority().isBlank()) {// todo а если null?  //  DONE
             invalidFields.add(PRIORITY);
         }
         return invalidFields;

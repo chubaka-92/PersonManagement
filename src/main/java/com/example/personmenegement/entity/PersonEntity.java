@@ -41,7 +41,11 @@ public class PersonEntity {
     @Column(name = "experience")
     private Double experience;
 
-    @OneToMany(mappedBy = "person")
+    @OneToMany()
+    @JoinTable(
+            name = "task",
+            joinColumns = @JoinColumn(name = "id_person"),
+            inverseJoinColumns = @JoinColumn(name = "id"))
     private List<TaskEntity> tasks = new ArrayList<>();
 
 }

@@ -22,7 +22,7 @@ public class TaskInitializerImp implements TaskInitializer {
 
 
     public void addFieldsEmpty(List<String> incorrectFields) {
-        log.info("Was calling addFieldsEmpty. Input incorrectFields: " + incorrectFields.toString());// todo toString
+        log.info("Was calling addFieldsEmpty. Input incorrectFields: " + incorrectFields);// todo toString    // DONE
         if (!incorrectFields.isEmpty()) {
             taskDtoError.setValid(false);
         }
@@ -43,7 +43,7 @@ public class TaskInitializerImp implements TaskInitializer {
     }
 
     public void addIncorrectArgumentMessage(Map<String, String> incorrectArguments) {
-        log.info("Was calling addIncorrectArgumentMessage. Input incorrectArguments: " + incorrectArguments.toString());
+        log.info("Was calling addIncorrectArgumentMessage. Input incorrectArguments: " + incorrectArguments);
         if (!incorrectArguments.isEmpty()) {
             taskDtoError.setValid(false);
         }
