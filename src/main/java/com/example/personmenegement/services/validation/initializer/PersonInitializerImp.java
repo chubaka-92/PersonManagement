@@ -21,7 +21,7 @@ public class PersonInitializerImp implements PersonInitializer {
     private final MessageService messageService;
 
     public void addFieldsEmpty(List<String> incorrectFields) {
-        log.info("Was calling addFieldsEmpty. Input incorrectFields: " + incorrectFields);// todo toString  // DONE
+        log.info("Was calling addFieldsEmpty. Input incorrectFields: " + incorrectFields);
         if (!incorrectFields.isEmpty()) {
             personDtoError.setValid(false);
         }

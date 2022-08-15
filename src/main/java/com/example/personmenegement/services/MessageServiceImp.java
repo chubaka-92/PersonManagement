@@ -14,8 +14,6 @@ public class MessageServiceImp implements MessageService {
     private final ResourceBundle resourceBundle = ResourceBundle.getBundle(MESSAGE);
 
     public String getMessage(String constant) {
-        // todo тут обязателен try/catch? Разве ResourceBundle не null возвращает?
-        //  Done
         return resourceBundle.getString(constant);
     }
 

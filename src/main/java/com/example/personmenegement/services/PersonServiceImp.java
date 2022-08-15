@@ -1,10 +1,7 @@
 package com.example.personmenegement.services;
 
 
-import com.example.personmenegement.api.PersonDAO;
-import com.example.personmenegement.api.PersonMapper;
-import com.example.personmenegement.api.PersonService;
-import com.example.personmenegement.api.PersonValidation;
+import com.example.personmenegement.api.*;
 import com.example.personmenegement.dto.PersonDto;
 import com.example.personmenegement.entity.PersonEntity;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +20,8 @@ public class PersonServiceImp implements PersonService {
     private final PersonDAO personDao;
     private final PersonMapper personMapper;
     private final PersonValidation personValidation;
+    private final PersonProducer personProducer;
+    ;
 
     @Override
     public PersonDto getPersonByUid(String uid) {
@@ -47,9 +46,7 @@ public class PersonServiceImp implements PersonService {
             log.error(personDtoResponse.toString());
             return personDtoResponse;
         }
-        PersonEntity personEntity = personMapper.personToPersonEntity(personDto);
-        personProducer.sendTask(personEntity);
-        return personMapper.personEntityToPerson(personEntity);
+        return getNewPerson(personDto);
     }
 
     public PersonDto updatePerson(PersonDto personDto) {
@@ -68,15 +65,14 @@ public class PersonServiceImp implements PersonService {
 
     public Long deletePerson(Long id) {
         log.info("Was calling deletePerson. Input id: {}", id);
-        // todo если бросаешь Exception, то лучше бросай его сразу в PersonDao
-        //  Done
         personDao.deletePersonById(id);
         return id;
     }
 
     public List<PersonDto> addNewPersons(List<PersonDto> personsDto) {
         log.info("Was calling addNewPersons. Input persons: {}", personsDto);
-        List<PersonDto> response = new ArrayList<>();
+        // todo используй стримы
+        List<PersonDto> response = /*new ArrayList<>();
         for (PersonDto personDto : personsDto) {// todo используй стримы
             PersonDto personDtoResponse = personValidation.validate(personDto);
             if (personDtoResponse == null) {
@@ -89,6 +85,25 @@ public class PersonServiceImp implements PersonService {
                 response.add(personDtoResponse);
             }
         }
+        List<PersonDto> response2 =*/ personsDto.stream()
+                .map(this::getPersonDto)
+                .collect(Collectors.toList());
+
         return response;
+    }
+
+    private PersonDto getPersonDto(PersonDto personDto) {
+        PersonDto result = personValidation.validate(personDto);
+        if (result == null) {
+            return getNewPerson(personDto);
+        }
+        log.error(result.toString());
+        return result;
+    }
+
+    private PersonDto getNewPerson(PersonDto personDto) {
+        PersonEntity personEntity = personMapper.personToPersonEntity(personDto);
+        personProducer.sendTask(personEntity);
+        return personMapper.personEntityToPerson(personEntity);
     }
 }

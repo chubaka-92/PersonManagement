@@ -34,7 +34,7 @@ public class TaskController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Long> deleteTask(@PathVariable("id") Long id) {
         log.info("Was calling deleteTask. Input id: {}", id);
-        return ResponseEntity.ok(taskService.deleteTask(id))
+        return ResponseEntity.ok(taskService.deleteTask(id));
     }
 
     @PostMapping("/task/person/{id}")

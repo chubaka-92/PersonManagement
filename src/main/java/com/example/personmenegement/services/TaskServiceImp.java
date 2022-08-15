@@ -79,17 +79,20 @@ public class TaskServiceImp implements TaskService {
             log.error(MessageFormat.format(messageService.getMessage(TOO_MANY_TASKS), getCountAvailableTasks(personEntity)));
             throw new ManyTasksException(MessageFormat.format(messageService.getMessage(TOO_MANY_TASKS), getCountAvailableTasks(personEntity)));
         }
-        List<TaskDto> response = new ArrayList<>();// todo используй стримы
-        for (TaskDto taskDto : tasksDto) {
-            TaskDto taskDtoTemp = taskValidation.validate(taskDto);
-            if (taskDtoTemp == null) {
-                response.add(getNewTask(personEntity, taskDto));
-            } else {
-                log.error(taskDto.toString());
-                response.add(taskDto);
-            }
+        // todo используй стримы
+        //  Done
+        return tasksDto.stream()
+                .map(taskDto -> getTaskDto(taskDto,personEntity))
+                .collect(Collectors.toList());
+    }
+
+    private TaskDto getTaskDto(TaskDto taskDto,PersonEntity personEntity) {
+        log.info("Was calling getTaskDto. Input taskDto: {} personId: {}", taskDto, personEntity);
+        TaskDto result = taskValidation.validate(taskDto);
+        if (result == null) {
+            return getNewTask(personEntity,taskDto);
         }
-        return response;
+        return result;
     }
 
     public TaskDto updateTask(TaskDto taskDto, Long personId) {
@@ -100,7 +103,7 @@ public class TaskServiceImp implements TaskService {
             throw new PersonNotFoundException(MessageFormat.format(messageService.getMessage(PERSON_NOT_FOUND), personId));
         }
         TaskDto taskDtoTemp = taskValidation.validate(taskDto);
-        if (!(taskDtoTemp == null)) {// todo сложно. Лучше например так: if (taskDto != null)
+        if (taskDtoTemp != null) {// todo сложно. Лучше например так: if (taskDto != null)  //  Done
             log.error(taskDtoTemp.toString());
             return taskDtoTemp;
         }
