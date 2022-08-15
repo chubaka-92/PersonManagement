@@ -27,7 +27,7 @@ public enum Position {
     private final Double workExperience;
     private final Integer countTasks;
 
-    public static Position definePosition(String position) { //todo название definePosition //  Done
+    public static Position definePosition(String position) {
         log.info("Was calling definePosition. Input position: {}", position);
         MessageService messageService = new MessageServiceImp();
         if (messageService.getMessage(INTERN).equals(position)) {
@@ -44,7 +44,4 @@ public enum Position {
             return UNDEFINED;
         }
     }
-
-    // todo методы для валидации не должны быть в Enum, у тебя есть отдельный сервис, который за это отвечает
-    //  Done. Перенес обратно в класс с валидацией
 }

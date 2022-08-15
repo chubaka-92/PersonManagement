@@ -5,10 +5,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.Optional;
 
-public interface PersonRepository extends JpaRepository<PersonEntity, Long> {// todo лучше используй JpaRepository  //  DONE
+public interface PersonRepository extends JpaRepository<PersonEntity, Long> {
 
     @Modifying
     @Transactional

@@ -17,6 +17,7 @@ public class PersonController {
 
     private final PersonService personService;
 
+
     @GetMapping("/{uid}")
     public ResponseEntity<PersonDto> getPerson(@PathVariable("uid") String uid) {
         log.info("Was calling getPerson. Input uid: {}", uid);
@@ -37,7 +38,7 @@ public class PersonController {
 
     @PostMapping("/add")
     public ResponseEntity<PersonDto> createPerson(@RequestBody PersonDto personDto) {
-        log.info("Was calling createPerson. Input person: {}", personDto.toString());
+        log.info("Was calling createPerson. Input person: {}", personDto);
         return ResponseEntity.ok(personService.addNewPerson(personDto));
     }
 

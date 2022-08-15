@@ -7,7 +7,6 @@ import com.example.personmenegement.entity.PersonEntity;
 import com.example.personmenegement.entity.TaskEntity;
 import com.example.personmenegement.exeption.ManyTasksException;
 import com.example.personmenegement.exeption.PersonNotFoundException;
-import com.example.personmenegement.exeption.TaskNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -34,26 +33,17 @@ public class TaskServiceImp implements TaskService {
     private final PersonDAO personDao;
     private final TaskProducer taskProducer;
 
+
     @Override
     public TaskDto getTaskByUid(String uid) {
         log.info("Was calling getTaskByUid. Input id: {}", uid);
         TaskEntity taskEntity = taskDAO.findTaskByUid(uid);
-        if (taskEntity == null) {
-            log.error(MessageFormat.format(messageService.getMessage(TASK_NOT_FOUND), uid));
-            throw new TaskNotFoundException(MessageFormat.format(messageService.getMessage(TASK_NOT_FOUND), uid));
-        }
         return taskMapper.taskEntityToTask(taskEntity);
     }
 
     public List<TaskDto> getTasks() {
         log.info("Was calling getTasks.");
         List<TaskEntity> tasks = taskDAO.findTasks();
-
-        if (tasks == null) {
-            log.error(messageService.getMessage(TASKS_NOT_FOUND));
-            throw new TaskNotFoundException(messageService.getMessage(TASKS_NOT_FOUND));
-
-        }
         return tasks.stream()
                 .map(taskMapper::taskEntityToTask)
                 .collect(Collectors.toList());
@@ -61,10 +51,6 @@ public class TaskServiceImp implements TaskService {
 
     public Long deleteTask(Long id) {
         log.info("Was calling deleteTask. Input id: {}", id);
-        if (taskDAO.findTaskById(id) == null) {
-            log.error(MessageFormat.format(messageService.getMessage(TASK_NOT_FOUND), id));
-            throw new TaskNotFoundException(MessageFormat.format(messageService.getMessage(TASK_NOT_FOUND), id));
-        }
         taskDAO.deleteTaskById(id);
         return id;
     }
@@ -72,10 +58,6 @@ public class TaskServiceImp implements TaskService {
     public TaskDto addNewTask(TaskDto taskDto, Long personId) {
         log.info("Was calling addNewTask. Input task: {} personId: {}", taskDto, personId);
         PersonEntity personEntity = personDao.findPersonById(personId);
-        if (personEntity == null) {
-            log.error(MessageFormat.format(messageService.getMessage(PERSON_NOT_FOUND), personId));
-            throw new PersonNotFoundException(MessageFormat.format(messageService.getMessage(PERSON_NOT_FOUND), personId));
-        }
         if (checkAvailableCountTasksToPerson(ONE_TASK, personEntity)) {
             log.error(MessageFormat.format(messageService.getMessage(TOO_MANY_TASKS), getCountAvailableTasks(personEntity)));
             throw new ManyTasksException(MessageFormat.format(messageService.getMessage(TOO_MANY_TASKS), getCountAvailableTasks(personEntity)));
@@ -92,10 +74,7 @@ public class TaskServiceImp implements TaskService {
     public List<TaskDto> addNewTasks(List<TaskDto> tasksDto, Long personId) {
         log.info("Was calling addNewTasks. Input tasks: {} personId: {}", tasksDto, personId);
         PersonEntity personEntity = personDao.findPersonById(personId);
-        if (personEntity == null) {
-            log.error(MessageFormat.format(messageService.getMessage(PERSON_NOT_FOUND), personId));
-            throw new PersonNotFoundException(MessageFormat.format(messageService.getMessage(PERSON_NOT_FOUND), personId));
-        }
+
         if (checkAvailableCountTasksToPerson(tasksDto.size(), personEntity)) {
             log.error(MessageFormat.format(messageService.getMessage(TOO_MANY_TASKS), getCountAvailableTasks(personEntity)));
             throw new ManyTasksException(MessageFormat.format(messageService.getMessage(TOO_MANY_TASKS), getCountAvailableTasks(personEntity)));
@@ -139,7 +118,6 @@ public class TaskServiceImp implements TaskService {
     private TaskDto getUpdateTask(PersonEntity personEntity, TaskDto taskDto) {
         log.debug("Was calling getUpdateTask. Input personEntity: {} taskTemp: {}", personEntity, taskDto);
         TaskEntity taskEntity = taskMapper.taskToTaskEntity(taskDto);
-        taskEntity.setPersonId(personEntity.getId());
         taskEntity.setPersonId(personEntity.getId());
         taskEntity.setId(taskDAO.updateTask(taskEntity).getId());
         return taskMapper.taskEntityToTask(taskEntity);

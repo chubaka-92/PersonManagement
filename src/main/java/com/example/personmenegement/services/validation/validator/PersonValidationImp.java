@@ -19,7 +19,7 @@ import static com.example.personmenegement.types.Position.definePosition;
 public class PersonValidationImp implements PersonValidation {
 
     public PersonDto validate(PersonDto personDto) {
-        log.info("Was calling validate. Input person: " + personDto);// todo toString необязателен   //  DONE
+        log.info("Was calling validate. Input person: " + personDto);
         PersonChecker personChecker = new PersonCheckerImp(new MessageServiceImp());
         PersonInitializer personErrorMessage = new PersonInitializerImp(personDto, new MessageServiceImp());
 

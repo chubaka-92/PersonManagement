@@ -21,7 +21,7 @@ public class TaskMapperImp implements TaskMapper {
     public TaskDto taskEntityToTask(TaskEntity taskEntity) {
         log.info("Was calling taskEntityToTask. Input taskEntity: {}", taskEntity);
         return TaskDto.builder()
-                .id(getId(taskEntity))// todo где-то используешь valueOf, где-то toString Лучше писать в одном стиле  //   Done
+                .id(getId(taskEntity))
                 .uid(taskEntity.getUid())
                 .description(taskEntity.getDescription())
                 .priority(messageService.getMessage(taskEntity.getPriority()))

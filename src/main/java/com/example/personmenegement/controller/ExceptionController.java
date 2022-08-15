@@ -17,31 +17,28 @@ public class ExceptionController {
 
     @ExceptionHandler(PersonNotFoundException.class)
     public ResponseEntity<?> handlePersonNotFoundException(PersonNotFoundException exception, WebRequest request) {
-        ErrorDetails errorDetails = ErrorDetails.builder()
-                .timeStamp(LocalDate.now())
-                .status(HttpStatus.BAD_REQUEST.value())// todo смотри туду в rest а лучше после правок rest сделай мерж сюда, чтобы исправления влились и не приходилось делать одну и ту же работу несколько раз
-                .message(exception.getMessage())
-                .details(request.getDescription(false)).build();
-        return new ResponseEntity(errorDetails, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @ExceptionHandler(TaskNotFoundException.class)
     public ResponseEntity<?> handleTaskNotFoundExceptionException(TaskNotFoundException exception, WebRequest request) {
-        ErrorDetails errorDetails = ErrorDetails.builder()
-                .timeStamp(LocalDate.now())
-                .status(HttpStatus.BAD_REQUEST.value())// todo смотри туду в rest
-                .message(exception.getMessage())
-                .details(request.getDescription(false)).build();
-        return new ResponseEntity(errorDetails, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @ExceptionHandler(ManyTasksException.class)
     public ResponseEntity<?> handleManyTasksExceptionException(ManyTasksException exception, WebRequest request) {
-        ErrorDetails errorDetails = ErrorDetails.builder()
+        ErrorDetails errorDetails = getErrorDetails(
+                exception.getMessage(),
+                HttpStatus.BAD_REQUEST.value(),
+                request.getDescription(false));
+        return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
+    }
+
+    private ErrorDetails getErrorDetails(String exception, Integer statusCode, String request) {
+        return ErrorDetails.builder()
                 .timeStamp(LocalDate.now())
-                .status(HttpStatus.BAD_REQUEST.value())// todo смотри туду в rest
-                .message(exception.getMessage())
-                .details(request.getDescription(false)).build();
-        return new ResponseEntity(errorDetails, HttpStatus.BAD_REQUEST);
+                .status(statusCode)
+                .message(exception)
+                .details(request).build();
     }
 }

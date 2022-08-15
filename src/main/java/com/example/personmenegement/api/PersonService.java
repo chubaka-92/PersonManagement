@@ -6,15 +6,15 @@ import java.util.List;
 
 public interface PersonService {
 
-    List<PersonDto> getPersons();// todo сервис не должен возвращать ResponseEntity   //   DONE
+    List<PersonDto> getPersons();
 
-    PersonDto addNewPerson(PersonDto personDto);// todo сервис не должен возвращать ResponseEntity   //   DONE
+    PersonDto addNewPerson(PersonDto personDto);
 
-    List<PersonDto> addNewPersons(List<PersonDto> personsDto);// todo сервис не должен возвращать ResponseEntity   //   DONE
+    List<PersonDto> addNewPersons(List<PersonDto> personsDto);
 
-    PersonDto updatePerson(PersonDto personDto);// todo сервис не должен возвращать ResponseEntity   //   DONE
+    PersonDto updatePerson(PersonDto personDto);
 
-    Long deletePerson(Long id);// todo сервис не должен возвращать ResponseEntity   //   DONE
+    Long deletePerson(Long id);
 
     PersonDto getPersonByUid(String uid);
 }

@@ -20,11 +20,9 @@ public class TaskInitializerImp implements TaskInitializer {
     private final TaskDto taskDtoError;
     private final MessageService messageService;
 
-    // todo выбери один стиль, либо писать руками конструктор, либо lombok
-    //   Done
 
     public void addFieldsEmpty(List<String> incorrectFields) {
-        log.info("Was calling addFieldsEmpty. Input incorrectFields: " + incorrectFields.toString());
+        log.info("Was calling addFieldsEmpty. Input incorrectFields: " + incorrectFields);// todo toString    // DONE
         if (!incorrectFields.isEmpty()) {
             taskDtoError.setValid(false);
         }
@@ -45,7 +43,7 @@ public class TaskInitializerImp implements TaskInitializer {
     }
 
     public void addIncorrectArgumentMessage(Map<String, String> incorrectArguments) {
-        log.info("Was calling addIncorrectArgumentMessage. Input incorrectArguments: " + incorrectArguments.toString());
+        log.info("Was calling addIncorrectArgumentMessage. Input incorrectArguments: " + incorrectArguments);
         if (!incorrectArguments.isEmpty()) {
             taskDtoError.setValid(false);
         }

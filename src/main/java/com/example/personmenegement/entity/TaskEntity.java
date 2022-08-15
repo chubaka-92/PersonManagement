@@ -31,8 +31,6 @@ public class TaskEntity {
 
     @Column(name = "id_person")
     private Long personId;
-
-
 }
 
 

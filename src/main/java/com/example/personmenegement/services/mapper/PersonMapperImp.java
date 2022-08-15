@@ -26,7 +26,7 @@ public class PersonMapperImp implements PersonMapper {
     private final TaskMapper taskMapper;
 
     public PersonDto personEntityToPerson(PersonEntity personEntity) {
-        log.info("Was calling personEntityToPerson. Input personEntity: {}", personEntity.toString());
+        log.info("Was calling personEntityToPerson. Input personEntity: {}", personEntity);
         return PersonDto.builder()
                 .id(getId(personEntity))
                 .uid(personEntity.getUid())
@@ -41,7 +41,7 @@ public class PersonMapperImp implements PersonMapper {
     }
 
     public PersonEntity personToPersonEntity(PersonDto personDto) {
-        log.info("Was calling personToPersonEntity. Input id: {}", personDto.toString());
+        log.info("Was calling personToPersonEntity. Input id: {}", personDto);
         return PersonEntity.builder()
                 .id(getId(personDto))
                 .uid(getUid(personDto))
