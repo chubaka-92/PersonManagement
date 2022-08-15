@@ -37,7 +37,7 @@ public class TaskDAOImp implements TaskDAO {
     public List<TaskEntity> findTasks() {
         log.info("Was calling findTasks.");
         List<TaskEntity> tasks = taskRepository.findAll();
-        if (tasks == null) {
+        if (tasks.size() == 0) {
             log.error(messageService.getMessage(TASKS_NOT_FOUND));
             throw new TaskNotFoundException(messageService.getMessage(TASKS_NOT_FOUND));
         }

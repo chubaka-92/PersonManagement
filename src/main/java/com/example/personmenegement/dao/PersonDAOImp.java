@@ -35,7 +35,7 @@ public class PersonDAOImp implements PersonDAO {
     public List<PersonEntity> findPersons() {
         log.info("Was calling findPersons.");
         List<PersonEntity> persons = personRepository.findAll();
-        if (persons == null) {
+        if (persons.size() == 0) {
             log.error(messageService.getMessage(PERSONS_NOT_FOUND));
             throw new PersonNotFoundException(messageService.getMessage(PERSONS_NOT_FOUND));
         }
