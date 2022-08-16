@@ -24,6 +24,7 @@ public class PersonDto {
     private String position;
     private String salary;
     private String experience;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private List<TaskDto> tasks;
     @JsonIgnore
     private boolean valid = true;
