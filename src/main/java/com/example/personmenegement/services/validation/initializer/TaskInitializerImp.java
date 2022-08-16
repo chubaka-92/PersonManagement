@@ -22,7 +22,7 @@ public class TaskInitializerImp implements TaskInitializer {
 
 
     public void addFieldsEmpty(List<String> incorrectFields) {
-        log.info("Was calling addFieldsEmpty. Input incorrectFields: " + incorrectFields);// todo toString    // DONE
+        log.info("Was calling addFieldsEmpty. Input incorrectFields: " + incorrectFields);
         if (!incorrectFields.isEmpty()) {
             taskDtoError.setValid(false);
         }
