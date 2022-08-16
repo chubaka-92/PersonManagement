@@ -73,7 +73,7 @@ public class PersonServiceImp implements PersonService {
         log.info("Was calling addNewPersons. Input persons: {}", personsDto);
         // todo используй стримы
         List<PersonDto> response = /*new ArrayList<>();
-        for (PersonDto personDto : personsDto) {// todo используй стримы
+        for (PersonDto personDto : personsDto) {
             PersonDto personDtoResponse = personValidation.validate(personDto);
             if (personDtoResponse == null) {
                 PersonEntity personEntity = personMapper.personToPersonEntity(personDto);
@@ -81,7 +81,7 @@ public class PersonServiceImp implements PersonService {
                 personDtoResponse = personMapper.personEntityToPerson(personEntity);
                 response.add(personDtoResponse);
             } else {
-                log.error(personDtoResponse.toString());
+                log.error(personDtoResponse.toString());// todo код закомментирован. Убрать
                 response.add(personDtoResponse);
             }
         }

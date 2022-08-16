@@ -26,7 +26,7 @@ public class TaskInitializerImp implements TaskInitializer {
         if (!incorrectFields.isEmpty()) {
             taskDtoError.setValid(false);
         }
-        for (String field : incorrectFields) {
+        for (String field : incorrectFields) {// todo используй стримы
             switch (field) {
                 case TaskFieldName.DESCRIPTION: {
                     taskDtoError.setDescription(messageService.getMessage(EMPTY_FIELD));
@@ -47,7 +47,7 @@ public class TaskInitializerImp implements TaskInitializer {
         if (!incorrectArguments.isEmpty()) {
             taskDtoError.setValid(false);
         }
-        for (Map.Entry<String, String> entry : incorrectArguments.entrySet()) {
+        for (Map.Entry<String, String> entry : incorrectArguments.entrySet()) {// todo используй стримы
             switch (entry.getKey()) {
                 case TaskFieldName.DESCRIPTION: {
                     taskDtoError.setDescription(entry.getValue());

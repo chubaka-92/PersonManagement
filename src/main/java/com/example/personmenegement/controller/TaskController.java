@@ -21,7 +21,7 @@ public class TaskController {
     @GetMapping("/{uid}")
     public ResponseEntity<TaskDto> getTask(@PathVariable("uid") String uid) {
         log.info("Was calling getTask. Input uid: {}", uid);
-        TaskDto taskResponse =taskService.getTaskByUid(uid);
+        TaskDto taskResponse =taskService.getTaskByUid(uid);// todo реформат кода
         return ResponseEntity.ok(taskResponse);
     }
 

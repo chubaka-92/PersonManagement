@@ -79,8 +79,6 @@ public class TaskServiceImp implements TaskService {
             log.error(MessageFormat.format(messageService.getMessage(TOO_MANY_TASKS), getCountAvailableTasks(personEntity)));
             throw new ManyTasksException(MessageFormat.format(messageService.getMessage(TOO_MANY_TASKS), getCountAvailableTasks(personEntity)));
         }
-        // todo используй стримы
-        //  Done
         return tasksDto.stream()
                 .map(taskDto -> getTaskDto(taskDto,personEntity))
                 .collect(Collectors.toList());
@@ -103,7 +101,7 @@ public class TaskServiceImp implements TaskService {
             throw new PersonNotFoundException(MessageFormat.format(messageService.getMessage(PERSON_NOT_FOUND), personId));
         }
         TaskDto taskDtoTemp = taskValidation.validate(taskDto);
-        if (taskDtoTemp != null) {// todo сложно. Лучше например так: if (taskDto != null)  //  Done
+        if (taskDtoTemp != null) {
             log.error(taskDtoTemp.toString());
             return taskDtoTemp;
         }

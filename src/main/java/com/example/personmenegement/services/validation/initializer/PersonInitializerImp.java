@@ -25,7 +25,7 @@ public class PersonInitializerImp implements PersonInitializer {
         if (!incorrectFields.isEmpty()) {
             personDtoError.setValid(false);
         }
-        for (String field : incorrectFields) {
+        for (String field : incorrectFields) {// todo используй стримы
             switch (field) {
                 case PersonFieldName.NAME: {
                     personDtoError.setName(messageService.getMessage(EMPTY_FIELD));
@@ -58,7 +58,7 @@ public class PersonInitializerImp implements PersonInitializer {
         if (!incorrectArguments.isEmpty()) {
             personDtoError.setValid(false);
         }
-        for (Map.Entry<String, String> entry : incorrectArguments.entrySet()) {
+        for (Map.Entry<String, String> entry : incorrectArguments.entrySet()) {// todo используй стримы
             switch (entry.getKey()) {
                 case PersonFieldName.NAME: {
                     personDtoError.setName(entry.getValue());

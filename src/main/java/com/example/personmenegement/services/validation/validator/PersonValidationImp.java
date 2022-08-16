@@ -28,7 +28,7 @@ public class PersonValidationImp implements PersonValidation {
         Position position = definePosition(personDto.getPosition());
 
         if (!personErrorMessage.hasErrors()) {
-            if (position != UNDEFINED) {
+            if (position != UNDEFINED) {// todo вынеси этот if/else в отдельный метод, тяжело читать такие конструкции
                 personErrorMessage.addIncorrectArgumentMessage(
                         personChecker.checkAge(personDto.getAge()));
 

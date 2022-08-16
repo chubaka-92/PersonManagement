@@ -26,7 +26,7 @@ public class TaskDAOImp implements TaskDAO {
 
     public TaskEntity findTaskById(Long id) {
         log.info("Was calling findTaskById. Input id: {}", id);
-        TaskEntity taskEntity = taskRepository.findById(id).orElse(null);
+        TaskEntity taskEntity = taskRepository.findById(id).orElse(null);// todo если зашел такой же подход как в findPersonById, то сделай так же
         if (taskEntity == null) {
             log.error(MessageFormat.format(messageService.getMessage(TASK_NOT_FOUND), id));
             throw new TaskNotFoundException(MessageFormat.format(messageService.getMessage(TASK_NOT_FOUND), id));
@@ -65,7 +65,7 @@ public class TaskDAOImp implements TaskDAO {
     @Override
     public TaskEntity findTaskByUid(String uid) {
         log.info("Was calling findTaskByUid. Input uid: {}", uid);
-        TaskEntity taskEntity = taskRepository.findByUid(uid).orElse(null);
+        TaskEntity taskEntity = taskRepository.findByUid(uid).orElse(null);// todo если зашел такой же подход как в findPersonById, то сделай так же
         if (taskEntity == null) {
             log.error(MessageFormat.format(messageService.getMessage(TASK_NOT_FOUND), uid));
             throw new TaskNotFoundException(MessageFormat.format(messageService.getMessage(TASK_NOT_FOUND), uid));
