@@ -48,7 +48,7 @@ public class PersonServiceImp implements PersonService {
             return personDtoResponse;
         }
         PersonEntity personEntity = personMapper.personToPersonEntity(personDto);
-        personProducer.sendTask(personEntity);
+        personProducer.sendTask(personEntity);// todo не объявлено
         return personMapper.personEntityToPerson(personEntity);
     }
 
@@ -68,8 +68,6 @@ public class PersonServiceImp implements PersonService {
 
     public Long deletePerson(Long id) {
         log.info("Was calling deletePerson. Input id: {}", id);
-        // todo если бросаешь Exception, то лучше бросай его сразу в PersonDao
-        //  Done
         personDao.deletePersonById(id);
         return id;
     }
@@ -81,7 +79,7 @@ public class PersonServiceImp implements PersonService {
             PersonDto personDtoResponse = personValidation.validate(personDto);
             if (personDtoResponse == null) {
                 PersonEntity personEntity = personMapper.personToPersonEntity(personDto);
-                personProducer.sendTask(personEntity);
+                personProducer.sendTask(personEntity);// todo не объявлено
                 personDtoResponse = personMapper.personEntityToPerson(personEntity);
                 response.add(personDtoResponse);
             } else {

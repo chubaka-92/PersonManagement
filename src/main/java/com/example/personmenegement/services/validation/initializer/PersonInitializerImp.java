@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @Slf4j
 @Getter
@@ -21,11 +22,11 @@ public class PersonInitializerImp implements PersonInitializer {
     private final MessageService messageService;
 
     public void addFieldsEmpty(List<String> incorrectFields) {
-        log.info("Was calling addFieldsEmpty. Input incorrectFields: " + incorrectFields);// todo toString  // DONE
+        log.info("Was calling addFieldsEmpty. Input incorrectFields: " + incorrectFields);
         if (!incorrectFields.isEmpty()) {
             personDtoError.setValid(false);
         }
-        for (String field : incorrectFields) {
+        for (String field : incorrectFields) {// todo сделай с помощью стримов
             switch (field) {
                 case PersonFieldName.NAME: {
                     personDtoError.setName(messageService.getMessage(EMPTY_FIELD));
@@ -58,7 +59,7 @@ public class PersonInitializerImp implements PersonInitializer {
         if (!incorrectArguments.isEmpty()) {
             personDtoError.setValid(false);
         }
-        for (Map.Entry<String, String> entry : incorrectArguments.entrySet()) {
+        for (Map.Entry<String, String> entry : incorrectArguments.entrySet()) {// todo сделай с помощью стримов, подсказка: incorrectArguments.entrySet().stream();
             switch (entry.getKey()) {
                 case PersonFieldName.NAME: {
                     personDtoError.setName(entry.getValue());

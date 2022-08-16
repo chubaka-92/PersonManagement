@@ -29,19 +29,19 @@ public class PersonCheckerImp implements PersonChecker {
     public List<String> checkRequiredFields(PersonDto personDto) {
         log.info("Was calling checkRequiredFields. Input person: {}", personDto);
         List<String> invalidFields = new ArrayList<>();
-        if (personDto.getName() == null || personDto.getName().isBlank()) {// todo а если придет null?   //   DONE
+        if (personDto.getName() == null || personDto.getName().isBlank()) {
             invalidFields.add(NAME);
         }
-        if (personDto.getPosition() == null || personDto.getPosition().isBlank()) {// todo а если придет null?   //   DONE
+        if (personDto.getPosition() == null || personDto.getPosition().isBlank()) {
             invalidFields.add(POSITION);
         }
-        if (personDto.getAge() == null || personDto.getAge().isBlank()) {// todo а если придет null?   //   DONE
+        if (personDto.getAge() == null || personDto.getAge().isBlank()) {
             invalidFields.add(AGE);
         }
-        if (personDto.getSalary() == null || personDto.getSalary().isBlank()) {// todo а если придет null?   //   DONE
+        if (personDto.getSalary() == null || personDto.getSalary().isBlank()) {
             invalidFields.add(SALARY);
         }
-        if (personDto.getExperience() == null || personDto.getExperience().isBlank()) {// todo а если придет null?   //   DONE
+        if (personDto.getExperience() == null || personDto.getExperience().isBlank()) {
             invalidFields.add(EXPERIENCE);
         }
         return invalidFields;
@@ -98,7 +98,7 @@ public class PersonCheckerImp implements PersonChecker {
         log.info("Was calling checkExperienceMatchingPosition. Input positionPerson: {} experience: {}",
                 positionPerson,
                 experience);
-        return positionPerson.getWorkExperience().compareTo(Double.valueOf(experience)) <= 0;// todo так лучше  // Done. Согласен, локаничнее
+        return positionPerson.getWorkExperience().compareTo(Double.valueOf(experience)) <= 0;
     }
 
     private boolean checkSalaryMatchingPosition(Position positionPerson, BigDecimal salaryPerson) {
@@ -106,6 +106,6 @@ public class PersonCheckerImp implements PersonChecker {
                 positionPerson,
                 salaryPerson);
         return positionPerson.getSalaryMin().compareTo(salaryPerson) <= 0
-                && positionPerson.getSalaryMax().compareTo(salaryPerson) >= 0;// todo так лучше  // Done. Согласен, локаничнее
+                && positionPerson.getSalaryMax().compareTo(salaryPerson) >= 0;
     }
 }
