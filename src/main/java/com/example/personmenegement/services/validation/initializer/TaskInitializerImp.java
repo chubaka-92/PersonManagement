@@ -26,20 +26,9 @@ public class TaskInitializerImp implements TaskInitializer {
         if (!incorrectFields.isEmpty()) {
             taskDtoError.setValid(false);
         }
-        for (String field : incorrectFields) {// todo используй стримы
-            switch (field) {
-                case TaskFieldName.DESCRIPTION: {
-                    taskDtoError.setDescription(messageService.getMessage(EMPTY_FIELD));
-                    break;
-                }
-                case TaskFieldName.PRIORITY: {
-                    taskDtoError.setPriority(messageService.getMessage(EMPTY_FIELD));
-                    break;
-                }
-                default:
-                    break;
-            }
-        }
+        // todo сделай с помощью стримов
+        //   DOne
+        incorrectFields.forEach(this::settingEmptyField);
     }
 
     public void addIncorrectArgumentMessage(Map<String, String> incorrectArguments) {
@@ -47,24 +36,45 @@ public class TaskInitializerImp implements TaskInitializer {
         if (!incorrectArguments.isEmpty()) {
             taskDtoError.setValid(false);
         }
-        for (Map.Entry<String, String> entry : incorrectArguments.entrySet()) {// todo используй стримы
-            switch (entry.getKey()) {
-                case TaskFieldName.DESCRIPTION: {
-                    taskDtoError.setDescription(entry.getValue());
-                    break;
-                }
-                case TaskFieldName.PRIORITY: {
-                    taskDtoError.setPriority(entry.getValue());
-                    break;
-                }
-                default:
-                    break;
-            }
-        }
+        // todo сделай с помощью стримов, подсказка: incorrectArguments.entrySet().stream();
+        //  Done. получилось без стрима, но тоже локанично
+        incorrectArguments.entrySet().forEach(this::settingIncorrectArgumentMessage);
     }
 
     public boolean hasErrors() {
         log.info("Was calling hasErrors.");
         return !taskDtoError.isValid();
+    }
+
+    private void settingEmptyField(String field) {
+        log.debug("Was calling settingEmptyField. Input field: " + field);
+        switch (field) {
+            case TaskFieldName.DESCRIPTION: {
+                taskDtoError.setDescription(messageService.getMessage(EMPTY_FIELD));
+                break;
+            }
+            case TaskFieldName.PRIORITY: {
+                taskDtoError.setPriority(messageService.getMessage(EMPTY_FIELD));
+                break;
+            }
+            default:
+                break;
+        }
+    }
+
+    private void settingIncorrectArgumentMessage(Map.Entry<String, String> entry) {
+        log.debug("Was calling settingIncorrectArgumentMessage. Input entry: " + entry);
+        switch (entry.getKey()) {
+            case TaskFieldName.DESCRIPTION: {
+                taskDtoError.setDescription(entry.getValue());
+                break;
+            }
+            case TaskFieldName.PRIORITY: {
+                taskDtoError.setPriority(entry.getValue());
+                break;
+            }
+            default:
+                break;
+        }
     }
 }

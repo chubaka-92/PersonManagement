@@ -26,7 +26,7 @@ public class PersonDAOImp implements PersonDAO {
         log.info("Was calling findPersonById. Input id: {}", id);
         return personRepository.findById(id).orElseThrow(() -> {
             log.error(MessageFormat.format(messageService.getMessage(PERSON_NOT_FOUND), id));
-            throw new PersonNotFoundException(MessageFormat.format(messageService.getMessage(PERSON_NOT_FOUND), id));// todo можно вот так, для сокращения кода и информативность не теряется
+            throw new PersonNotFoundException(MessageFormat.format(messageService.getMessage(PERSON_NOT_FOUND), id));// todo можно вот так, для сокращения кода и информативность не теряется  //  Done. красивое
         });
     }
 
@@ -61,11 +61,10 @@ public class PersonDAOImp implements PersonDAO {
     @Override
     public PersonEntity findPersonByUid(String uid) {
         log.info("Was calling findPersonByUid. Input id: {}", uid);
-        PersonEntity personEntity = personRepository.findByUid(uid).orElse(null);// todo если зашел такой же подход как в findPersonById, то сделай так же
-        if (personEntity == null) {
+        return personRepository.findByUid(uid).orElseThrow(() -> {
             log.error(MessageFormat.format(messageService.getMessage(PERSON_NOT_FOUND), uid));
             throw new PersonNotFoundException(MessageFormat.format(messageService.getMessage(PERSON_NOT_FOUND), uid));
-        }
-        return personEntity;
+        }); // todo если зашел такой же подход как в findPersonById, то сделай так же
+            //  DONE
     }
 }

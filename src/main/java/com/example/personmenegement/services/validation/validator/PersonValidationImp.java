@@ -28,22 +28,30 @@ public class PersonValidationImp implements PersonValidation {
         Position position = definePosition(personDto.getPosition());
 
         if (!personErrorMessage.hasErrors()) {
-            if (position != UNDEFINED) {// todo вынеси этот if/else в отдельный метод, тяжело читать такие конструкции
-                personErrorMessage.addIncorrectArgumentMessage(
-                        personChecker.checkAge(personDto.getAge()));
-
-                personErrorMessage.addIncorrectArgumentMessage(
-                        personChecker.checkSalary(position, personDto.getSalary()));
-
-                personErrorMessage.addIncorrectArgumentMessage(
-                        personChecker.checkExperience(position, personDto.getExperience()));
-            } else {
-                personErrorMessage.addIncorrectArgumentMessage(personChecker.checkPosition(personDto.getPosition()));
-            }
+            // todo вынеси этот if/else в отдельный метод, тяжело читать такие конструкции
+            //   Done
+            checkingFilingFields(personDto, personErrorMessage, personChecker, position);
         }
         if (personErrorMessage.hasErrors()) {
             return personErrorMessage.getPersonDtoError();
         }
         return null;
+    }
+
+    private void checkingFilingFields(PersonDto personDto,
+                                      PersonInitializer personErrorMessage,
+                                      PersonChecker personChecker,
+                                      Position position) {
+        log.info("Was calling checkingFilingFields.");
+        if (position != UNDEFINED) {
+            personErrorMessage.addIncorrectArgumentMessage(personChecker.checkAge(personDto.getAge()));
+
+            personErrorMessage.addIncorrectArgumentMessage(personChecker.checkSalary(position, personDto.getSalary()));
+
+            personErrorMessage.addIncorrectArgumentMessage(
+                    personChecker.checkExperience(position, personDto.getExperience()));
+        } else {
+            personErrorMessage.addIncorrectArgumentMessage(personChecker.checkPosition(personDto.getPosition()));
+        }
     }
 }

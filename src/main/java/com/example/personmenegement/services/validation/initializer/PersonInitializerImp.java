@@ -25,32 +25,9 @@ public class PersonInitializerImp implements PersonInitializer {
         if (!incorrectFields.isEmpty()) {
             personDtoError.setValid(false);
         }
-        for (String field : incorrectFields) {// todo используй стримы
-            switch (field) {
-                case PersonFieldName.NAME: {
-                    personDtoError.setName(messageService.getMessage(EMPTY_FIELD));
-                    break;
-                }
-                case PersonFieldName.AGE: {
-                    personDtoError.setAge(messageService.getMessage(EMPTY_FIELD));
-                    break;
-                }
-                case PersonFieldName.POSITION: {
-                    personDtoError.setPosition(messageService.getMessage(EMPTY_FIELD));
-                    break;
-                }
-                case PersonFieldName.SALARY: {
-                    personDtoError.setSalary(messageService.getMessage(EMPTY_FIELD));
-                    break;
-                }
-                case PersonFieldName.EXPERIENCE: {
-                    personDtoError.setExperience(messageService.getMessage(EMPTY_FIELD));
-                    break;
-                }
-                default:
-                    break;
-            }
-        }
+        //todo сделай с помощью стримов
+        //   Done. получилось без стримов даже)
+        incorrectFields.forEach(this::settingEmptyFields);
     }
 
     public void addIncorrectArgumentMessage(Map<String, String> incorrectArguments) {
@@ -58,36 +35,69 @@ public class PersonInitializerImp implements PersonInitializer {
         if (!incorrectArguments.isEmpty()) {
             personDtoError.setValid(false);
         }
-        for (Map.Entry<String, String> entry : incorrectArguments.entrySet()) {// todo используй стримы
-            switch (entry.getKey()) {
-                case PersonFieldName.NAME: {
-                    personDtoError.setName(entry.getValue());
-                    break;
-                }
-                case PersonFieldName.AGE: {
-                    personDtoError.setAge(entry.getValue());
-                    break;
-                }
-                case PersonFieldName.POSITION: {
-                    personDtoError.setPosition(entry.getValue());
-                    break;
-                }
-                case PersonFieldName.SALARY: {
-                    personDtoError.setSalary(entry.getValue());
-                    break;
-                }
-                case PersonFieldName.EXPERIENCE: {
-                    personDtoError.setExperience(entry.getValue());
-                    break;
-                }
-                default:
-                    break;
-            }
-        }
+        // todo сделай с помощью стримов, подсказка: incorrectArguments.entrySet().stream();
+        //  Done. Сделал без стримов, но тоже локанично
+        incorrectArguments.entrySet().forEach(this::settingIncorrectArgumentMessage);
     }
 
     public boolean hasErrors() {
         log.info("Was calling hasErrors.");
         return !personDtoError.isValid();
+    }
+
+    private void settingIncorrectArgumentMessage(Map.Entry<String, String> entry) {
+        log.debug("Was calling settingIncorrectArgumentMessage. Input entry: " + entry);
+        switch (entry.getKey()) {
+            case PersonFieldName.NAME: {
+                personDtoError.setName(entry.getValue());
+                break;
+            }
+            case PersonFieldName.AGE: {
+                personDtoError.setAge(entry.getValue());
+                break;
+            }
+            case PersonFieldName.POSITION: {
+                personDtoError.setPosition(entry.getValue());
+                break;
+            }
+            case PersonFieldName.SALARY: {
+                personDtoError.setSalary(entry.getValue());
+                break;
+            }
+            case PersonFieldName.EXPERIENCE: {
+                personDtoError.setExperience(entry.getValue());
+                break;
+            }
+            default:
+                break;
+        }
+    }
+
+    private void settingEmptyFields(String field) {
+        log.debug("Was calling settingEmptyFields. Input field: " + field);
+        switch (field) {
+            case PersonFieldName.NAME: {
+                personDtoError.setName(messageService.getMessage(EMPTY_FIELD));
+                break;
+            }
+            case PersonFieldName.AGE: {
+                personDtoError.setAge(messageService.getMessage(EMPTY_FIELD));
+                break;
+            }
+            case PersonFieldName.POSITION: {
+                personDtoError.setPosition(messageService.getMessage(EMPTY_FIELD));
+                break;
+            }
+            case PersonFieldName.SALARY: {
+                personDtoError.setSalary(messageService.getMessage(EMPTY_FIELD));
+                break;
+            }
+            case PersonFieldName.EXPERIENCE: {
+                personDtoError.setExperience(messageService.getMessage(EMPTY_FIELD));
+                break;
+            }
+            default:
+                break;
+        }
     }
 }

@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -71,28 +70,13 @@ public class PersonServiceImp implements PersonService {
 
     public List<PersonDto> addNewPersons(List<PersonDto> personsDto) {
         log.info("Was calling addNewPersons. Input persons: {}", personsDto);
-        // todo используй стримы
-        List<PersonDto> response = /*new ArrayList<>();
-        for (PersonDto personDto : personsDto) {
-            PersonDto personDtoResponse = personValidation.validate(personDto);
-            if (personDtoResponse == null) {
-                PersonEntity personEntity = personMapper.personToPersonEntity(personDto);
-                personProducer.sendTask(personEntity);
-                personDtoResponse = personMapper.personEntityToPerson(personEntity);
-                response.add(personDtoResponse);
-            } else {
-                log.error(personDtoResponse.toString());// todo код закомментирован. Убрать
-                response.add(personDtoResponse);
-            }
-        }
-        List<PersonDto> response2 =*/ personsDto.stream()
+        return personsDto.stream()
                 .map(this::getPersonDto)
                 .collect(Collectors.toList());
-
-        return response;
     }
 
     private PersonDto getPersonDto(PersonDto personDto) {
+        log.debug("Was calling getPersonDto. Input personDto: {}", personDto);
         PersonDto result = personValidation.validate(personDto);
         if (result == null) {
             return getNewPerson(personDto);
@@ -102,6 +86,7 @@ public class PersonServiceImp implements PersonService {
     }
 
     private PersonDto getNewPerson(PersonDto personDto) {
+        log.debug("Was calling getNewPerson. Input personDto: {}", personDto);
         PersonEntity personEntity = personMapper.personToPersonEntity(personDto);
         personProducer.sendTask(personEntity);
         return personMapper.personEntityToPerson(personEntity);

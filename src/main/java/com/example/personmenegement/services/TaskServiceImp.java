@@ -24,8 +24,6 @@ public class TaskServiceImp implements TaskService {
     private static final int ONE_TASK = 1;
     private final TaskDAOImp taskDAO;
     private static final String TOO_MANY_TASKS = "tooManyTasks";
-    private static final String TASK_NOT_FOUND = "taskNotFound";
-    private static final String TASKS_NOT_FOUND = "tasksNotFound";
     private static final String PERSON_NOT_FOUND = "personNotFound";
     private final MessageService messageService;
     private final TaskMapper taskMapper;
