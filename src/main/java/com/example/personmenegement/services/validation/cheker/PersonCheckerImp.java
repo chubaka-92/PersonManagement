@@ -6,7 +6,6 @@ import com.example.personmenegement.dto.PersonDto;
 import com.example.personmenegement.types.Position;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.text.MessageFormat;

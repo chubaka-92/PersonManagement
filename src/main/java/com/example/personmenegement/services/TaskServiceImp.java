@@ -6,7 +6,6 @@ import com.example.personmenegement.dto.TaskDto;
 import com.example.personmenegement.entity.PersonEntity;
 import com.example.personmenegement.entity.TaskEntity;
 import com.example.personmenegement.exeption.ManyTasksException;
-import com.example.personmenegement.exeption.PersonNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -23,9 +22,6 @@ public class TaskServiceImp implements TaskService {
     private static final int ONE_TASK = 1;
     private final TaskDAOImp taskDAO;
     private static final String TOO_MANY_TASKS = "tooManyTasks";
-    private static final String TASK_NOT_FOUND = "taskNotFound";
-    private static final String TASKS_NOT_FOUND = "tasksNotFound";
-    private static final String PERSON_NOT_FOUND = "personNotFound";
     private final MessageService messageService;
     private final TaskMapper taskMapper;
     private final TaskValidation taskValidation;
@@ -90,10 +86,6 @@ public class TaskServiceImp implements TaskService {
     public TaskDto updateTask(TaskDto taskDto, Long personId) {
         log.info("Was calling updateTask. Input task: {} personId: {}", taskDto, personId);
         PersonEntity personEntity = personDao.findPersonById(personId);
-        if (personEntity == null) {
-            log.error(MessageFormat.format(messageService.getMessage(PERSON_NOT_FOUND), personId));
-            throw new PersonNotFoundException(MessageFormat.format(messageService.getMessage(PERSON_NOT_FOUND), personId));
-        }
         TaskDto taskDtoTemp = taskValidation.validate(taskDto);
         if (!(taskDtoTemp == null)) {
             log.error(taskDtoTemp.toString());
@@ -119,11 +111,12 @@ public class TaskServiceImp implements TaskService {
     }
 
     private static Integer getCountAvailableTasks(PersonEntity personEntity) {
+        log.debug("Was calling getCountAvailableTasks. Input personEntity: {}", personEntity);
         return personEntity.getPosition().getCountTasks() - personEntity.getTasks().size();
     }
 
     private boolean checkAvailableCountTasksToPerson(int countTasks, PersonEntity personEntity) {
-        log.info("Was calling checkAvailableCountTasksToPerson. Input personEntity: {} countTasks: {}",
+        log.debug("Was calling checkAvailableCountTasksToPerson. Input personEntity: {} countTasks: {}",
                 personEntity,
                 countTasks);
         if (personEntity.getTasks().size() < personEntity.getPosition().getCountTasks()

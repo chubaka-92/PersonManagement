@@ -8,7 +8,6 @@ import com.example.personmenegement.services.MessageServiceImp;
 import com.example.personmenegement.services.validation.cheker.PersonCheckerImp;
 import com.example.personmenegement.services.validation.initializer.PersonInitializerImp;
 import com.example.personmenegement.types.Position;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +16,6 @@ import static com.example.personmenegement.types.Position.definePosition;
 
 @Slf4j
 @Service
-@RequiredArgsConstructor
 public class PersonValidationImp implements PersonValidation {
 
     public PersonDto validate(PersonDto personDto) {

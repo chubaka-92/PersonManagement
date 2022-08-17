@@ -79,6 +79,7 @@ public class PersonServiceImp implements PersonService {
     }
 
     private PersonDto getPersonDto(PersonDto personDto) {
+        log.debug("Was calling getPersonDto. Input personDto: {}", personDto);
         PersonDto result = personValidation.validate(personDto);
         if (result == null) {
             return getNewPerson(personDto);
@@ -88,6 +89,7 @@ public class PersonServiceImp implements PersonService {
     }
 
     private PersonDto getNewPerson(PersonDto personDto) {
+        log.debug("Was calling getNewPerson. Input personDto: {}", personDto);
         PersonEntity personEntity = personDao.addPerson(personMapper.personToPersonEntity(personDto));
         return personMapper.personEntityToPerson(personEntity);
     }

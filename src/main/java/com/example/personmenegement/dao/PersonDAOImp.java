@@ -65,6 +65,6 @@ public class PersonDAOImp implements PersonDAO {
             log.error(MessageFormat.format(messageService.getMessage(PERSON_NOT_FOUND), uid));
             throw new PersonNotFoundException(MessageFormat.format(messageService.getMessage(PERSON_NOT_FOUND), uid));
         }); // todo если зашел такой же подход как в findPersonById, то сделай так же
-            //  DONE
+        //  DONE
     }
 }
