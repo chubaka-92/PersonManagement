@@ -6,8 +6,6 @@ import java.util.List;
 
 public interface TaskDAO {
 
-    TaskEntity findTaskById(Long id);
-
     List<TaskEntity> findTasks();
 
     TaskEntity addTask(TaskEntity taskEntity);

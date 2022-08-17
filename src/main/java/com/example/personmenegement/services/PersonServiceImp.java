@@ -11,7 +11,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -42,14 +41,11 @@ public class PersonServiceImp implements PersonService {
     public PersonDto addNewPerson(PersonDto personDto) {
         log.info("Was calling addNewPerson. Input person: {}", personDto);
         PersonDto personDtoResponse = personValidation.validate(personDto);
-
         if (personDtoResponse != null) {
             log.error(personDtoResponse.toString());
             return personDtoResponse;
         }
-        PersonEntity personEntity = personMapper.personToPersonEntity(personDto);
-        personProducer.sendTask(personEntity);// todo не объявлено
-        return personMapper.personEntityToPerson(personEntity);
+        return getNewPerson(personDto);
     }
 
     public PersonDto updatePerson(PersonDto personDto) {
@@ -65,7 +61,6 @@ public class PersonServiceImp implements PersonService {
         return personDtoResponse;
     }
 
-
     public Long deletePerson(Long id) {
         log.info("Was calling deletePerson. Input id: {}", id);
         personDao.deletePersonById(id);
@@ -74,19 +69,26 @@ public class PersonServiceImp implements PersonService {
 
     public List<PersonDto> addNewPersons(List<PersonDto> personsDto) {
         log.info("Was calling addNewPersons. Input persons: {}", personsDto);
-        List<PersonDto> response = new ArrayList<>();
-        for (PersonDto personDto : personsDto) {
-            PersonDto personDtoResponse = personValidation.validate(personDto);
-            if (personDtoResponse == null) {
-                PersonEntity personEntity = personMapper.personToPersonEntity(personDto);
-                personProducer.sendTask(personEntity);// todo не объявлено
-                personDtoResponse = personMapper.personEntityToPerson(personEntity);
-                response.add(personDtoResponse);
-            } else {
-                log.error(personDtoResponse.toString());
-                response.add(personDtoResponse);
-            }
+        // todo используй стримы
+        //  DONE
+        // todo код закомментирован. Убрать
+        //  DONE
+        return personsDto.stream()
+                .map(this::getPersonDto)
+                .collect(Collectors.toList());
+    }
+
+    private PersonDto getPersonDto(PersonDto personDto) {
+        PersonDto result = personValidation.validate(personDto);
+        if (result == null) {
+            return getNewPerson(personDto);
         }
-        return response;
+        log.error(result.toString());
+        return result;
+    }
+
+    private PersonDto getNewPerson(PersonDto personDto) {
+        PersonEntity personEntity = personDao.addPerson(personMapper.personToPersonEntity(personDto));
+        return personMapper.personEntityToPerson(personEntity);
     }
 }

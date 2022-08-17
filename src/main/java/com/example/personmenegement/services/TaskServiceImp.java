@@ -12,7 +12,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.text.MessageFormat;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,7 +30,6 @@ public class TaskServiceImp implements TaskService {
     private final TaskMapper taskMapper;
     private final TaskValidation taskValidation;
     private final PersonDAO personDao;
-    private final TaskProducer taskProducer;
 
 
     @Override
@@ -58,16 +56,12 @@ public class TaskServiceImp implements TaskService {
     public TaskDto addNewTask(TaskDto taskDto, Long personId) {
         log.info("Was calling addNewTask. Input task: {} personId: {}", taskDto, personId);
         PersonEntity personEntity = personDao.findPersonById(personId);
+
         if (checkAvailableCountTasksToPerson(ONE_TASK, personEntity)) {
             log.error(MessageFormat.format(messageService.getMessage(TOO_MANY_TASKS), getCountAvailableTasks(personEntity)));
             throw new ManyTasksException(MessageFormat.format(messageService.getMessage(TOO_MANY_TASKS), getCountAvailableTasks(personEntity)));
         }
-        TaskDto taskDtoTemp = taskValidation.validate(taskDto);
-        if (taskDtoTemp != null) {
-            log.error(taskDtoTemp.toString());
-            return taskDtoTemp;
-        }
-        return getNewTask(personEntity, taskDto);
+        return getTaskDto(taskDto, personEntity);
     }
 
     @Override
@@ -79,17 +73,18 @@ public class TaskServiceImp implements TaskService {
             log.error(MessageFormat.format(messageService.getMessage(TOO_MANY_TASKS), getCountAvailableTasks(personEntity)));
             throw new ManyTasksException(MessageFormat.format(messageService.getMessage(TOO_MANY_TASKS), getCountAvailableTasks(personEntity)));
         }
-        List<TaskDto> response = new ArrayList<>();
-        for (TaskDto taskDto : tasksDto) {
-            TaskDto taskDtoTemp = taskValidation.validate(taskDto);
-            if (taskDtoTemp == null) {
-                response.add(getNewTask(personEntity, taskDto));
-            } else {
-                log.error(taskDto.toString());
-                response.add(taskDto);
-            }
+        return tasksDto.stream()
+                .map(taskDto -> getTaskDto(taskDto, personEntity))
+                .collect(Collectors.toList());
+    }
+
+    private TaskDto getTaskDto(TaskDto taskDto, PersonEntity personEntity) {
+        log.info("Was calling getTaskDto. Input taskDto: {} personId: {}", taskDto, personEntity);
+        TaskDto result = taskValidation.validate(taskDto);
+        if (result == null) {
+            return getNewTask(personEntity, taskDto);
         }
-        return response;
+        return result;
     }
 
     public TaskDto updateTask(TaskDto taskDto, Long personId) {
@@ -111,7 +106,7 @@ public class TaskServiceImp implements TaskService {
         log.debug("Was calling addNewTasks. Input personEntity: {} taskTemp: {}", personEntity, taskDto);
         TaskEntity taskEntity = taskMapper.taskToTaskEntity(taskDto);
         taskEntity.setPersonId(personEntity.getId());
-        taskProducer.sendTask(taskEntity);
+        taskEntity.setId(taskDAO.addTask(taskEntity).getId());
         return taskMapper.taskEntityToTask(taskEntity);
     }
 
@@ -130,8 +125,7 @@ public class TaskServiceImp implements TaskService {
     private boolean checkAvailableCountTasksToPerson(int countTasks, PersonEntity personEntity) {
         log.info("Was calling checkAvailableCountTasksToPerson. Input personEntity: {} countTasks: {}",
                 personEntity,
-                countTasks); //todo вот так опрятнее выглядит. не нравится использование "+" в логах (много места занимает и выглядит не оч). Везде где есть вставка значений в логи сделать такой вид. + желательно, делать лог в одну строку, но если не получается, то сделать, как здесь
-        //  done
+                countTasks);
         if (personEntity.getTasks().size() < personEntity.getPosition().getCountTasks()
                 && getCountAvailableTasks(personEntity) >= countTasks) {
             return false;

@@ -24,18 +24,16 @@ public class PersonDAOImp implements PersonDAO {
 
     public PersonEntity findPersonById(Long id) {
         log.info("Was calling findPersonById. Input id: {}", id);
-        PersonEntity personEntity = personRepository.findById(id).orElse(null);
-        if (personEntity == null) {
+        return personRepository.findById(id).orElseThrow(() -> {
             log.error(MessageFormat.format(messageService.getMessage(PERSON_NOT_FOUND), id));
-            throw new PersonNotFoundException(MessageFormat.format(messageService.getMessage(PERSON_NOT_FOUND), id));
-        }
-        return personEntity;
+            throw new PersonNotFoundException(MessageFormat.format(messageService.getMessage(PERSON_NOT_FOUND), id));// todo можно вот так, для сокращения кода и информативность не теряется  //  DONE. красивое!
+        });
     }
 
     public List<PersonEntity> findPersons() {
         log.info("Was calling findPersons.");
         List<PersonEntity> persons = personRepository.findAll();
-        if (persons == null) {
+        if (persons.size() == 0) {
             log.error(messageService.getMessage(PERSONS_NOT_FOUND));
             throw new PersonNotFoundException(messageService.getMessage(PERSONS_NOT_FOUND));
         }
@@ -63,11 +61,10 @@ public class PersonDAOImp implements PersonDAO {
     @Override
     public PersonEntity findPersonByUid(String uid) {
         log.info("Was calling findPersonByUid. Input id: {}", uid);
-        PersonEntity personEntity = personRepository.findByUid(uid).orElse(null);
-        if (personEntity == null) {
+        return personRepository.findByUid(uid).orElseThrow(() -> {
             log.error(MessageFormat.format(messageService.getMessage(PERSON_NOT_FOUND), uid));
             throw new PersonNotFoundException(MessageFormat.format(messageService.getMessage(PERSON_NOT_FOUND), uid));
-        }
-        return personEntity;
+        }); // todo если зашел такой же подход как в findPersonById, то сделай так же
+            //  DONE
     }
 }

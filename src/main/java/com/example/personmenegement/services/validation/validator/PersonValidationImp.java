@@ -8,6 +8,7 @@ import com.example.personmenegement.services.MessageServiceImp;
 import com.example.personmenegement.services.validation.cheker.PersonCheckerImp;
 import com.example.personmenegement.services.validation.initializer.PersonInitializerImp;
 import com.example.personmenegement.types.Position;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,7 @@ import static com.example.personmenegement.types.Position.definePosition;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class PersonValidationImp implements PersonValidation {
 
     public PersonDto validate(PersonDto personDto) {
@@ -28,22 +30,30 @@ public class PersonValidationImp implements PersonValidation {
         Position position = definePosition(personDto.getPosition());
 
         if (!personErrorMessage.hasErrors()) {
-            if (position != UNDEFINED) {
-                personErrorMessage.addIncorrectArgumentMessage(
-                        personChecker.checkAge(personDto.getAge()));
-
-                personErrorMessage.addIncorrectArgumentMessage(
-                        personChecker.checkSalary(position, personDto.getSalary()));
-
-                personErrorMessage.addIncorrectArgumentMessage(
-                        personChecker.checkExperience(position, personDto.getExperience()));
-            } else {
-                personErrorMessage.addIncorrectArgumentMessage(personChecker.checkPosition(personDto.getPosition()));
-            }
+            // todo вынеси этот if/else в отдельный метод, тяжело читать такие конструкции
+            //   Done
+            checkingFilingFields(personDto, personErrorMessage, personChecker, position);
         }
         if (personErrorMessage.hasErrors()) {
             return personErrorMessage.getPersonDtoError();
         }
         return null;
+    }
+
+    private void checkingFilingFields(PersonDto personDto,
+                                      PersonInitializer personErrorMessage,
+                                      PersonChecker personChecker,
+                                      Position position) {
+        log.info("Was calling checkingFilingFields.");
+        if (position != UNDEFINED) {
+            personErrorMessage.addIncorrectArgumentMessage(personChecker.checkAge(personDto.getAge()));
+
+            personErrorMessage.addIncorrectArgumentMessage(personChecker.checkSalary(position, personDto.getSalary()));
+
+            personErrorMessage.addIncorrectArgumentMessage(
+                    personChecker.checkExperience(position, personDto.getExperience()));
+        } else {
+            personErrorMessage.addIncorrectArgumentMessage(personChecker.checkPosition(personDto.getPosition()));
+        }
     }
 }
