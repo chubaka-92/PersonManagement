@@ -79,7 +79,7 @@ public class TaskServiceImp implements TaskService {
             log.error(MessageFormat.format(messageService.getMessage(TOO_MANY_TASKS), getCountAvailableTasks(personEntity)));
             throw new ManyTasksException(MessageFormat.format(messageService.getMessage(TOO_MANY_TASKS), getCountAvailableTasks(personEntity)));
         }
-        List<TaskDto> response = new ArrayList<>();// todo используй стримы
+        List<TaskDto> response = new ArrayList<>();
         for (TaskDto taskDto : tasksDto) {
             TaskDto taskDtoTemp = taskValidation.validate(taskDto);
             if (taskDtoTemp == null) {
@@ -100,7 +100,7 @@ public class TaskServiceImp implements TaskService {
             throw new PersonNotFoundException(MessageFormat.format(messageService.getMessage(PERSON_NOT_FOUND), personId));
         }
         TaskDto taskDtoTemp = taskValidation.validate(taskDto);
-        if (!(taskDtoTemp == null)) {// todo сложно. Лучше например так: if (taskDto != null)
+        if (!(taskDtoTemp == null)) {
             log.error(taskDtoTemp.toString());
             return taskDtoTemp;
         }
@@ -130,7 +130,8 @@ public class TaskServiceImp implements TaskService {
     private boolean checkAvailableCountTasksToPerson(int countTasks, PersonEntity personEntity) {
         log.info("Was calling checkAvailableCountTasksToPerson. Input personEntity: {} countTasks: {}",
                 personEntity,
-                countTasks);
+                countTasks); //todo вот так опрятнее выглядит. не нравится использование "+" в логах (много места занимает и выглядит не оч). Везде где есть вставка значений в логи сделать такой вид. + желательно, делать лог в одну строку, но если не получается, то сделать, как здесь
+        //  done
         if (personEntity.getTasks().size() < personEntity.getPosition().getCountTasks()
                 && getCountAvailableTasks(personEntity) >= countTasks) {
             return false;
