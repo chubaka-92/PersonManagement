@@ -25,8 +25,6 @@ public class PersonInitializerImp implements PersonInitializer {
         if (!incorrectFields.isEmpty()) {
             personDtoError.setValid(false);
         }
-        //todo сделай с помощью стримов
-        //   Done. получилось без стримов даже)
         incorrectFields.forEach(this::settingEmptyFields);
     }
 
@@ -35,8 +33,6 @@ public class PersonInitializerImp implements PersonInitializer {
         if (!incorrectArguments.isEmpty()) {
             personDtoError.setValid(false);
         }
-        // todo сделай с помощью стримов, подсказка: incorrectArguments.entrySet().stream();
-        //  Done. Сделал без стримов, но тоже локанично
         incorrectArguments.entrySet().forEach(this::settingIncorrectArgumentMessage);
     }
 

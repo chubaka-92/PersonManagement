@@ -28,8 +28,6 @@ public class PersonValidationImp implements PersonValidation {
         Position position = definePosition(personDto.getPosition());
 
         if (!personErrorMessage.hasErrors()) {
-            // todo вынеси этот if/else в отдельный метод, тяжело читать такие конструкции
-            //   Done
             checkingFilingFields(personDto, personErrorMessage, personChecker, position);
         }
         if (personErrorMessage.hasErrors()) {

@@ -55,7 +55,7 @@ public class TaskDAOImp implements TaskDAO {
         log.info("Was calling findTaskByUid. Input uid: {}", uid);
         return taskRepository.findByUid(uid).orElseThrow(() -> {
             log.error(MessageFormat.format(messageService.getMessage(TASK_NOT_FOUND), uid));
-            throw new TaskNotFoundException(MessageFormat.format(messageService.getMessage(TASK_NOT_FOUND), uid));// todo можно вот так, для сокращения кода и информативность не теряется  //  DONE. красивое!
+            throw new TaskNotFoundException(MessageFormat.format(messageService.getMessage(TASK_NOT_FOUND), uid));
         });
 
     }

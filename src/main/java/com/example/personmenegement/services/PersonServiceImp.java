@@ -69,10 +69,6 @@ public class PersonServiceImp implements PersonService {
 
     public List<PersonDto> addNewPersons(List<PersonDto> personsDto) {
         log.info("Was calling addNewPersons. Input persons: {}", personsDto);
-        // todo используй стримы
-        //  DONE
-        // todo код закомментирован. Убрать
-        //  DONE
         return personsDto.stream()
                 .map(this::getPersonDto)
                 .collect(Collectors.toList());
