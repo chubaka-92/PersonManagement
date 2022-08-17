@@ -26,8 +26,6 @@ public class TaskInitializerImp implements TaskInitializer {
         if (!incorrectFields.isEmpty()) {
             taskDtoError.setValid(false);
         }
-        // todo сделай с помощью стримов
-        //   DOne
         incorrectFields.forEach(this::settingEmptyField);
     }
 
@@ -36,8 +34,6 @@ public class TaskInitializerImp implements TaskInitializer {
         if (!incorrectArguments.isEmpty()) {
             taskDtoError.setValid(false);
         }
-        // todo сделай с помощью стримов, подсказка: incorrectArguments.entrySet().stream();
-        //  Done. получилось без стрима, но тоже локанично
         incorrectArguments.entrySet().forEach(this::settingIncorrectArgumentMessage);
     }
 

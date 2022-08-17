@@ -16,12 +16,12 @@ import java.time.LocalDate;
 public class ExceptionController {
 
     @ExceptionHandler(PersonNotFoundException.class)
-    public ResponseEntity<?> handlePersonNotFoundException() {// todo параметры не используются  // DONE
+    public ResponseEntity<?> handlePersonNotFoundException() {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @ExceptionHandler(TaskNotFoundException.class)
-    public ResponseEntity<?> handleTaskNotFoundExceptionException() {// todo параметры не используются  // DONE
+    public ResponseEntity<?> handleTaskNotFoundExceptionException() {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
