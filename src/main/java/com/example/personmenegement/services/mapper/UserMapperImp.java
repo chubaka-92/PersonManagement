@@ -5,6 +5,7 @@ import com.example.personmenegement.entity.RoleEntity;
 import com.example.personmenegement.entity.UserEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,12 +16,14 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class UserMapperImp {
 
+    private final PasswordEncoder passwordEncoder;
+
     public UserDto userEntityToUserDto(UserEntity userEntity) {
         log.info("Was calling userEntityToUserDto. Input userEntity: {}", userEntity);
         return UserDto.builder()
                 .username(userEntity.getUsername())
                 .email(userEntity.getEmail())
-                .roles(userEntity.getRoleEntities())
+                //.roles(userEntity.getRoleEntities())
                 .build();
     }
 
@@ -29,11 +32,13 @@ public class UserMapperImp {
         return UserEntity.builder()
                 .username(userDto.getUsername())
                 .email(userDto.getEmail())
-                .password(userDto.getPassword())
-                .roleEntities(userDto.getRoles())
+                .password(passwordEncoder.encode(userDto.getPassword()))
+                       // .roleEntities(getRoles(userDto.getRoles()))
                 .build();
+
     }
-    private List<RoleEntity> getRoles(List<String> roles) {
+
+/*    private List<RoleEntity> getRoles(List<String> roles) {
         log.debug("Was calling getTasks.");
         if (roles == null) {
             return null;
@@ -42,6 +47,6 @@ public class UserMapperImp {
                 .stream()
                 .map(taskMapper::taskEntityToTask)
                 .collect(Collectors.toList());
-    }
+    }*/
 
 }

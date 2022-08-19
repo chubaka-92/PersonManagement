@@ -5,6 +5,7 @@ import com.example.personmenegement.dto.PersonDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,6 +19,7 @@ public class PersonController {
     private final PersonService personService;
 
     @GetMapping("/{uid}")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<PersonDto> getPerson(@PathVariable("uid") String uid) { // todo ResponseEntity без параметризации выглядит некрасиво, лушче сделать ResponseEntity<Long> или для простоты ResponseEntity<?>  //   DONE
         log.info("Was calling getPerson. Input uid: {}", uid);
         return ResponseEntity.ok(personService.getPersonByUid(uid)); // todo зачем valueOf если и так приходит Long? убрать // DONE

@@ -7,6 +7,8 @@ import com.example.personmenegement.dto.LoginRequest;
 import com.example.personmenegement.dto.UserDto;
 import com.example.personmenegement.entity.RoleEntity;
 import com.example.personmenegement.entity.UserEntity;
+import com.example.personmenegement.exeption.UserEmailExistAuthException;
+import com.example.personmenegement.exeption.UserNameExistAuthException;
 import com.example.personmenegement.repository.RoleRepository;
 import com.example.personmenegement.repository.UserRepository;
 import com.example.personmenegement.services.mapper.UserMapperImp;
@@ -33,25 +35,16 @@ public class AuthServiceImp {
 
     private final UserDAOImp userDAO;
     private final UserMapperImp personMapper;
-    AuthenticationManager authenticationManager;
 
+    private final AuthenticationManager authenticationManager;
 
-    UserRepository userRepository;
-
-
-    RoleRepository roleRepository;
-
-
-    PasswordEncoder passwordEncoder;
-
-
-    JwtUtils jwtUtils;
+    private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
+    private final UserMapperImp userMapper;
+    private final JwtUtils jwtUtils;
 
     public Object auth(LoginRequest loginRequest) {
-        Authentication authentication = authenticationManager
-                .authenticate(new UsernamePasswordAuthenticationToken(
-                        loginRequest.getUsername(),
-                        loginRequest.getPassword()));
+        Authentication authentication = getAuthenticate(loginRequest);
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtUtils.generateJwtToken(authentication);
@@ -68,22 +61,23 @@ public class AuthServiceImp {
                 roles);
     }
 
+    private Authentication getAuthenticate(LoginRequest loginRequest) {
+        return authenticationManager
+                .authenticate(new UsernamePasswordAuthenticationToken(
+                        loginRequest.getUsername(),
+                        loginRequest.getPassword()));
+    }
+
     public Object registration(UserDto userDto) {
         if (userRepository.existsByUsername(userDto.getUsername())) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(new MessageResponse("Error: Username is exist"));
+            throw new UserNameExistAuthException("Error: Username is exist");
         }
 
         if (userRepository.existsByEmail(userDto.getEmail())) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(new MessageResponse("Error: Email is exist"));
+            throw new UserEmailExistAuthException("Error: Email is exist");
         }
 
-        UserEntity user = new UserEntity(userDto.getUsername(),
-                userDto.getEmail(),
-                passwordEncoder.encode(userDto.getPassword()));
+        UserEntity user = userMapper.userDtoToUserEntity(userDto);
 
         Set<String> reqRoles = userDto.getRoles();
         Set<RoleEntity> roleEntities = new HashSet<>();
