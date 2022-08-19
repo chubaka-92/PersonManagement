@@ -1,5 +1,8 @@
-package com.example.personmenegement.config;
+package com.example.personmenegement.config.securety;
 
+import com.example.personmenegement.config.securety.jwt.AuthEntryPointJwt;
+import com.example.personmenegement.config.securety.jwt.AuthTokenFilter;
+import com.example.personmenegement.services.security.UserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,7 +17,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-/*
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -22,7 +24,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserDetailsServiceImpl userDetailsService;
-
     private final AuthEntryPointJwt unauthorizedHandler;
 
     @Bean
@@ -53,8 +54,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
-                .antMatchers("/api/auth/**").permitAll()
-                .antMatchers("/api/test/**").permitAll()
+                .antMatchers("/person/**").permitAll()
+                .antMatchers("/tasks/**").permitAll()
                 .anyRequest().authenticated();
 
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
@@ -71,4 +72,3 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //		.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
 }
-*/

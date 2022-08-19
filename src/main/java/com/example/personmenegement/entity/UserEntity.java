@@ -1,5 +1,6 @@
 package com.example.personmenegement.entity;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,6 +10,7 @@ import java.util.Set;
 
 @Getter
 @Setter
+@Builder
 @Entity
 @Table(name = "users")
 public class UserEntity {
@@ -29,5 +31,6 @@ public class UserEntity {
         @JoinTable(name = "user_roles",
                 joinColumns = @JoinColumn(name = "user_id"),
                 inverseJoinColumns = @JoinColumn(name = "role_id"))
-        private Set<Role> roles = new HashSet<>();
+        private Set<RoleEntity> roleEntities = new HashSet<>();
+
 }
