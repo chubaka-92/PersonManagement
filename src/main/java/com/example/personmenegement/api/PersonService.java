@@ -12,7 +12,7 @@ public interface PersonService {
 
     List<PersonDto> addNewPersons(List<PersonDto> personsDto);
 
-    PersonDto updatePerson(PersonDto personDto);
+    PersonDto updatePerson(Long id, PersonDto personDto);
 
     Long deletePerson(Long id);
 

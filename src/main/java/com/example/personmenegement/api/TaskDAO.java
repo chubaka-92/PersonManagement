@@ -15,4 +15,6 @@ public interface TaskDAO {
     void deleteTaskById(Long id);
 
     TaskEntity findTaskByUid(String uid);
+
+    TaskEntity findTaskById(Long taskId);
 }

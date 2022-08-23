@@ -49,9 +49,9 @@ public class TaskController {
         return ResponseEntity.ok(taskService.addNewTasks(tasksDto, personId));
     }
 
-    @PutMapping("/task/person/{id}")
-    public ResponseEntity<TaskDto> updateTask(@RequestBody TaskDto taskDto, @PathVariable("id") Long personId) {
-        log.info("Was calling updateTask. Input task: {} personId: {}", taskDto, personId);
-        return ResponseEntity.ok(taskService.updateTask(taskDto, personId));
+    @PutMapping("/task/{id}")
+    public ResponseEntity<TaskDto> updateTask(@RequestBody TaskDto taskDto, @PathVariable("id") Long taskId) {
+        log.info("Was calling updateTask. Input task: {} taskId: {}", taskDto, taskId);
+        return ResponseEntity.ok(taskService.updateTask(taskDto, taskId));
     }
 }

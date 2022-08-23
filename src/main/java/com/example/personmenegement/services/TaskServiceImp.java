@@ -6,13 +6,11 @@ import com.example.personmenegement.dto.TaskDto;
 import com.example.personmenegement.entity.PersonEntity;
 import com.example.personmenegement.entity.TaskEntity;
 import com.example.personmenegement.exeption.ManyTasksException;
-import com.example.personmenegement.exeption.PersonNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.text.MessageFormat;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,7 +22,6 @@ public class TaskServiceImp implements TaskService {
     private static final int ONE_TASK = 1;
     private final TaskDAOImp taskDAO;
     private static final String TOO_MANY_TASKS = "tooManyTasks";
-    private static final String PERSON_NOT_FOUND = "personNotFound";
     private final MessageService messageService;
     private final TaskMapper taskMapper;
     private final TaskValidation taskValidation;
@@ -78,32 +75,28 @@ public class TaskServiceImp implements TaskService {
             throw new ManyTasksException(MessageFormat.format(messageService.getMessage(TOO_MANY_TASKS), getCountAvailableTasks(personEntity)));
         }
         return tasksDto.stream()
-                .map(taskDto -> getTaskDto(taskDto,personEntity))
+                .map(taskDto -> getTaskDto(taskDto, personEntity))
                 .collect(Collectors.toList());
     }
 
-    private TaskDto getTaskDto(TaskDto taskDto,PersonEntity personEntity) {
+    private TaskDto getTaskDto(TaskDto taskDto, PersonEntity personEntity) {
         log.info("Was calling getTaskDto. Input taskDto: {} personId: {}", taskDto, personEntity);
         TaskDto result = taskValidation.validate(taskDto);
         if (result == null) {
-            return getNewTask(personEntity,taskDto);
+            return getNewTask(personEntity, taskDto);
         }
         return result;
     }
 
-    public TaskDto updateTask(TaskDto taskDto, Long personId) {
-        log.info("Was calling updateTask. Input task: {} personId: {}", taskDto, personId);
-        PersonEntity personEntity = personDao.findPersonById(personId);
-        if (personEntity == null) {
-            log.error(MessageFormat.format(messageService.getMessage(PERSON_NOT_FOUND), personId));
-            throw new PersonNotFoundException(MessageFormat.format(messageService.getMessage(PERSON_NOT_FOUND), personId));
-        }
+    public TaskDto updateTask(TaskDto taskDto, Long taskId) {
+        log.info("Was calling updateTask. Input taskDto: {} taskId: {}", taskDto, taskId);
+        TaskEntity taskEntity = taskDAO.findTaskById(taskId);
         TaskDto taskDtoTemp = taskValidation.validate(taskDto);
         if (taskDtoTemp != null) {
             log.error(taskDtoTemp.toString());
             return taskDtoTemp;
         }
-        return getUpdateTask(personEntity, taskDto);
+        return getUpdateTask(taskDto, taskEntity);
     }
 
     private TaskDto getNewTask(PersonEntity personEntity, TaskDto taskDto) {
@@ -114,12 +107,11 @@ public class TaskServiceImp implements TaskService {
         return taskMapper.taskEntityToTask(taskEntity);
     }
 
-    private TaskDto getUpdateTask(PersonEntity personEntity, TaskDto taskDto) {
-        log.debug("Was calling getUpdateTask. Input personEntity: {} taskTemp: {}", personEntity, taskDto);
-        TaskEntity taskEntity = taskMapper.taskToTaskEntity(taskDto);
-        taskEntity.setPersonId(personEntity.getId());
-        taskEntity.setId(taskDAO.updateTask(taskEntity).getId());
-        return taskMapper.taskEntityToTask(taskEntity);
+    private TaskDto getUpdateTask(TaskDto taskDto, TaskEntity taskEntity) {
+        log.debug("Was calling getUpdateTask. Input personEntity: {} taskEntity: {}", taskDto, taskEntity);
+        TaskEntity result = taskMapper.taskDtoAndTaskEntityToTaskEntity(taskDto, taskEntity);
+        taskDAO.updateTask(result);
+        return taskMapper.taskEntityToTask(result);
     }
 
     private static Integer getCountAvailableTasks(PersonEntity personEntity) {
@@ -130,10 +122,7 @@ public class TaskServiceImp implements TaskService {
         log.info("Was calling checkAvailableCountTasksToPerson. Input personEntity: {} countTasks: {}",
                 personEntity,
                 countTasks);
-        if (personEntity.getTasks().size() < personEntity.getPosition().getCountTasks()
-                && getCountAvailableTasks(personEntity) >= countTasks) {
-            return false;
-        }
-        return true;
+        return personEntity.getTasks().size() >= personEntity.getPosition().getCountTasks()
+                || getCountAvailableTasks(personEntity) < countTasks;
     }
 }

@@ -20,7 +20,6 @@ public class PersonServiceImp implements PersonService {
     private final PersonMapper personMapper;
     private final PersonValidation personValidation;
     private final PersonProducer personProducer;
-    ;
 
     @Override
     public PersonDto getPersonByUid(String uid) {
@@ -48,17 +47,16 @@ public class PersonServiceImp implements PersonService {
         return getNewPerson(personDto);
     }
 
-    public PersonDto updatePerson(PersonDto personDto) {
-        log.info("Was calling updatePerson. Input person: {}", personDto);
+    public PersonDto updatePerson(Long id, PersonDto personDto) {
+        log.info("Was calling updatePerson. Input id: {} person: {}", id, personDto);
+        PersonEntity personEntity = personDao.findPersonById(id);
         PersonDto personDtoResponse = personValidation.validate(personDto);
 
         if (personDtoResponse != null) {
             log.error(personDtoResponse.toString());
             return personDtoResponse;
         }
-        PersonEntity personEntity = personDao.updatePerson(personMapper.personToPersonEntity(personDto));
-        personDtoResponse = personMapper.personEntityToPerson(personEntity);
-        return personDtoResponse;
+        return getUpdatePerson(personEntity, personDto);
     }
 
 
@@ -90,5 +88,12 @@ public class PersonServiceImp implements PersonService {
         PersonEntity personEntity = personMapper.personToPersonEntity(personDto);
         personProducer.sendTask(personEntity);
         return personMapper.personEntityToPerson(personEntity);
+    }
+
+    private PersonDto getUpdatePerson(PersonEntity personEntity, PersonDto personDto) {
+        log.debug("Was calling updatePerson. Input personEntity: {} person: {}", personEntity, personDto);
+        PersonEntity result = personMapper.personDtoAndPersonEntityToPersonEntity(personDto, personEntity);
+        personDao.updatePerson(result);
+        return personMapper.personEntityToPerson(result);
     }
 }

@@ -7,6 +7,7 @@ import com.example.personmenegement.exeption.PersonNotFoundException;
 import com.example.personmenegement.repository.PersonRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -53,9 +54,14 @@ public class PersonDAOImp implements PersonDAO {
     }
 
     @Transactional
-    public void deletePersonById(long personId) {
+    public void deletePersonById(Long personId) {
         log.info("Was calling deletePersonById. Input personId: {}", personId);
-        personRepository.deleteById(personId);
+        try {
+            personRepository.deleteById(personId);
+        } catch (EmptyResultDataAccessException e) {
+            log.error(messageService.getMessage(PERSONS_NOT_FOUND));
+            throw new PersonNotFoundException(messageService.getMessage(PERSONS_NOT_FOUND));
+        }
     }
 
     @Override

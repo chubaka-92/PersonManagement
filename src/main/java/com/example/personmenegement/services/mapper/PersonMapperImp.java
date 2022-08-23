@@ -41,13 +41,27 @@ public class PersonMapperImp implements PersonMapper {
     }
 
     public PersonEntity personToPersonEntity(PersonDto personDto) {
-        log.info("Was calling personToPersonEntity. Input id: {}", personDto);
+        log.info("Was calling personToPersonEntity. Input personDto: {}", personDto);
         return PersonEntity.builder()
                 .id(getId(personDto))
                 .uid(getUid(personDto))
-                .name(personDto.getName())
+                .name(personDto.getName().trim())
                 .age(Integer.valueOf(personDto.getAge()))
-                .email(personDto.getEmail())
+                .email(personDto.getEmail().trim())
+                .salary(new BigDecimal(personDto.getSalary()))
+                .position(Position.definePosition(personDto.getPosition()))
+                .experience(Double.valueOf(personDto.getExperience()))
+                .build();
+    }
+
+    public PersonEntity personDtoAndPersonEntityToPersonEntity(PersonDto personDto, PersonEntity personEntity) {
+        log.info("Was calling personDtoAndPersonEntityToPersonEntity. Input personDto: {} personEntity: {}", personDto, personEntity);
+        return PersonEntity.builder()
+                .id(personEntity.getId())
+                .uid(personEntity.getUid())
+                .name(personDto.getName().trim())
+                .age(Integer.valueOf(personDto.getAge()))
+                .email(personDto.getEmail().trim())
                 .salary(new BigDecimal(personDto.getSalary()))
                 .position(Position.definePosition(personDto.getPosition()))
                 .experience(Double.valueOf(personDto.getExperience()))
