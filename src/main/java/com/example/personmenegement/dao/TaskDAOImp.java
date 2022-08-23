@@ -7,6 +7,7 @@ import com.example.personmenegement.exeption.TaskNotFoundException;
 import com.example.personmenegement.repository.TaskRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -47,7 +48,12 @@ public class TaskDAOImp implements TaskDAO {
     @Transactional
     public void deleteTaskById(Long id) {
         log.info("Was calling deleteTaskById. Input id: {}", id);
-        taskRepository.deleteById(id);
+        try {
+            taskRepository.deleteById(id);
+        } catch (EmptyResultDataAccessException e) {
+            log.error(messageService.getMessage(TASKS_NOT_FOUND));
+            throw new TaskNotFoundException(messageService.getMessage(TASKS_NOT_FOUND));
+        }
     }
 
     @Override
@@ -57,6 +63,14 @@ public class TaskDAOImp implements TaskDAO {
             log.error(MessageFormat.format(messageService.getMessage(TASK_NOT_FOUND), uid));
             throw new TaskNotFoundException(MessageFormat.format(messageService.getMessage(TASK_NOT_FOUND), uid));
         });
+    }
 
+    @Override
+    public TaskEntity findTaskById(Long id) {
+        log.info("Was calling findTaskById. Input uid: {}", id);
+        return taskRepository.findById(id).orElseThrow(() -> {
+            log.error(MessageFormat.format(messageService.getMessage(TASK_NOT_FOUND), id));
+            throw new TaskNotFoundException(MessageFormat.format(messageService.getMessage(TASK_NOT_FOUND), id));
+        });
     }
 }

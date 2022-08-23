@@ -42,10 +42,10 @@ public class PersonController {
         return ResponseEntity.ok(personService.addNewPerson(personDto));
     }
 
-    @PutMapping()
-    public ResponseEntity<PersonDto> updatePerson(@RequestBody PersonDto personDto) {
-        log.info("Was calling updatePerson. Input person: {}", personDto);
-        return ResponseEntity.ok(personService.updatePerson(personDto));
+    @PutMapping("/{id}")
+    public ResponseEntity<PersonDto> updatePerson(@PathVariable("id") Long id, @RequestBody PersonDto personDto) {
+        log.info("Was calling updatePerson. Input id: {} person: {}", id, personDto);
+        return ResponseEntity.ok(personService.updatePerson(id, personDto));
     }
 
     @PostMapping()

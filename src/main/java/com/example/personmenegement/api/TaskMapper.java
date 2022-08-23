@@ -8,4 +8,6 @@ public interface TaskMapper {
     TaskDto taskEntityToTask(TaskEntity taskEntity);
 
     TaskEntity taskToTaskEntity(TaskDto taskDto);
+
+    TaskEntity taskDtoAndTaskEntityToTaskEntity(TaskDto taskDto, TaskEntity taskEntity);
 }

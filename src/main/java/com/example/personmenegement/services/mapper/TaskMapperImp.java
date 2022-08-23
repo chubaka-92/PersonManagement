@@ -33,11 +33,21 @@ public class TaskMapperImp implements TaskMapper {
         return TaskEntity.builder()
                 .id(getId(taskDto))
                 .uid(getUid(taskDto))
-                .description(taskDto.getDescription())
+                .description(taskDto.getDescription().trim())
                 .priority(Priority.definePriority(taskDto.getPriority()))
                 .build();
     }
 
+    public TaskEntity taskDtoAndTaskEntityToTaskEntity(TaskDto taskDto, TaskEntity taskEntity) {
+        log.info("Was calling taskDtoAndTaskEntityToTaskEntity. Input taskDto: {}  taskEntity: {}", taskDto, taskEntity);
+        return TaskEntity.builder()
+                .id(taskEntity.getId())
+                .uid(taskEntity.getUid())
+                .description(taskDto.getDescription().trim())
+                .priority(Priority.definePriority(taskDto.getPriority()))
+                .personId(taskEntity.getPersonId())
+                .build();
+    }
     private String getId(TaskEntity taskEntity) {
         log.debug("Was calling getId. Input taskEntity: {}", taskEntity);
         if (taskEntity.getId() == null) {

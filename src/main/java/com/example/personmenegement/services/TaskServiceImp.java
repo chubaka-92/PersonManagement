@@ -83,15 +83,15 @@ public class TaskServiceImp implements TaskService {
         return result;
     }
 
-    public TaskDto updateTask(TaskDto taskDto, Long personId) {
-        log.info("Was calling updateTask. Input task: {} personId: {}", taskDto, personId);
-        PersonEntity personEntity = personDao.findPersonById(personId);
+    public TaskDto updateTask(TaskDto taskDto, Long taskId) {
+        log.info("Was calling updateTask. Input taskDto: {} taskId: {}", taskDto, taskId);
+        TaskEntity taskEntity = taskDAO.findTaskById(taskId);
         TaskDto taskDtoTemp = taskValidation.validate(taskDto);
-        if (!(taskDtoTemp == null)) {
+        if (taskDtoTemp != null) {
             log.error(taskDtoTemp.toString());
             return taskDtoTemp;
         }
-        return getUpdateTask(personEntity, taskDto);
+        return getUpdateTask(taskDto, taskEntity);
     }
 
     private TaskDto getNewTask(PersonEntity personEntity, TaskDto taskDto) {
@@ -102,12 +102,11 @@ public class TaskServiceImp implements TaskService {
         return taskMapper.taskEntityToTask(taskEntity);
     }
 
-    private TaskDto getUpdateTask(PersonEntity personEntity, TaskDto taskDto) {
-        log.debug("Was calling getUpdateTask. Input personEntity: {} taskTemp: {}", personEntity, taskDto);
-        TaskEntity taskEntity = taskMapper.taskToTaskEntity(taskDto);
-        taskEntity.setPersonId(personEntity.getId());
-        taskEntity.setId(taskDAO.updateTask(taskEntity).getId());
-        return taskMapper.taskEntityToTask(taskEntity);
+    private TaskDto getUpdateTask(TaskDto taskDto, TaskEntity taskEntity) {
+        log.debug("Was calling getUpdateTask. Input personEntity: {} taskEntity: {}", taskDto, taskEntity);
+        TaskEntity result = taskMapper.taskDtoAndTaskEntityToTaskEntity(taskDto, taskEntity);
+        taskDAO.updateTask(result);
+        return taskMapper.taskEntityToTask(result);
     }
 
     private static Integer getCountAvailableTasks(PersonEntity personEntity) {
@@ -119,10 +118,7 @@ public class TaskServiceImp implements TaskService {
         log.debug("Was calling checkAvailableCountTasksToPerson. Input personEntity: {} countTasks: {}",
                 personEntity,
                 countTasks);
-        if (personEntity.getTasks().size() < personEntity.getPosition().getCountTasks()
-                && getCountAvailableTasks(personEntity) >= countTasks) {
-            return false;
-        }
-        return true;
+        return personEntity.getTasks().size() >= personEntity.getPosition().getCountTasks()
+                || getCountAvailableTasks(personEntity) < countTasks;
     }
 }
