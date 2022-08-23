@@ -8,7 +8,7 @@ import java.util.ResourceBundle;
 
 @Service
 @RequiredArgsConstructor
-public class MessageServiceImp implements MessageService {
+public class MessageServiceImp implements MessageService {// todo тут интерфейс лишний
 
     private static final String MESSAGE = "message";
     private final ResourceBundle resourceBundle = ResourceBundle.getBundle(MESSAGE);

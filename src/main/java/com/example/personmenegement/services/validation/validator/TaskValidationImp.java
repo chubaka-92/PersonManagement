@@ -16,7 +16,7 @@ public class TaskValidationImp implements TaskValidation {
 
     public TaskDto validate(TaskDto taskDto) {
         log.info("Was calling validate. Input task: " + taskDto);
-        TaskChecker taskChecker = new TaskCheckerImp(new MessageServiceImp());
+        TaskChecker taskChecker = new TaskCheckerImp(new MessageServiceImp());// todo создавать руками класс, который @Service плохой тон. Убери лучше @Service и явно инициализируй его во всех классах
         TaskInitializer taskErrorMessage = new TaskInitializerImp(taskDto, new MessageServiceImp());
 
         taskErrorMessage.addFieldsEmpty(taskChecker.checkRequiredFields(taskDto));
