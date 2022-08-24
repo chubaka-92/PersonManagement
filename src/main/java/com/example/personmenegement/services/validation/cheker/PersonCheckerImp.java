@@ -1,10 +1,9 @@
 package com.example.personmenegement.services.validation.cheker;
 
-import com.example.personmenegement.api.MessageService;
 import com.example.personmenegement.api.PersonChecker;
 import com.example.personmenegement.dto.PersonDto;
+import com.example.personmenegement.services.MessageService;
 import com.example.personmenegement.types.Position;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.math.BigDecimal;
@@ -17,14 +16,13 @@ import java.util.Map;
 import static com.example.personmenegement.types.PersonFieldName.*;
 
 @Slf4j
-@RequiredArgsConstructor
 public class PersonCheckerImp implements PersonChecker {
     private static final String INCORRECT_AGE = "incorrectAge";
     private static final String INCORRECT_POSITION = "incorrectPosition";
     private static final String INCORRECT_SALARY = "incorrectSalary";
     private static final String LITTLE_WORK_EXPERIENCE = "littleWorkExperience";
     private static final int WORK_MIN_AGE = 16;
-    private final MessageService messageService;
+    private final MessageService messageService  = new MessageService();
 
     public List<String> checkRequiredFields(PersonDto personDto) {
         log.info("Was calling checkRequiredFields. Input person: {}", personDto);

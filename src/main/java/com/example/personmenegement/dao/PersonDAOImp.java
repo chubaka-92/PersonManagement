@@ -1,10 +1,10 @@
 package com.example.personmenegement.dao;
 
-import com.example.personmenegement.api.MessageService;
 import com.example.personmenegement.api.PersonDAO;
 import com.example.personmenegement.entity.PersonEntity;
 import com.example.personmenegement.exeption.PersonNotFoundException;
 import com.example.personmenegement.repository.PersonRepository;
+import com.example.personmenegement.services.MessageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -21,7 +21,7 @@ public class PersonDAOImp implements PersonDAO {
     private static final String PERSON_NOT_FOUND = "personNotFound";
     private static final String PERSONS_NOT_FOUND = "personsNotFound";
     private final PersonRepository personRepository;
-    private final MessageService messageService;
+    private final MessageService messageService = new MessageService();
 
     public PersonEntity findPersonById(Long id) {
         log.info("Was calling findPersonById. Input id: {}", id);

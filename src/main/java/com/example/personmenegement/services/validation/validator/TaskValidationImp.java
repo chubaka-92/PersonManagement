@@ -4,7 +4,6 @@ import com.example.personmenegement.api.TaskChecker;
 import com.example.personmenegement.api.TaskInitializer;
 import com.example.personmenegement.api.TaskValidation;
 import com.example.personmenegement.dto.TaskDto;
-import com.example.personmenegement.services.MessageServiceImp;
 import com.example.personmenegement.services.validation.cheker.TaskCheckerImp;
 import com.example.personmenegement.services.validation.initializer.TaskInitializerImp;
 import lombok.extern.slf4j.Slf4j;
@@ -16,8 +15,8 @@ public class TaskValidationImp implements TaskValidation {
 
     public TaskDto validate(TaskDto taskDto) {
         log.info("Was calling validate. Input task: " + taskDto);
-        TaskChecker taskChecker = new TaskCheckerImp(new MessageServiceImp());// todo см в Rest
-        TaskInitializer taskErrorMessage = new TaskInitializerImp(taskDto, new MessageServiceImp());
+        TaskChecker taskChecker = new TaskCheckerImp();// todo см в Rest  //  DONE
+        TaskInitializer taskErrorMessage = new TaskInitializerImp(taskDto);
 
         taskErrorMessage.addFieldsEmpty(taskChecker.checkRequiredFields(taskDto));
 

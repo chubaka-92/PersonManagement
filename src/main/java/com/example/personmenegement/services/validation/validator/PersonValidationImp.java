@@ -4,7 +4,6 @@ import com.example.personmenegement.api.PersonChecker;
 import com.example.personmenegement.api.PersonInitializer;
 import com.example.personmenegement.api.PersonValidation;
 import com.example.personmenegement.dto.PersonDto;
-import com.example.personmenegement.services.MessageServiceImp;
 import com.example.personmenegement.services.validation.cheker.PersonCheckerImp;
 import com.example.personmenegement.services.validation.initializer.PersonInitializerImp;
 import com.example.personmenegement.types.Position;
@@ -20,8 +19,8 @@ public class PersonValidationImp implements PersonValidation {
 
     public PersonDto validate(PersonDto personDto) {
         log.info("Was calling validate. Input person: " + personDto);
-        PersonChecker personChecker = new PersonCheckerImp(new MessageServiceImp());
-        PersonInitializer personErrorMessage = new PersonInitializerImp(personDto, new MessageServiceImp());
+        PersonChecker personChecker = new PersonCheckerImp();
+        PersonInitializer personErrorMessage = new PersonInitializerImp(personDto);
 
         personErrorMessage.addFieldsEmpty(personChecker.checkRequiredFields(personDto));
 

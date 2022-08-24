@@ -1,8 +1,8 @@
 package com.example.personmenegement.services.validation.initializer;
 
-import com.example.personmenegement.api.MessageService;
 import com.example.personmenegement.api.PersonInitializer;
 import com.example.personmenegement.dto.PersonDto;
+import com.example.personmenegement.services.MessageService;
 import com.example.personmenegement.types.PersonFieldName;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -16,9 +16,8 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class PersonInitializerImp implements PersonInitializer {
     private static final String EMPTY_FIELD = "emptyField";
-
     private final PersonDto personDtoError;
-    private final MessageService messageService;
+    private final MessageService messageService = new MessageService();
 
     public void addFieldsEmpty(List<String> incorrectFields) {
         log.info("Was calling addFieldsEmpty. Input incorrectFields: " + incorrectFields);
