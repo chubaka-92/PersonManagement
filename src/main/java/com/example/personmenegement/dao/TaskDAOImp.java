@@ -1,10 +1,10 @@
 package com.example.personmenegement.dao;
 
-import com.example.personmenegement.api.MessageService;
 import com.example.personmenegement.api.TaskDAO;
 import com.example.personmenegement.entity.TaskEntity;
 import com.example.personmenegement.exeption.TaskNotFoundException;
 import com.example.personmenegement.repository.TaskRepository;
+import com.example.personmenegement.services.MessageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -21,7 +21,7 @@ public class TaskDAOImp implements TaskDAO {
     private final TaskRepository taskRepository;
     private static final String TASK_NOT_FOUND = "taskNotFound";
     private static final String TASKS_NOT_FOUND = "tasksNotFound";
-    private final MessageService messageService;
+    private final MessageService messageService = new MessageService();
 
     public List<TaskEntity> findTasks() {
         log.info("Was calling findTasks.");

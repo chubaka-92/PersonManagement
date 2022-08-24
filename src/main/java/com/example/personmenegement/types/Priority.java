@@ -1,7 +1,6 @@
 package com.example.personmenegement.types;
 
-import com.example.personmenegement.api.MessageService;
-import com.example.personmenegement.services.MessageServiceImp;
+import com.example.personmenegement.services.MessageService;
 import lombok.AllArgsConstructor;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
@@ -16,10 +15,9 @@ public enum Priority {
     CRITICAL,
     UNDEFINED;
 
-
     public static Priority definePriority(String priority) {
         log.info("Was calling definePriority. Input priority: {}", priority);
-        MessageService messageService = new MessageServiceImp();
+        MessageService messageService = new MessageService();
         if (messageService.getMessage(LOW).equals(priority)) {
             return LOW;
         } else if (messageService.getMessage(MEDIUM).equals(priority)) {

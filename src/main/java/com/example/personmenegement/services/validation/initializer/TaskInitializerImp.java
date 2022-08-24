@@ -1,8 +1,8 @@
 package com.example.personmenegement.services.validation.initializer;
 
-import com.example.personmenegement.api.MessageService;
 import com.example.personmenegement.api.TaskInitializer;
 import com.example.personmenegement.dto.TaskDto;
+import com.example.personmenegement.services.MessageService;
 import com.example.personmenegement.types.TaskFieldName;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -16,9 +16,8 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class TaskInitializerImp implements TaskInitializer {
     private static final String EMPTY_FIELD = "emptyField";
-
     private final TaskDto taskDtoError;
-    private final MessageService messageService;
+    private final MessageService messageService = new MessageService();
 
 
     public void addFieldsEmpty(List<String> incorrectFields) {

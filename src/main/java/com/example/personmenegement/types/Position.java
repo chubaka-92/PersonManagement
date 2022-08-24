@@ -1,7 +1,6 @@
 package com.example.personmenegement.types;
 
-import com.example.personmenegement.api.MessageService;
-import com.example.personmenegement.services.MessageServiceImp;
+import com.example.personmenegement.services.MessageService;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
@@ -29,7 +28,7 @@ public enum Position {
 
     public static Position definePosition(String position) {
         log.info("Was calling definePosition. Input position: {}", position);
-        MessageService messageService = new MessageServiceImp();
+        MessageService messageService = new MessageService();
         if (messageService.getMessage(INTERN).equals(position)) {
             return INTERN;
         } else if (messageService.getMessage(TECHNOLOGIST).equals(position)) {

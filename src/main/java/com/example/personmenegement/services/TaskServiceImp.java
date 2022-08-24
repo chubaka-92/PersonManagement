@@ -22,7 +22,7 @@ public class TaskServiceImp implements TaskService {
     private static final int ONE_TASK = 1;
     private final TaskDAOImp taskDAO;
     private static final String TOO_MANY_TASKS = "tooManyTasks";
-    private final MessageService messageService;
+    private final MessageService messageService = new MessageService();
     private final TaskMapper taskMapper;
     private final TaskValidation taskValidation;
     private final PersonDAO personDao;

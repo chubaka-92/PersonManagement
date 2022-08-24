@@ -1,12 +1,12 @@
 package com.example.personmenegement.services.mapper;
 
-import com.example.personmenegement.api.MessageService;
 import com.example.personmenegement.api.PersonMapper;
 import com.example.personmenegement.api.TaskMapper;
 import com.example.personmenegement.dto.PersonDto;
 import com.example.personmenegement.dto.TaskDto;
 import com.example.personmenegement.entity.PersonEntity;
 import com.example.personmenegement.entity.TaskEntity;
+import com.example.personmenegement.services.MessageService;
 import com.example.personmenegement.types.Position;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class PersonMapperImp implements PersonMapper {
 
-    private final MessageService messageService;
+    private final MessageService messageService = new MessageService();
     private final TaskMapper taskMapper;
 
     public PersonDto personEntityToPerson(PersonEntity personEntity) {

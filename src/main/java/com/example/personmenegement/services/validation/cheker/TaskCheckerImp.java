@@ -1,10 +1,9 @@
 package com.example.personmenegement.services.validation.cheker;
 
-import com.example.personmenegement.api.MessageService;
 import com.example.personmenegement.api.TaskChecker;
 import com.example.personmenegement.dto.TaskDto;
+import com.example.personmenegement.services.MessageService;
 import com.example.personmenegement.types.Priority;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
@@ -16,10 +15,9 @@ import static com.example.personmenegement.types.TaskFieldName.DESCRIPTION;
 import static com.example.personmenegement.types.TaskFieldName.PRIORITY;
 
 @Slf4j
-@RequiredArgsConstructor
 public class TaskCheckerImp implements TaskChecker {
     private static final String INCORRECT_PRIORITY = "incorrectPriority";
-    private final MessageService messageService;
+    private final MessageService messageService = new MessageService();
 
 
     public List<String> checkRequiredFields(TaskDto taskDto) {
