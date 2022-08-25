@@ -14,7 +14,7 @@ public interface PersonDAO {
 
     PersonEntity updatePerson(PersonEntity personEntity);
 
-    void deletePersonById(long personId);
+    void deletePersonById(Long personId);
 
     PersonEntity findPersonByUid(String uid);
 }

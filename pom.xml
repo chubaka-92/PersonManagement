@@ -11,8 +11,8 @@
 	<groupId>com.example</groupId>
 	<artifactId>PersonMenegementRest</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>PersonMenegementRest</name>
-	<description>PersonMenegementRest project for Spring Boot</description>
+	<name>PersonManagement</name>
+	<description>PersonManagementRest project for Spring Boot</description>
 	<properties>
 		<java.version>11</java.version>
 	</properties>

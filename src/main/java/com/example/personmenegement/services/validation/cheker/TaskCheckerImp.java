@@ -1,10 +1,9 @@
 package com.example.personmenegement.services.validation.cheker;
 
-import com.example.personmenegement.api.MessageService;
 import com.example.personmenegement.api.TaskChecker;
 import com.example.personmenegement.dto.TaskDto;
+import com.example.personmenegement.services.MessageService;
 import com.example.personmenegement.types.Priority;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
@@ -16,21 +15,18 @@ import static com.example.personmenegement.types.TaskFieldName.DESCRIPTION;
 import static com.example.personmenegement.types.TaskFieldName.PRIORITY;
 
 @Slf4j
-@RequiredArgsConstructor
 public class TaskCheckerImp implements TaskChecker {
     private static final String INCORRECT_PRIORITY = "incorrectPriority";
-    private final MessageService messageService;
+    private final MessageService messageService = new MessageService();
 
-    // todo выбери один стиль, либо писать руками конструктор, либо lombok
-    //  Done
 
     public List<String> checkRequiredFields(TaskDto taskDto) {
         log.info("Was calling checkRequiredFields. Input task: {}", taskDto);
         List<String> invalidFields = new ArrayList<>();
-        if (taskDto.getDescription().isBlank()) {// todo isBlank  //   DONE
+        if (taskDto.getDescription() == null || taskDto.getDescription().isBlank()) {
             invalidFields.add(DESCRIPTION);
         }
-        if (taskDto.getPriority().isBlank()) {// todo isBlank  //   DONE
+        if (taskDto.getPriority() == null || taskDto.getPriority().isBlank()) {
             invalidFields.add(PRIORITY);
         }
         return invalidFields;

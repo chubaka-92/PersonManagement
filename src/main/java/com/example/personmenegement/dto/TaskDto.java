@@ -1,6 +1,7 @@
 package com.example.personmenegement.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
 @Getter
@@ -11,13 +12,13 @@ import lombok.*;
 @NoArgsConstructor
 public class TaskDto {
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String id;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String uid;
     private String description;
     private String priority;
 
     @JsonIgnore
     private boolean valid = true;
-    // todo используй lombok
-    //  DONE
 }

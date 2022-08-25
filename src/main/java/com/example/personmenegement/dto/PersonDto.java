@@ -1,6 +1,7 @@
 package com.example.personmenegement.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
 import java.util.List;
@@ -13,7 +14,9 @@ import java.util.List;
 @NoArgsConstructor
 public class PersonDto {
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String id;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String uid;
     private String name;
     private String age;
@@ -21,6 +24,7 @@ public class PersonDto {
     private String position;
     private String salary;
     private String experience;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private List<TaskDto> tasks;
     @JsonIgnore
     private boolean valid = true;

@@ -1,12 +1,12 @@
 package com.example.personmenegement.services.mapper;
 
-import com.example.personmenegement.api.MessageService;
 import com.example.personmenegement.api.PersonMapper;
 import com.example.personmenegement.api.TaskMapper;
 import com.example.personmenegement.dto.PersonDto;
 import com.example.personmenegement.dto.TaskDto;
 import com.example.personmenegement.entity.PersonEntity;
 import com.example.personmenegement.entity.TaskEntity;
+import com.example.personmenegement.services.MessageService;
 import com.example.personmenegement.types.Position;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,11 +22,11 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class PersonMapperImp implements PersonMapper {
 
-    private final MessageService messageService;
+    private final MessageService messageService = new MessageService();
     private final TaskMapper taskMapper;
 
     public PersonDto personEntityToPerson(PersonEntity personEntity) {
-        log.info("Was calling personEntityToPerson. Input personEntity: {}", personEntity.toString());
+        log.info("Was calling personEntityToPerson. Input personEntity: {}", personEntity);
         return PersonDto.builder()
                 .id(getId(personEntity))
                 .uid(personEntity.getUid())
@@ -41,13 +41,27 @@ public class PersonMapperImp implements PersonMapper {
     }
 
     public PersonEntity personToPersonEntity(PersonDto personDto) {
-        log.info("Was calling personToPersonEntity. Input id: {}", personDto.toString());
+        log.info("Was calling personToPersonEntity. Input personDto: {}", personDto);
         return PersonEntity.builder()
                 .id(getId(personDto))
                 .uid(getUid(personDto))
-                .name(personDto.getName())
+                .name(personDto.getName().trim())
                 .age(Integer.valueOf(personDto.getAge()))
-                .email(personDto.getEmail())
+                .email(personDto.getEmail().trim())
+                .salary(new BigDecimal(personDto.getSalary()))
+                .position(Position.definePosition(personDto.getPosition()))
+                .experience(Double.valueOf(personDto.getExperience()))
+                .build();
+    }
+
+    public PersonEntity personDtoAndPersonEntityToPersonEntity(PersonDto personDto, PersonEntity personEntity) {
+        log.info("Was calling personDtoAndPersonEntityToPersonEntity. Input personDto: {} personEntity: {}", personDto, personEntity);
+        return PersonEntity.builder()
+                .id(personEntity.getId())
+                .uid(personEntity.getUid())
+                .name(personDto.getName().trim())
+                .age(Integer.valueOf(personDto.getAge()))
+                .email(personDto.getEmail().trim())
                 .salary(new BigDecimal(personDto.getSalary()))
                 .position(Position.definePosition(personDto.getPosition()))
                 .experience(Double.valueOf(personDto.getExperience()))

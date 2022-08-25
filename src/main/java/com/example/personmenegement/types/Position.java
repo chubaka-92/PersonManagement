@@ -1,7 +1,6 @@
 package com.example.personmenegement.types;
 
-import com.example.personmenegement.api.MessageService;
-import com.example.personmenegement.services.MessageServiceImp;
+import com.example.personmenegement.services.MessageService;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
@@ -27,9 +26,9 @@ public enum Position {
     private final Double workExperience;
     private final Integer countTasks;
 
-    public static Position definePosition(String position) { //todo название definePosition //  Done
+    public static Position definePosition(String position) {
         log.info("Was calling definePosition. Input position: {}", position);
-        MessageService messageService = new MessageServiceImp();
+        MessageService messageService = new MessageService();
         if (messageService.getMessage(INTERN).equals(position)) {
             return INTERN;
         } else if (messageService.getMessage(TECHNOLOGIST).equals(position)) {
@@ -44,7 +43,4 @@ public enum Position {
             return UNDEFINED;
         }
     }
-
-    // todo методы для валидации не должны быть в Enum, у тебя есть отдельный сервис, который за это отвечает
-    //  Done. Перенес обратно в класс с валидацией
 }

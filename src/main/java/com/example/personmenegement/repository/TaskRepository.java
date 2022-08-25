@@ -7,5 +7,5 @@ import java.util.Optional;
 
 public interface TaskRepository extends JpaRepository<TaskEntity, Long> {
 
-    Optional<TaskEntity> findByUid(String uid);// todo лучше используй JpaRepository  //  DONE
+    Optional<TaskEntity> findByUid(String uid);
 }
