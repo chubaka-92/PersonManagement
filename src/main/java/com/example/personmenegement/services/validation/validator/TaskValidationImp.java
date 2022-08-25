@@ -15,7 +15,7 @@ public class TaskValidationImp implements TaskValidation {
 
     public TaskDto validate(TaskDto taskDto) {
         log.info("Was calling validate. Input task: " + taskDto);
-        TaskChecker taskChecker = new TaskCheckerImp();// todo см в Rest  //  DONE
+        TaskChecker taskChecker = new TaskCheckerImp();
         TaskInitializer taskErrorMessage = new TaskInitializerImp(taskDto);
 
         taskErrorMessage.addFieldsEmpty(taskChecker.checkRequiredFields(taskDto));
