@@ -5,6 +5,7 @@ import com.example.personmenegement.dto.PersonDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,6 +20,7 @@ public class PersonController {
 
 
     @GetMapping("/{uid}")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<PersonDto> getPerson(@PathVariable("uid") String uid) {
         log.info("Was calling getPerson. Input uid: {}", uid);
         return ResponseEntity.ok(personService.getPersonByUid(uid));

@@ -1,9 +1,7 @@
 package com.example.personmenegement.controller;
 
 import com.example.personmenegement.dto.ErrorDetails;
-import com.example.personmenegement.exeption.ManyTasksException;
-import com.example.personmenegement.exeption.PersonNotFoundException;
-import com.example.personmenegement.exeption.TaskNotFoundException;
+import com.example.personmenegement.exeption.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -40,5 +38,25 @@ public class ExceptionController {
                 .status(statusCode)
                 .message(exception)
                 .details(request).build();
+    }
+
+    @ExceptionHandler(UserEmailExistAuthException.class)
+    public ResponseEntity<?> handleUserEmailExistAuthException(UserEmailExistAuthException exception, WebRequest request) {
+        ErrorDetails errorDetails = ErrorDetails.builder()
+                .timeStamp(LocalDate.now())
+                .status(HttpStatus.BAD_REQUEST.value())
+                .message(exception.getMessage())
+                .details(request.getDescription(false)).build();
+        return new ResponseEntity(errorDetails, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(UserNameExistAuthException.class)
+    public ResponseEntity<?> handleUserNameExistAuthException(UserNameExistAuthException exception, WebRequest request) {
+        ErrorDetails errorDetails = ErrorDetails.builder()
+                .timeStamp(LocalDate.now())
+                .status(HttpStatus.BAD_REQUEST.value())
+                .message(exception.getMessage())
+                .details(request.getDescription(false)).build();
+        return new ResponseEntity(errorDetails, HttpStatus.BAD_REQUEST);
     }
 }
