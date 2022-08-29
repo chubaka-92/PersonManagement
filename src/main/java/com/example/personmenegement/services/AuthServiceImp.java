@@ -7,7 +7,6 @@ import com.example.personmenegement.dto.JwtResponse;
 import com.example.personmenegement.dto.LoginRequest;
 import com.example.personmenegement.dto.UserDto;
 import com.example.personmenegement.entity.UserEntity;
-import com.example.personmenegement.repository.RoleRepository;
 import com.example.personmenegement.services.mapper.UserMapperImp;
 import com.example.personmenegement.services.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;

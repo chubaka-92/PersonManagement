@@ -1,10 +1,8 @@
 package com.example.personmenegement.repository;
 
 import com.example.personmenegement.entity.RoleEntity;
-import com.example.personmenegement.types.Roles;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
