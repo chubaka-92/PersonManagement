@@ -39,24 +39,4 @@ public class ExceptionController {
                 .message(exception)
                 .details(request).build();
     }
-
-    @ExceptionHandler(UserEmailExistAuthException.class)
-    public ResponseEntity<?> handleUserEmailExistAuthException(UserEmailExistAuthException exception, WebRequest request) {
-        ErrorDetails errorDetails = ErrorDetails.builder()
-                .timeStamp(LocalDate.now())
-                .status(HttpStatus.BAD_REQUEST.value())
-                .message(exception.getMessage())
-                .details(request.getDescription(false)).build();
-        return new ResponseEntity(errorDetails, HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler(UserNameExistAuthException.class)
-    public ResponseEntity<?> handleUserNameExistAuthException(UserNameExistAuthException exception, WebRequest request) {
-        ErrorDetails errorDetails = ErrorDetails.builder()
-                .timeStamp(LocalDate.now())
-                .status(HttpStatus.BAD_REQUEST.value())
-                .message(exception.getMessage())
-                .details(request.getDescription(false)).build();
-        return new ResponseEntity(errorDetails, HttpStatus.BAD_REQUEST);
-    }
 }

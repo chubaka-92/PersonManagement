@@ -1,14 +1,16 @@
 package com.example.personmenegement.services.mapper;
 
+import com.example.personmenegement.dao.RoleDAOImp;
 import com.example.personmenegement.dto.UserDto;
 import com.example.personmenegement.entity.RoleEntity;
 import com.example.personmenegement.entity.UserEntity;
+import com.example.personmenegement.types.Roles;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -17,13 +19,14 @@ import java.util.stream.Collectors;
 public class UserMapperImp {
 
     private final PasswordEncoder passwordEncoder;
+    private final RoleDAOImp roleDAOImp;
 
     public UserDto userEntityToUserDto(UserEntity userEntity) {
         log.info("Was calling userEntityToUserDto. Input userEntity: {}", userEntity);
         return UserDto.builder()
                 .username(userEntity.getUsername())
                 .email(userEntity.getEmail())
-                //.roles(userEntity.getRoleEntities())
+                .roles(getRoles(userEntity.getRoleEntities()))
                 .build();
     }
 
@@ -33,20 +36,23 @@ public class UserMapperImp {
                 .username(userDto.getUsername())
                 .email(userDto.getEmail())
                 .password(passwordEncoder.encode(userDto.getPassword()))
-                       // .roleEntities(getRoles(userDto.getRoles()))
+                .roleEntities(getEntityRoles(userDto.getRoles()))
                 .build();
 
     }
 
-/*    private List<RoleEntity> getRoles(List<String> roles) {
-        log.debug("Was calling getTasks.");
-        if (roles == null) {
-            return null;
-        }
-        return roles
-                .stream()
-                .map(taskMapper::taskEntityToTask)
-                .collect(Collectors.toList());
-    }*/
+    private Set<RoleEntity> getEntityRoles(Set<String> roles) {
+        log.debug("Was calling getEntityRoles. Input roles: {}", roles);
+        return roles.stream()
+                .map(role -> roleDAOImp.findRoleByName(Roles.defineRole(role).name()))
+                .collect(Collectors.toSet());
+    }
+
+    private Set<String> getRoles(Set<RoleEntity> roleEntities) {
+        log.debug("Was calling getRoles. Input roleEntities: {}", roleEntities);
+        return roleEntities.stream()
+                .map(roleEntity -> roleEntity.getName().getName())
+                .collect(Collectors.toSet());
+    }
 
 }

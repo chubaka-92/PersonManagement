@@ -1,7 +1,6 @@
 package com.example.personmenegement.config.securety.jwt;
 
 import com.example.personmenegement.services.security.UserDetailsServiceImpl;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -20,7 +19,6 @@ import java.io.IOException;
 
 @Slf4j
 @Component
-//@RequiredArgsConstructor
 public class AuthTokenFilter extends OncePerRequestFilter {
     private static final String AUTHORIZATION = "Authorization";
     private static final String AUTHORIZATION_TYPE = "Bearer ";
@@ -30,7 +28,6 @@ public class AuthTokenFilter extends OncePerRequestFilter {
     private JwtUtils jwtUtils;
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
-
 
 
     @Override

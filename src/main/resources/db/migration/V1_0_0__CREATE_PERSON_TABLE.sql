@@ -1,5 +1,5 @@
 create table if not exists person (
-                         id       bigserial    not null,
+                         id       bigserial not null,
                          uid      varchar(100),            -- уникальный код задачи персоны
                          name     varchar(50),             -- Имя персоны
                          age      integer,                 -- возраст персоны

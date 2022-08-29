@@ -20,7 +20,6 @@ public class PersonController {
 
 
     @GetMapping("/{uid}")
-    @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<PersonDto> getPerson(@PathVariable("uid") String uid) {
         log.info("Was calling getPerson. Input uid: {}", uid);
         return ResponseEntity.ok(personService.getPersonByUid(uid));

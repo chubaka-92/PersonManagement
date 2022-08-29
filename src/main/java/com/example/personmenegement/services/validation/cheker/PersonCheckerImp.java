@@ -22,7 +22,7 @@ public class PersonCheckerImp implements PersonChecker {
     private static final String INCORRECT_SALARY = "incorrectSalary";
     private static final String LITTLE_WORK_EXPERIENCE = "littleWorkExperience";
     private static final int WORK_MIN_AGE = 16;
-    private final MessageService messageService  = new MessageService();
+    private final MessageService messageService = new MessageService();
 
     public List<String> checkRequiredFields(PersonDto personDto) {
         log.info("Was calling checkRequiredFields. Input person: {}", personDto);

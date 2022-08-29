@@ -1,5 +1,7 @@
 package com.example.personmenegement.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
 import java.util.Set;
@@ -12,7 +14,10 @@ import java.util.Set;
 @ToString(exclude = "password")
 public class UserDto {
     private String username;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private String password;
     private String email;
     private Set<String> roles;
-    private String password;
+    @JsonIgnore
+    private boolean valid = true;
 }

@@ -21,15 +21,13 @@ public class AuthController {
 
     @PostMapping("/signin")
     public ResponseEntity<?> authUser(@RequestBody LoginRequest loginRequest) {
-        log.info("Was calling authUser. Input loginRequest: {}", loginRequest.toString());
-
+        log.info("Was calling authUser. Input loginRequest: {}", loginRequest);
         return ResponseEntity.ok(personService.auth(loginRequest));
     }
 
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@RequestBody UserDto userDto) {
-        log.info("Was calling registerUser. Input signupRequest: {}", userDto.toString());
-
+        log.info("Was calling registerUser. Input userDto: {}", userDto);
         return ResponseEntity.ok(personService.registration(userDto));
     }
 }
