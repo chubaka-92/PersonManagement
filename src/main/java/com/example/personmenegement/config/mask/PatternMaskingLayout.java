@@ -12,7 +12,7 @@ import java.util.stream.IntStream;
 public class PatternMaskingLayout extends PatternLayout {
     private static final Character MASK_VALUE = '*';
     private Pattern multilinePattern;
-    private List<String> maskPatterns = new ArrayList<>();
+    private List<String> maskPatterns = new ArrayList<>(); // todo final добавь
 
     public void addMaskPattern(String maskPattern) {
         maskPatterns.add(maskPattern);
@@ -39,7 +39,7 @@ public class PatternMaskingLayout extends PatternLayout {
                     IntStream.range(matcher.start(group), matcher.end(group)).forEach(i -> sb.setCharAt(i, MASK_VALUE));
                 }
             });
-        }
+        }// todo сделай с помощью стрима
         return sb.toString();
     }
 }
