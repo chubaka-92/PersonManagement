@@ -28,23 +28,23 @@ public class JwtUtils {
                 .setSubject((userPrincipal.getUsername()))
                 .setIssuedAt(new Date())
                 .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
-                .signWith(SignatureAlgorithm.HS512, jwtSecret)
+                .signWith(SignatureAlgorithm.HS512, jwtSecret)// todo deprecated method
                 .compact();
     }
 
     public boolean validateJwtToken(String jwt) {
         log.info("Was calling validateJwtToken.");
         try {
-            Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(jwt);
+            Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(jwt);// todo deprecated method
             return true;
         } catch (MalformedJwtException | IllegalArgumentException e) {
-            System.err.println(e.getMessage());
+            System.err.println(e.getMessage());// todo нехорошо, используй логгер
         }
         return false;
     }
 
     public String getUserNameFromJwtToken(String jwt) {
         log.info("Was calling getUserNameFromJwtToken.");
-        return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(jwt).getBody().getSubject();
+        return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(jwt).getBody().getSubject();// todo deprecated method, сделай перенос строки как в generateJwtToken
     }
 }

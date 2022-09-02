@@ -27,7 +27,7 @@ public class UserEntity {
     @Column(name = "password")
     private String password;
 
-    @ManyToMany()
+    @ManyToMany()// todo укажи тип загрузки
     @JoinTable(name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))

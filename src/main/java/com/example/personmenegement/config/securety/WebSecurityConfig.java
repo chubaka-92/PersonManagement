@@ -1,4 +1,4 @@
-package com.example.personmenegement.config.securety;
+package com.example.personmenegement.config.securety;// todo ошибка в названии пакета
 
 import com.example.personmenegement.config.securety.jwt.AuthEntryPointJwt;
 import com.example.personmenegement.config.securety.jwt.AuthTokenFilter;
@@ -21,7 +21,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @RequiredArgsConstructor
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter {// todo WebSecurityConfigurerAdapter помечен как устаревший
 
     private final UserDetailsServiceImpl userDetailsService;
     private final AuthEntryPointJwt unauthorizedHandler;
