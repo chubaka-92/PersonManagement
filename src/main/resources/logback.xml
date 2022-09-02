@@ -2,8 +2,10 @@
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
-            <layout class="com.example.personmenegement.PatternMaskingLayout">
-                <maskPattern>(password)|(email)|(salary=)</maskPattern>
+            <layout class="com.example.personmenegement.config.mask.PatternMaskingLayout">
+                <maskPattern>(\w+@\w+\.\w+)</maskPattern>
+                <maskPattern>\"*[^\.]password\"*\s*[(:?)|(=?)]\s*\"*(\w*)</maskPattern>
+                <maskPattern>\"*salary\"*\s*[(:?)|(=?)]\s*\"*(\w*)</maskPattern>
                 <pattern>%d{dd/MM/yyyy HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n%ex</pattern>-->
             </layout>
         </encoder>
@@ -20,8 +22,13 @@
             <totalSizeCap>10MB</totalSizeCap>
         </rollingPolicy>
 
-        <encoder>
-            <pattern>%d{HH:mm:ss.SSS}  %-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>
+        <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+            <layout class="com.example.personmenegement.config.mask.PatternMaskingLayout">
+                <maskPattern>(\w+@\w+\.\w+)</maskPattern>
+                <maskPattern>\"*[^\.]password\"*\s*[(:?)|(=?)]\s*\"*(\w*)</maskPattern>
+                <maskPattern>\"*salary\"*\s*[(:?)|(=?)]\s*\"*(\w*)</maskPattern>
+                <pattern>%d{HH:mm:ss.SSS}  %-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>
+            </layout>
         </encoder>
     </appender>
 

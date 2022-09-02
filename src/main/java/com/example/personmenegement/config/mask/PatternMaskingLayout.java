@@ -1,4 +1,4 @@
-package com.example.personmenegement;
+package com.example.personmenegement.config.mask;
 
 import ch.qos.logback.classic.PatternLayout;
 import ch.qos.logback.classic.spi.ILoggingEvent;
@@ -7,9 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.IntStream;
 
 public class PatternMaskingLayout extends PatternLayout {
-    public static final String MASK = "*******";
+    private static final Character MASK_VALUE = '*';
     private Pattern multilinePattern;
     private List<String> maskPatterns = new ArrayList<>();
 
@@ -33,33 +34,12 @@ public class PatternMaskingLayout extends PatternLayout {
         StringBuilder sb = new StringBuilder(message);
         Matcher matcher = multilinePattern.matcher(sb);
         while (matcher.find()) {
-            if (matcher.group().contains("salary")
-                    || matcher.group().contains("email")
-                    || matcher.group().contains("password")) {
-                maskSalary(sb, matcher);
-            }
+            IntStream.rangeClosed(1, matcher.groupCount()).forEach(group -> {
+                if (matcher.group(group) != null) {
+                    IntStream.range(matcher.start(group), matcher.end(group)).forEach(i -> sb.setCharAt(i, MASK_VALUE));
+                }
+            });
         }
         return sb.toString();
     }
-
-    private void maskSalary(StringBuilder sb, Matcher matcher) {
-        String targetExpression = matcher.group();
-        String[] split = null;
-        if (targetExpression.contains("=")) {
-            split = targetExpression.split("=");
-        } else {
-            split = targetExpression.split(":");
-        }
-
-/*        String pan = split[1];
-        String maskedPan = getGenerateMaskedPan(pan);*/
-        int start = matcher.start() + split[0].length() + 1;
-        int end = matcher.end();
-        sb.replace(start, end, MASK);
-        //sb.replace(start, end, maskedPan);
-    }
-
-/*    private String getGenerateMaskedPan(String pan) {
-        return pan.replaceAll(pan, MASK);
-    }*/
 }
