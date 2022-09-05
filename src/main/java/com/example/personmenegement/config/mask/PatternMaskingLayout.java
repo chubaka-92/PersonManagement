@@ -12,7 +12,7 @@ import java.util.stream.IntStream;
 public class PatternMaskingLayout extends PatternLayout {
     private static final Character MASK_VALUE = '*';
     private Pattern multilinePattern;
-    private List<String> maskPatterns = new ArrayList<>(); // todo final добавь
+    private final List<String> maskPatterns = new ArrayList<>(); // todo final добавь  //  DONE
 
     public void addMaskPattern(String maskPattern) {
         maskPatterns.add(maskPattern);
