@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
+import javax.crypto.spec.SecretKeySpec;
+import java.security.Key;
+import java.util.Base64;
 import java.util.Date;
 
 @Slf4j
@@ -24,26 +27,26 @@ public class JwtUtils {
         log.info("Was calling generateJwtToken.");
         UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
 
+        Key key = new SecretKeySpec(Base64.getDecoder().decode(jwtSecret), SignatureAlgorithm.HS256.getJcaName());
+
         return Jwts.builder()
                 .setSubject((userPrincipal.getUsername()))
                 .setIssuedAt(new Date())
                 .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
-                //.signWith(jwtSecret, SignatureAlgorithm.HS512)
-                .signWith(SignatureAlgorithm.HS512, jwtSecret)// todo deprecated method
-                //.signWith(SignatureAlgorithm.HS512, TextCodec.BASE64.decode("Yn2kjibddFAWtnPJ2AFlL8WXmohJMCvigQggaEypa5E=")// todo deprecated method
+                .signWith(key)// todo deprecated method  // DONE
                 .compact();
     }
 
     public boolean validateJwtToken(String jwt) {
         log.info("Was calling validateJwtToken.");
         try {
-            Jwts.parser()
-                    .setSigningKey(jwtSecret)
-                    .parseClaimsJws(jwt);// todo deprecated method  //  DONE
-/*            Jwts.parserBuilder()
-                    .setSigningKey(jwtSecret.getBytes(StandardCharsets.UTF_8))
+            // todo deprecated method
+            //  DONE
+            Key key = new SecretKeySpec(Base64.getDecoder().decode(jwtSecret), SignatureAlgorithm.HS256.getJcaName());
+            Jwts.parserBuilder()
+                    .setSigningKey(key)
                     .build()
-                    .parseClaimsJws(jwt);*/
+                    .parseClaimsJws(jwt);
             return true;
         } catch (MalformedJwtException | IllegalArgumentException e) {
             log.error(e.getMessage());// todo нехорошо, используй логгер  //   DONE
@@ -53,16 +56,14 @@ public class JwtUtils {
 
     public String getUserNameFromJwtToken(String jwt) {
         log.info("Was calling getUserNameFromJwtToken.");
-        return Jwts.parser()
-                .setSigningKey(jwtSecret)
-                .parseClaimsJws(jwt)
-                .getBody().
-                getSubject();// todo deprecated method, сделай перенос строки как в generateJwtToken
-/*        return Jwts.parserBuilder()
-                .setSigningKey(jwtSecret.getBytes(StandardCharsets.UTF_8))
+        // todo deprecated method, сделай перенос строки как в generateJwtToken
+        //  DONE
+        Key key = new SecretKeySpec(Base64.getDecoder().decode(jwtSecret), SignatureAlgorithm.HS256.getJcaName());
+        return Jwts.parserBuilder()
+                .setSigningKey(key)
                 .build()
                 .parseClaimsJws(jwt)
                 .getBody()
-                .getSubject();*/
+                .getSubject();
     }
 }

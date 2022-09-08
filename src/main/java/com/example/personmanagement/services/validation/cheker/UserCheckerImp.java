@@ -23,6 +23,7 @@ public class UserCheckerImp implements UserChecker {
     private static final String INCORRECT_ROLE = "incorrectRole";
     private static final String ROLE_NOT_FOUND = "roleNotFound";
     private static final String EMAIL_EXIST = "emailExist";
+    private static final String INCORRECT_EMAIL = "incorrectEmail";
     private final MessageService messageService = new MessageService();
     private final UserDAO userDAO;
     private final RoleDAO roleDAO;
@@ -62,9 +63,15 @@ public class UserCheckerImp implements UserChecker {
     public Map<String, String> checkEmail(String email) {
         log.info("Was calling checkEmail. Input email: {}", email);
         Map<String, String> response = new HashMap<>();
+        if (!correctFormatEmail(email)) {
+            String message = messageService.getMessage(INCORRECT_EMAIL);
+            response.put(EMAIL, message);
+            return response;
+        }
         if (userDAO.existenceUserEmail(email)) {
             String message = messageService.getMessage(EMAIL_EXIST);
             response.put(EMAIL, message);
+            return response;
         }
         return response;
     }
@@ -75,6 +82,10 @@ public class UserCheckerImp implements UserChecker {
         Map<String, String> response = new HashMap<>();
         roles.forEach(role -> checkingRole(response, role));
         return response;
+    }
+
+    private boolean correctFormatEmail(String email) {
+        return email.trim().matches("(\\w+@\\w+\\.\\w+)");
     }
 
     private void checkingRole(Map<String, String> response, String role) {

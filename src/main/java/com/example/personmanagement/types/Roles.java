@@ -15,7 +15,7 @@ public enum Roles {
     ROLE_ADMIN("admin"),
     UNDEFINED("undefined");
 
-    private final String name;// todo можно обойтись без него, у тебя в сущности есть @Enumerated
+    private final String name;
 
     public static Roles defineRole(String role) {
         log.info("Was calling defineRole. Input role: {}", role);

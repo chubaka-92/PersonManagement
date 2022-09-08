@@ -33,8 +33,8 @@ public class UserMapperImp {
     public UserEntity userDtoToUserEntity(UserDto userDto) {
         log.info("Was calling userDtoToUserEntity. Input userDto: {}", userDto);
         return UserEntity.builder()
-                .username(userDto.getUsername())
-                .email(userDto.getEmail())
+                .username(userDto.getUsername().trim())
+                .email(userDto.getEmail().trim())
                 .password(passwordEncoder.encode(userDto.getPassword()))
                 .roleEntities(getEntityRoles(userDto.getRoles()))
                 .build();

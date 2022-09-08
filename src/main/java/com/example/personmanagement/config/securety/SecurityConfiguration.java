@@ -22,6 +22,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfiguration {
+
     private final AuthEntryPointJwt unauthorizedHandler;
 
     @Bean

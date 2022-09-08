@@ -1,6 +1,7 @@
 package com.example.personmanagement.controller;
 
 import com.example.personmanagement.dto.LoginRequest;
+import com.example.personmanagement.dto.PersonDto;
 import com.example.personmanagement.dto.UserDto;
 import com.example.personmanagement.services.AuthServiceImp;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +29,10 @@ public class AuthController {
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@RequestBody UserDto userDto) {
         log.info("Was calling registerUser. Input userDto: {}", userDto);
-        return ResponseEntity.ok(personService.registration(userDto));
+        UserDto result = personService.registration(userDto);
+        if(result.isValid()){
+            return ResponseEntity.ok(result);
+        }
+        return ResponseEntity.badRequest().body(result);
     }
 }
