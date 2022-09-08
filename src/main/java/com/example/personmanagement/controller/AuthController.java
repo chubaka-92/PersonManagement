@@ -1,7 +1,6 @@
 package com.example.personmanagement.controller;
 
 import com.example.personmanagement.dto.LoginRequest;
-import com.example.personmanagement.dto.PersonDto;
 import com.example.personmanagement.dto.UserDto;
 import com.example.personmanagement.services.AuthServiceImp;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +29,7 @@ public class AuthController {
     public ResponseEntity<?> registerUser(@RequestBody UserDto userDto) {
         log.info("Was calling registerUser. Input userDto: {}", userDto);
         UserDto result = personService.registration(userDto);
-        if(result.isValid()){
+        if (result.isValid()) {
             return ResponseEntity.ok(result);
         }
         return ResponseEntity.badRequest().body(result);

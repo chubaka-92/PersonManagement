@@ -1,7 +1,6 @@
 package com.example.personmanagement.entity;
 
 import lombok.*;
-import org.springframework.context.annotation.Lazy;
 
 import javax.persistence.*;
 import java.util.HashSet;
