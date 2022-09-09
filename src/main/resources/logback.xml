@@ -2,7 +2,7 @@
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
-            <layout class="com.example.personmenegement.config.mask.PatternMaskingLayout">
+            <layout class="com.example.personmanagement.config.mask.PatternMaskingLayout">
                 <maskPattern>(\w+@\w+\.\w+)</maskPattern>
                 <maskPattern>\"*[^\.]password\"*\s*[(:?)|(=?)]\s*\"*(\w*)</maskPattern>
                 <maskPattern>\"*salary\"*\s*[(:?)|(=?)]\s*\"*(\w*)</maskPattern>
@@ -23,7 +23,7 @@
         </rollingPolicy>
 
         <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
-            <layout class="com.example.personmenegement.config.mask.PatternMaskingLayout">
+            <layout class="com.example.personmanagement.config.mask.PatternMaskingLayout">
                 <maskPattern>(\w+@\w+\.\w+)</maskPattern>
                 <maskPattern>\"*[^\.]password\"*\s*[(:?)|(=?)]\s*\"*(\w*)</maskPattern>
                 <maskPattern>\"*salary\"*\s*[(:?)|(=?)]\s*\"*(\w*)</maskPattern>
