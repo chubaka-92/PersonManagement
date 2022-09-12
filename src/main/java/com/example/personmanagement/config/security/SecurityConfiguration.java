@@ -1,7 +1,7 @@
-package com.example.personmanagement.config.securety;
+package com.example.personmanagement.config.security;
 
-import com.example.personmanagement.config.securety.jwt.AuthEntryPointJwt;
-import com.example.personmanagement.config.securety.jwt.AuthTokenFilter;
+import com.example.personmanagement.config.security.jwt.AuthEntryPointJwt;
+import com.example.personmanagement.config.security.jwt.AuthTokenFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

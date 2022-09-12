@@ -1,4 +1,4 @@
-package com.example.personmanagement.config.securety.jwt;
+package com.example.personmanagement.config.security.jwt;
 
 import com.example.personmanagement.services.security.UserDetailsImpl;
 import io.jsonwebtoken.Jwts;
@@ -29,10 +29,12 @@ public class JwtUtils {
 
         Key key = new SecretKeySpec(Base64.getDecoder().decode(jwtSecret), SignatureAlgorithm.HS256.getJcaName());
 
+        Date dateExpiration = new Date((new Date()).getTime() + jwtExpirationMs);
+
         return Jwts.builder()
                 .setSubject((userPrincipal.getUsername()))
                 .setIssuedAt(new Date())
-                .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))// todo лучше вынести параметры в отдельные переменные
+                .setExpiration(dateExpiration)// todo лучше вынести параметры в отдельные переменные  // DONE
                 .signWith(key)
                 .compact();
     }

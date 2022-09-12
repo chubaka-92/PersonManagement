@@ -1,4 +1,4 @@
-package com.example.personmanagement.config.securety.jwt;
+package com.example.personmanagement.config.security.jwt;
 
 import com.example.personmanagement.services.security.UserDetailsServiceImpl;
 import lombok.extern.slf4j.Slf4j;
