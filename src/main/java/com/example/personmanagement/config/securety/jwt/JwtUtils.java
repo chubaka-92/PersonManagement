@@ -32,16 +32,14 @@ public class JwtUtils {
         return Jwts.builder()
                 .setSubject((userPrincipal.getUsername()))
                 .setIssuedAt(new Date())
-                .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
-                .signWith(key)// todo deprecated method  // DONE
+                .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))// todo лучше вынести параметры в отдельные переменные
+                .signWith(key)
                 .compact();
     }
 
     public boolean validateJwtToken(String jwt) {
         log.info("Was calling validateJwtToken.");
         try {
-            // todo deprecated method
-            //  DONE
             Key key = new SecretKeySpec(Base64.getDecoder().decode(jwtSecret), SignatureAlgorithm.HS256.getJcaName());
             Jwts.parserBuilder()
                     .setSigningKey(key)
@@ -49,15 +47,13 @@ public class JwtUtils {
                     .parseClaimsJws(jwt);
             return true;
         } catch (MalformedJwtException | IllegalArgumentException e) {
-            log.error(e.getMessage());// todo нехорошо, используй логгер  //   DONE
+            log.error(e.getMessage());
         }
         return false;
     }
 
     public String getUserNameFromJwtToken(String jwt) {
         log.info("Was calling getUserNameFromJwtToken.");
-        // todo deprecated method, сделай перенос строки как в generateJwtToken
-        //  DONE
         Key key = new SecretKeySpec(Base64.getDecoder().decode(jwtSecret), SignatureAlgorithm.HS256.getJcaName());
         return Jwts.parserBuilder()
                 .setSigningKey(key)

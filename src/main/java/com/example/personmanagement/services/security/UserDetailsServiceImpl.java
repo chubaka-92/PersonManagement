@@ -27,7 +27,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         log.info("Was calling loadUserByUsername. Input username: {}", username);
         UserEntity user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException(
-                        MessageFormat.format(messageService.getMessage(USER_NOT_FOUND), username)));// todo используй MessageFormat  //  DONE
+                        MessageFormat.format(messageService.getMessage(USER_NOT_FOUND), username)));
         return UserDetailsImpl.build(user);
     }
 }
