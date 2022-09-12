@@ -1,4 +1,4 @@
-package com.example.personmanagement.config.securety.jwt;
+package com.example.personmanagement.config.security.jwt;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
@@ -29,10 +29,12 @@ public class JwtUtils {
 
         Key key = new SecretKeySpec(Base64.getDecoder().decode(jwtSecret), SignatureAlgorithm.HS256.getJcaName());
 
+        Date dateExpiration = new Date((new Date()).getTime() + jwtExpirationMs);
+
         return Jwts.builder()
                 .setSubject((userPrincipal.getUsername()))
                 .setIssuedAt(new Date())
-                .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
+                .setExpiration(dateExpiration)
                 .signWith(key)
                 .compact();
     }
