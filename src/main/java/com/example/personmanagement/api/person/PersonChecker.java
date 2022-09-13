@@ -1,4 +1,4 @@
-package com.example.personmanagement.api;
+package com.example.personmanagement.api.person;
 
 import com.example.personmanagement.dto.PersonDto;
 import com.example.personmanagement.types.Position;
@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 //TODO разбить api на подпакеты
+//  DONE
 public interface PersonChecker {
 
     List<String> checkRequiredFields(PersonDto personDto);

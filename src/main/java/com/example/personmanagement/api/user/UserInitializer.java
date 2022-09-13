@@ -1,17 +1,16 @@
-package com.example.personmanagement.api;
+package com.example.personmanagement.api.user;
 
-import com.example.personmanagement.dto.PersonDto;
+import com.example.personmanagement.dto.UserDto;
 
 import java.util.List;
 import java.util.Map;
 
-public interface PersonInitializer {
-
+public interface UserInitializer {
     void addFieldsEmpty(List<String> incorrectFields);
 
     void addIncorrectArgumentMessage(Map<String, String> incorrectArguments);
 
     boolean hasErrors();
 
-    PersonDto getPersonDtoError();
+    UserDto getUserDtoError();
 }

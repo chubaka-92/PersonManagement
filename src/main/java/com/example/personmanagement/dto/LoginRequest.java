@@ -8,7 +8,8 @@ import lombok.ToString;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-//@ToString(exclude = "password") //todo коммент в коде
+//todo коммент в коде
+//  DONE
 @ToString()
 public class LoginRequest {
     private String username;

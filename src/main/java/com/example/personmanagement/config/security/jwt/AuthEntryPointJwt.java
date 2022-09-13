@@ -28,7 +28,6 @@ public class AuthEntryPointJwt implements AuthenticationEntryPoint {
                          HttpServletResponse response,
                          AuthenticationException authException) throws IOException {
         log.info("Was calling doFilterInternal.");
-        System.err.println(authException.getMessage());
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 

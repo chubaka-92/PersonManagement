@@ -1,6 +1,6 @@
 package com.example.personmanagement.dao;
 
-import com.example.personmanagement.api.TaskDAO;
+import com.example.personmanagement.api.task.TaskDAO;
 import com.example.personmanagement.entity.TaskEntity;
 import com.example.personmanagement.exeption.TaskNotFoundException;
 import com.example.personmanagement.repository.TaskRepository;

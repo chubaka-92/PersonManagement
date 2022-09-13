@@ -1,7 +1,7 @@
 package com.example.personmanagement.services.mapper;
 
-import com.example.personmanagement.api.PersonMapper;
-import com.example.personmanagement.api.TaskMapper;
+import com.example.personmanagement.api.person.PersonMapper;
+import com.example.personmanagement.api.task.TaskMapper;
 import com.example.personmanagement.dto.PersonDto;
 import com.example.personmanagement.dto.TaskDto;
 import com.example.personmanagement.entity.PersonEntity;
@@ -70,36 +70,32 @@ public class PersonMapperImp implements PersonMapper {
 
     private Long getId(PersonDto personDto) {
         log.debug("Was calling getId.");
-        if (personDto.getId() == null) { //todo использовать итерарный if
-            return null;
-        }
-        return Long.valueOf(personDto.getId());
+        //todo использовать итерарный if
+        //  DONE
+        return personDto.getId() == null ? null : Long.valueOf(personDto.getId());
+
     }
 
     private String getId(PersonEntity personEntity) {
         log.debug("Was calling getId.");
-        if (personEntity.getId() == null) { //todo использовать итерарный if
-            return null;
-        }
-        return personEntity.getId().toString();
+        //todo использовать итерарный if
+        //  DONE
+        return personEntity.getId() == null ? null : personEntity.getId().toString();
     }
 
     private List<TaskDto> getTasks(List<TaskEntity> taskEntities) {
         log.debug("Was calling getTasks.");
-        if (taskEntities == null) { //todo использовать итерарный if
-            return null;
-        }
-        return taskEntities
-                .stream()
+        //todo использовать итерарный if
+        //  DONE
+        return taskEntities == null ? null : taskEntities.stream()
                 .map(taskMapper::taskEntityToTask)
                 .collect(Collectors.toList());
     }
 
     private String getUid(PersonDto personDto) {
         log.debug("Was calling getUid. Input personDto: {}", personDto);
-        if (personDto.getUid() == null) { //todo использовать итерарный if
-            return UUID.randomUUID().toString();
-        }
-        return personDto.getUid();
+        //todo использовать итерарный if
+        //  DONE
+        return personDto.getUid() == null ? UUID.randomUUID().toString() : personDto.getUid();
     }
 }

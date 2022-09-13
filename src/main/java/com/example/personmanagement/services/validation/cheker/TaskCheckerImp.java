@@ -1,6 +1,6 @@
 package com.example.personmanagement.services.validation.cheker;
 
-import com.example.personmanagement.api.TaskChecker;
+import com.example.personmanagement.api.task.TaskChecker;
 import com.example.personmanagement.dto.TaskDto;
 import com.example.personmanagement.services.MessageService;
 import com.example.personmanagement.types.Priority;

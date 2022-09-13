@@ -1,6 +1,10 @@
 package com.example.personmanagement.services;
 
-import com.example.personmanagement.api.*;
+import com.example.personmanagement.api.person.PersonDAO;
+import com.example.personmanagement.api.task.TaskMapper;
+import com.example.personmanagement.api.task.TaskProducer;
+import com.example.personmanagement.api.task.TaskService;
+import com.example.personmanagement.api.task.TaskValidation;
 import com.example.personmanagement.dao.TaskDAOImp;
 import com.example.personmanagement.dto.TaskDto;
 import com.example.personmanagement.entity.PersonEntity;
@@ -100,7 +104,7 @@ public class TaskServiceImp implements TaskService {
     }
 
     private TaskDto getNewTask(PersonEntity personEntity, TaskDto taskDto) {
-        log.debug("Was calling addNewTasks. Input personEntity: {} taskTemp: {}", personEntity, taskDto); //todo почему debug ?
+        log.debug("Was calling addNewTasks. Input personEntity: {} taskTemp: {}", personEntity, taskDto); //todo почему debug ? // DONE. излишняя информация для инфо
         TaskEntity taskEntity = taskMapper.taskToTaskEntity(taskDto);
         taskEntity.setPersonId(personEntity.getId());
         taskProducer.sendTask(taskEntity);
@@ -108,7 +112,7 @@ public class TaskServiceImp implements TaskService {
     }
 
     private TaskDto getUpdateTask(TaskDto taskDto, TaskEntity taskEntity) {
-        log.debug("Was calling getUpdateTask. Input personEntity: {} taskEntity: {}", taskDto, taskEntity); //todo почему debug ?
+        log.debug("Was calling getUpdateTask. Input personEntity: {} taskEntity: {}", taskDto, taskEntity); //todo почему debug ? // DONE. излишняя информация для инфо
         TaskEntity result = taskMapper.taskDtoAndTaskEntityToTaskEntity(taskDto, taskEntity);
         taskDAO.updateTask(result);
         return taskMapper.taskEntityToTask(result);

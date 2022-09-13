@@ -1,8 +1,8 @@
 package com.example.personmanagement.services.validation.validator;
 
-import com.example.personmanagement.api.TaskChecker;
-import com.example.personmanagement.api.TaskInitializer;
-import com.example.personmanagement.api.TaskValidation;
+import com.example.personmanagement.api.task.TaskChecker;
+import com.example.personmanagement.api.task.TaskInitializer;
+import com.example.personmanagement.api.task.TaskValidation;
 import com.example.personmanagement.dto.TaskDto;
 import com.example.personmanagement.services.validation.cheker.TaskCheckerImp;
 import com.example.personmanagement.services.validation.initializer.TaskInitializerImp;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 public class TaskValidationImp implements TaskValidation {
 
     public TaskDto validate(TaskDto taskDto) {
-        log.info("Was calling validate. Input task: " + taskDto);
+        log.info("Was calling validate. Input task: {}", taskDto);
         TaskChecker taskChecker = new TaskCheckerImp();
         TaskInitializer taskErrorMessage = new TaskInitializerImp(taskDto);
 

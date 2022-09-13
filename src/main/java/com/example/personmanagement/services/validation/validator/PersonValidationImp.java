@@ -1,8 +1,8 @@
 package com.example.personmanagement.services.validation.validator;
 
-import com.example.personmanagement.api.PersonChecker;
-import com.example.personmanagement.api.PersonInitializer;
-import com.example.personmanagement.api.PersonValidation;
+import com.example.personmanagement.api.person.PersonChecker;
+import com.example.personmanagement.api.person.PersonInitializer;
+import com.example.personmanagement.api.person.PersonValidation;
 import com.example.personmanagement.dto.PersonDto;
 import com.example.personmanagement.services.validation.cheker.PersonCheckerImp;
 import com.example.personmanagement.services.validation.initializer.PersonInitializerImp;
@@ -18,7 +18,7 @@ import static com.example.personmanagement.types.Position.definePosition;
 public class PersonValidationImp implements PersonValidation {
 
     public PersonDto validate(PersonDto personDto) {
-        log.info("Was calling validate. Input person: " + personDto);
+        log.info("Was calling validate. Input person: {}", personDto);
         PersonChecker personChecker = new PersonCheckerImp();
         PersonInitializer personErrorMessage = new PersonInitializerImp(personDto);
 
@@ -45,8 +45,7 @@ public class PersonValidationImp implements PersonValidation {
 
             personErrorMessage.addIncorrectArgumentMessage(personChecker.checkSalary(position, personDto.getSalary()));
 
-            personErrorMessage.addIncorrectArgumentMessage( //todo убрать перенос
-                    personChecker.checkExperience(position, personDto.getExperience()));
+            personErrorMessage.addIncorrectArgumentMessage(personChecker.checkExperience(position, personDto.getExperience())); //todo убрать перенос  //  DONE
         } else {
             personErrorMessage.addIncorrectArgumentMessage(personChecker.checkPosition(personDto.getPosition()));
         }

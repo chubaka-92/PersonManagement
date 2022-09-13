@@ -1,8 +1,8 @@
 package com.example.personmanagement.services.validation.validator;
 
-import com.example.personmanagement.api.UserChecker;
-import com.example.personmanagement.api.UserInitializer;
-import com.example.personmanagement.api.UserValidation;
+import com.example.personmanagement.api.user.UserChecker;
+import com.example.personmanagement.api.user.UserInitializer;
+import com.example.personmanagement.api.user.UserValidation;
 import com.example.personmanagement.dto.UserDto;
 import com.example.personmanagement.services.validation.initializer.UserInitializerImp;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +17,7 @@ public class UserValidationImp implements UserValidation {
     private final UserChecker userChecker;
 
     public UserDto validate(UserDto userDto) {
-        log.info("Was calling validate. Input userDto: " + userDto);
+        log.info("Was calling validate. Input userDto: {}", userDto);
         UserInitializer userErrorMessage = new UserInitializerImp(userDto);
 
         userErrorMessage.addFieldsEmpty(userChecker.checkRequiredFields(userDto));

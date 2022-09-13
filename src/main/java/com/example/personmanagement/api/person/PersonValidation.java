@@ -1,4 +1,4 @@
-package com.example.personmanagement.api;
+package com.example.personmanagement.api.person;
 
 import com.example.personmanagement.dto.PersonDto;
 

@@ -1,6 +1,6 @@
 package com.example.personmanagement.dao;
 
-import com.example.personmanagement.api.PersonDAO;
+import com.example.personmanagement.api.person.PersonDAO;
 import com.example.personmanagement.entity.PersonEntity;
 import com.example.personmanagement.exeption.PersonNotFoundException;
 import com.example.personmanagement.repository.PersonRepository;

@@ -1,6 +1,6 @@
 package com.example.personmanagement.dao;
 
-import com.example.personmanagement.api.UserDAO;
+import com.example.personmanagement.api.user.UserDAO;
 import com.example.personmanagement.entity.UserEntity;
 import com.example.personmanagement.repository.UserRepository;
 import lombok.RequiredArgsConstructor;

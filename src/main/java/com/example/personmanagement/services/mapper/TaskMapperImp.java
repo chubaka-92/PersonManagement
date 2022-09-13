@@ -1,6 +1,6 @@
 package com.example.personmanagement.services.mapper;
 
-import com.example.personmanagement.api.TaskMapper;
+import com.example.personmanagement.api.task.TaskMapper;
 import com.example.personmanagement.dto.TaskDto;
 import com.example.personmanagement.entity.TaskEntity;
 import com.example.personmanagement.services.MessageService;
@@ -49,26 +49,23 @@ public class TaskMapperImp implements TaskMapper {
 
     private String getId(TaskEntity taskEntity) {
         log.debug("Was calling getId. Input taskEntity: {}", taskEntity);
-        if (taskEntity.getId() == null) { //todo использовать итерарный if
-            return null;
-        }
-        return taskEntity.getId().toString();
+        //todo использовать итерарный if
+        //  DONE
+        return taskEntity.getId() == null ? null : taskEntity.getId().toString();
     }
 
     private Long getId(TaskDto taskDto) {
         log.debug("Was calling getId. Input task: {}", taskDto);
-        if (taskDto.getId() == null) { //todo использовать итерарный if
-            return null;
-        }
-        return Long.valueOf(taskDto.getId());
+        //todo использовать итерарный if
+        //  DONE
+        return taskDto.getId() == null ? null : Long.valueOf(taskDto.getId());
     }
 
     private String getUid(TaskDto taskDto) {
         log.debug("Was calling getUid. Input task: {}", taskDto);
-        if (taskDto.getUid() == null) { //todo использовать итерарный if
-            return UUID.randomUUID().toString();
-        }
-        return taskDto.getUid();
+        //todo использовать итерарный if
+        //  DONE
+        return taskDto.getUid() == null ? UUID.randomUUID().toString() : taskDto.getUid();
     }
 
 }

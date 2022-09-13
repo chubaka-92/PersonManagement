@@ -12,10 +12,8 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 @Slf4j
 @Component
@@ -32,7 +30,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
-                                    FilterChain filterChain) throws ServletException, IOException { //todo try catch и throws одновременно. Убрать throws
+                                    FilterChain filterChain) { //todo try catch и throws одновременно. Убрать throws  // DONE
         log.info("Was calling doFilterInternal.");
         try {
             String jwt = parseJwt(request);
@@ -46,11 +44,12 @@ public class AuthTokenFilter extends OncePerRequestFilter {
 
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             }
+            filterChain.doFilter(request, response);
         } catch (Exception e) {
             log.error(e.getMessage());
-            System.err.println(e); //todo убрать
+            //todo убрать
+            //  DONE
         }
-        filterChain.doFilter(request, response);
     }
 
     private String parseJwt(HttpServletRequest request) {

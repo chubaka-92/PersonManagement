@@ -26,22 +26,19 @@ public enum Position {
     private final BigDecimal salaryMax;
     private final Double workExperience;
     private final Integer countTasks;
+    private static final MessageService messageService = new MessageService();
 
     public static Position definePosition(String position) {
         log.info("Was calling definePosition. Input position: {}", position);
-        MessageService messageService = new MessageService();
-        if (messageService.getMessage(INTERN).equals(position)) { //todo сделать через HashMap. почитай про метод getOrDefault
-            return INTERN;
-        } else if (messageService.getMessage(TECHNOLOGIST).equals(position)) {
-            return TECHNOLOGIST;
-        } else if (messageService.getMessage(ENGINEER).equals(position)) {
-            return ENGINEER;
-        } else if (messageService.getMessage(LEAD_ENGINEER).equals(position)) {
-            return LEAD_ENGINEER;
-        } else if (messageService.getMessage(CHIEF_ENGINEER).equals(position)) {
-            return CHIEF_ENGINEER;
-        } else {
-            return UNDEFINED;
-        }
+        return getPositions().getOrDefault(position, UNDEFINED);
     }
+
+    private static HashMap<String, Position> getPositions() {
+        HashMap<String, Position> positions = new HashMap<>();
+        for (Position ps : Position.values()) {
+            positions.put(messageService.getMessage(ps), ps);
+        }
+        return positions;
+    }
+
 }
