@@ -25,8 +25,8 @@ public class AuthTokenFilter extends OncePerRequestFilter {
     private static final int BEGIN_INDEX = 7;
 
     @Autowired
-    private JwtUtils jwtUtils;
-    @Autowired
+    private JwtUtils jwtUtils;// todo Autowired на поле нехорошо
+    @Autowired// todo Autowired на поле нехорошо
     private UserDetailsServiceImpl userDetailsService;
 
 
