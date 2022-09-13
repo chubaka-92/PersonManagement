@@ -27,19 +27,19 @@ public class PersonCheckerImp implements PersonChecker {
     public List<String> checkRequiredFields(PersonDto personDto) {
         log.info("Was calling checkRequiredFields. Input person: {}", personDto);
         List<String> invalidFields = new ArrayList<>();
-        if (personDto.getName() == null || personDto.getName().isBlank()) {
+        if (personDto.getName() == null || personDto.getName().isBlank()) { //todo сделать приватный метод на проверку на null и isBlank
             invalidFields.add(NAME);
         }
-        if (personDto.getPosition() == null || personDto.getPosition().isBlank()) {
+        if (personDto.getPosition() == null || personDto.getPosition().isBlank()) { //todo сделать приватный метод на проверку на null и isBlank
             invalidFields.add(POSITION);
         }
-        if (personDto.getAge() == null || personDto.getAge().isBlank()) {
+        if (personDto.getAge() == null || personDto.getAge().isBlank()) { //todo сделать приватный метод на проверку на null и isBlank
             invalidFields.add(AGE);
         }
-        if (personDto.getSalary() == null || personDto.getSalary().isBlank()) {
+        if (personDto.getSalary() == null || personDto.getSalary().isBlank()) { //todo сделать приватный метод на проверку на null и isBlank
             invalidFields.add(SALARY);
         }
-        if (personDto.getExperience() == null || personDto.getExperience().isBlank()) {
+        if (personDto.getExperience() == null || personDto.getExperience().isBlank()) { //todo сделать приватный метод на проверку на null и isBlank
             invalidFields.add(EXPERIENCE);
         }
         return invalidFields;

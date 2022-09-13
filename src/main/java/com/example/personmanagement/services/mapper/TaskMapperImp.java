@@ -49,7 +49,7 @@ public class TaskMapperImp implements TaskMapper {
 
     private String getId(TaskEntity taskEntity) {
         log.debug("Was calling getId. Input taskEntity: {}", taskEntity);
-        if (taskEntity.getId() == null) {
+        if (taskEntity.getId() == null) { //todo использовать итерарный if
             return null;
         }
         return taskEntity.getId().toString();
@@ -57,7 +57,7 @@ public class TaskMapperImp implements TaskMapper {
 
     private Long getId(TaskDto taskDto) {
         log.debug("Was calling getId. Input task: {}", taskDto);
-        if (taskDto.getId() == null) {
+        if (taskDto.getId() == null) { //todo использовать итерарный if
             return null;
         }
         return Long.valueOf(taskDto.getId());
@@ -65,7 +65,7 @@ public class TaskMapperImp implements TaskMapper {
 
     private String getUid(TaskDto taskDto) {
         log.debug("Was calling getUid. Input task: {}", taskDto);
-        if (taskDto.getUid() == null) {
+        if (taskDto.getUid() == null) { //todo использовать итерарный if
             return UUID.randomUUID().toString();
         }
         return taskDto.getUid();

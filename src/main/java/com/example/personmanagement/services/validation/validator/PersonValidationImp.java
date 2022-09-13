@@ -45,7 +45,7 @@ public class PersonValidationImp implements PersonValidation {
 
             personErrorMessage.addIncorrectArgumentMessage(personChecker.checkSalary(position, personDto.getSalary()));
 
-            personErrorMessage.addIncorrectArgumentMessage(
+            personErrorMessage.addIncorrectArgumentMessage( //todo убрать перенос
                     personChecker.checkExperience(position, personDto.getExperience()));
         } else {
             personErrorMessage.addIncorrectArgumentMessage(personChecker.checkPosition(personDto.getPosition()));

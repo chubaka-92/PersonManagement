@@ -32,16 +32,16 @@ public class UserCheckerImp implements UserChecker {
     public List<String> checkRequiredFields(UserDto userDto) {
         log.info("Was calling checkRequiredFields. Input userDto: {}", userDto);
         List<String> invalidFields = new ArrayList<>();
-        if (userDto.getUsername() == null || userDto.getUsername().isBlank()) {
+        if (userDto.getUsername() == null || userDto.getUsername().isBlank()) { //todo сделать приватный метод на проверку на null и isBlank
             invalidFields.add(USER_NAME);
         }
-        if (userDto.getEmail() == null || userDto.getEmail().isBlank()) {
+        if (userDto.getEmail() == null || userDto.getEmail().isBlank()) { //todo сделать приватный метод на проверку на null и isBlank
             invalidFields.add(EMAIL);
         }
-        if (userDto.getPassword() == null || userDto.getPassword().isBlank()) {
+        if (userDto.getPassword() == null || userDto.getPassword().isBlank()) { //todo сделать приватный метод на проверку на null и isBlank
             invalidFields.add(PASSWORD);
         }
-        if (userDto.getRoles() == null || userDto.getRoles().isEmpty()) {
+        if (userDto.getRoles() == null || userDto.getRoles().isEmpty()) { //todo сделать приватный метод на проверку на null и isBlank
             invalidFields.add(ROLES);
         }
 
@@ -89,13 +89,13 @@ public class UserCheckerImp implements UserChecker {
     }
 
     private void checkingRole(Map<String, String> response, String role) {
-        log.debug("Was calling checkingRole. Input response: {} role: {}", response, role);
+        log.debug("Was calling checkingRole. Input response: {} role: {}", response, role); //todo почему debug ?
         Roles roleUser = Roles.defineRole(role);
         if (roleUser == Roles.UNDEFINED) {
-            String message = MessageFormat.format(messageService.getMessage(INCORRECT_ROLE), role);
+            String message = MessageFormat.format(messageService.getMessage(INCORRECT_ROLE), role); //todo поместить в put
             response.put(ROLES, message);
         } else if (!roleDAO.existenceRoleName(roleUser.name())) {
-            String message = MessageFormat.format(messageService.getMessage(ROLE_NOT_FOUND), role);
+            String message = MessageFormat.format(messageService.getMessage(ROLE_NOT_FOUND), role); //todo поместить в put
             response.put(ROLES, message);
         }
     }

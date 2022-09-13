@@ -7,6 +7,7 @@ import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
 
 @Slf4j
 @Getter
@@ -29,7 +30,7 @@ public enum Position {
     public static Position definePosition(String position) {
         log.info("Was calling definePosition. Input position: {}", position);
         MessageService messageService = new MessageService();
-        if (messageService.getMessage(INTERN).equals(position)) {
+        if (messageService.getMessage(INTERN).equals(position)) { //todo сделать через HashMap. почитай про метод getOrDefault
             return INTERN;
         } else if (messageService.getMessage(TECHNOLOGIST).equals(position)) {
             return TECHNOLOGIST;

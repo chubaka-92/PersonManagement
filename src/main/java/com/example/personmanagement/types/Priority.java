@@ -18,7 +18,7 @@ public enum Priority {
     public static Priority definePriority(String priority) {
         log.info("Was calling definePriority. Input priority: {}", priority);
         MessageService messageService = new MessageService();
-        if (messageService.getMessage(LOW).equals(priority)) {
+        if (messageService.getMessage(LOW).equals(priority)) { //todo сделать через HashMap. почитай про метод getOrDefault
             return LOW;
         } else if (messageService.getMessage(MEDIUM).equals(priority)) {
             return MEDIUM;

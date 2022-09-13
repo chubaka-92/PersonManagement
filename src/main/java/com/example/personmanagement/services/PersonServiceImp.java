@@ -74,7 +74,7 @@ public class PersonServiceImp implements PersonService {
     }
 
     private PersonDto getPersonDto(PersonDto personDto) {
-        log.debug("Was calling getPersonDto. Input personDto: {}", personDto);
+        log.debug("Was calling getPersonDto. Input personDto: {}", personDto); //todo почему debug ?
         PersonDto result = personValidation.validate(personDto);
         if (result == null) {
             return getNewPerson(personDto);
@@ -84,14 +84,14 @@ public class PersonServiceImp implements PersonService {
     }
 
     private PersonDto getNewPerson(PersonDto personDto) {
-        log.debug("Was calling getNewPerson. Input personDto: {}", personDto);
+        log.debug("Was calling getNewPerson. Input personDto: {}", personDto); //todo почему debug ?
         PersonEntity personEntity = personMapper.personToPersonEntity(personDto);
         personProducer.sendTask(personEntity);
         return personMapper.personEntityToPerson(personEntity);
     }
 
     private PersonDto getUpdatePerson(PersonEntity personEntity, PersonDto personDto) {
-        log.debug("Was calling updatePerson. Input personEntity: {} person: {}", personEntity, personDto);
+        log.debug("Was calling updatePerson. Input personEntity: {} person: {}", personEntity, personDto); //todo почему debug ?
         PersonEntity result = personMapper.personDtoAndPersonEntityToPersonEntity(personDto, personEntity);
         personDao.updatePerson(result);
         return personMapper.personEntityToPerson(result);

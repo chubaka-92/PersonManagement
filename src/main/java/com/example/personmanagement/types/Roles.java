@@ -19,7 +19,7 @@ public enum Roles {
 
     public static Roles defineRole(String role) {
         log.info("Was calling defineRole. Input role: {}", role);
-        if (ROLE_USER.name.equals(role)) {
+        if (ROLE_USER.name.equals(role)) { //todo сделать через HashMap. почитай про метод getOrDefault
             return ROLE_USER;
         } else if (ROLE_MODERATOR.name.equals(role)) {
             return ROLE_MODERATOR;
