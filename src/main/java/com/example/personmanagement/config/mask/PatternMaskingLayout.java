@@ -13,12 +13,12 @@ public class PatternMaskingLayout extends PatternLayout {
     private static final Character MASK_VALUE = '*';
     private static final int START_INCLUSIVE = 1;
     private Pattern multilinePattern;
-    private final List<String> maskPatterns = new ArrayList<>(); // todo final добавь  //  DONE
+    private final List<String> maskPatterns = new ArrayList<>();
 
     public void addMaskPattern(String maskPattern) {
         maskPatterns.add(maskPattern);
         multilinePattern = Pattern.compile(
-                String.join("|", maskPatterns),
+                String.join("|", maskPatterns),// todo сделай | константой
                 Pattern.MULTILINE
         );
     }
@@ -41,8 +41,6 @@ public class PatternMaskingLayout extends PatternLayout {
                 }
             });
         }
-        // todo сделай с помощью стрима
-        //  done. решили оставить так, не усложнять)
         return sb.toString();
     }
 }
