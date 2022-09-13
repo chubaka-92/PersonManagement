@@ -34,7 +34,7 @@ public class JwtUtils {
         return Jwts.builder()
                 .setSubject((userPrincipal.getUsername()))
                 .setIssuedAt(new Date())
-                .setExpiration(dateExpiration)// todo лучше вынести параметры в отдельные переменные  // DONE
+                .setExpiration(dateExpiration)
                 .signWith(key)
                 .compact();
     }
