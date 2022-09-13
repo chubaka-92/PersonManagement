@@ -1,8 +1,8 @@
 package com.example.personmanagement.config.security.jwt;
 
 import com.example.personmanagement.services.security.UserDetailsServiceImpl;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,14 +19,13 @@ import java.io.IOException;
 
 @Slf4j
 @Component
+@AllArgsConstructor
 public class AuthTokenFilter extends OncePerRequestFilter {
     private static final String AUTHORIZATION = "Authorization";
     private static final String AUTHORIZATION_TYPE = "Bearer ";
     private static final int BEGIN_INDEX = 7;
 
-    @Autowired
     private JwtUtils jwtUtils;
-    @Autowired
     private UserDetailsServiceImpl userDetailsService;
 
 
