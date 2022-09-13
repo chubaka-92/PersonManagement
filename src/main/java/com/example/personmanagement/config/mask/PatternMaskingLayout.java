@@ -19,7 +19,7 @@ public class PatternMaskingLayout extends PatternLayout {
     public void addMaskPattern(String maskPattern) {
         maskPatterns.add(maskPattern);
         multilinePattern = Pattern.compile(
-                String.join(DELIMITER, maskPatterns),// todo сделай | константой // DONE
+                String.join(DELIMITER, maskPatterns),
                 Pattern.MULTILINE
         );
     }
