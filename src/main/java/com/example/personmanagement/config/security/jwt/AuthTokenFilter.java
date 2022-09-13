@@ -25,8 +25,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
     private static final String AUTHORIZATION_TYPE = "Bearer ";
     private static final int BEGIN_INDEX = 7;
 
-
-    private JwtUtils jwtUtils;// todo Autowired на поле нехорошо //  DONE
+    private JwtUtils jwtUtils;// todo Autowired на поле нехорошо //  DOne
     // todo Autowired на поле нехорошо  //  DONE
     private UserDetailsServiceImpl userDetailsService;
 
