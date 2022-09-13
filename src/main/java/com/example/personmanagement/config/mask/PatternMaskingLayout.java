@@ -12,13 +12,14 @@ import java.util.stream.IntStream;
 public class PatternMaskingLayout extends PatternLayout {
     private static final Character MASK_VALUE = '*';
     private static final int START_INCLUSIVE = 1;
+    private static final String DELIMITER = "|";
     private Pattern multilinePattern;
     private final List<String> maskPatterns = new ArrayList<>();
 
     public void addMaskPattern(String maskPattern) {
         maskPatterns.add(maskPattern);
         multilinePattern = Pattern.compile(
-                String.join("|", maskPatterns),// todo сделай | константой
+                String.join(DELIMITER, maskPatterns),// todo сделай | константой // DONE
                 Pattern.MULTILINE
         );
     }
