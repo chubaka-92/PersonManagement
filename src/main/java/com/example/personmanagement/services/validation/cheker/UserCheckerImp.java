@@ -81,15 +81,11 @@ public class UserCheckerImp implements UserChecker {
     }
 
     private void checkingRole(Map<String, String> response, String role) {
-        log.debug("Was calling checkingRole. Input response: {} role: {}", response, role); //todo почему debug ?  // DONE. излишняя информация для инфо
+        log.debug("Was calling checkingRole. Input response: {} role: {}", response, role);
         Roles roleUser = Roles.defineRole(role);
         if (roleUser == Roles.UNDEFINED) {
-            //todo поместить в put
-            //  DONE
             response.put(ROLES, MessageFormat.format(messageService.getMessage(INCORRECT_ROLE), role));
         } else if (!roleDAO.existenceRoleName(roleUser.name())) {
-            //todo поместить в put
-            //  DONE
             response.put(ROLES, MessageFormat.format(messageService.getMessage(ROLE_NOT_FOUND), role));
         }
     }

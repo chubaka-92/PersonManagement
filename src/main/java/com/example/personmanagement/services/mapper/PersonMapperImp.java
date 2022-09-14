@@ -70,23 +70,17 @@ public class PersonMapperImp implements PersonMapper {
 
     private Long getId(PersonDto personDto) {
         log.debug("Was calling getId.");
-        //todo использовать итерарный if
-        //  DONE
         return personDto.getId() == null ? null : Long.valueOf(personDto.getId());
 
     }
 
     private String getId(PersonEntity personEntity) {
         log.debug("Was calling getId.");
-        //todo использовать итерарный if
-        //  DONE
         return personEntity.getId() == null ? null : personEntity.getId().toString();
     }
 
     private List<TaskDto> getTasks(List<TaskEntity> taskEntities) {
         log.debug("Was calling getTasks.");
-        //todo использовать итерарный if
-        //  DONE
         return taskEntities == null ? null : taskEntities.stream()
                 .map(taskMapper::taskEntityToTask)
                 .collect(Collectors.toList());
@@ -94,8 +88,6 @@ public class PersonMapperImp implements PersonMapper {
 
     private String getUid(PersonDto personDto) {
         log.debug("Was calling getUid. Input personDto: {}", personDto);
-        //todo использовать итерарный if
-        //  DONE
         return personDto.getUid() == null ? UUID.randomUUID().toString() : personDto.getUid();
     }
 }

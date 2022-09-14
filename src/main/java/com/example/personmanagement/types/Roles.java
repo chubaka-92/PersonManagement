@@ -24,14 +24,12 @@ public enum Roles {
 
     public static Roles defineRole(String role) {
         log.info("Was calling defineRole. Input role: {}", role);
-        //todo сделать через HashMap. почитай про метод getOrDefault
-        //  DONE
         return getRoles().getOrDefault(role, UNDEFINED);
     }
 
-    private static HashMap<String, Roles> getRoles() {
+    private static HashMap<String, Roles> getRoles() { //todo defineRole
         HashMap<String, Roles> roles = new HashMap<>();
-        for (Roles rl : Roles.values()) {
+        for (Roles rl : Roles.values()) { //todo не сокращай переменные
             roles.put(messageService.getMessage(rl), rl);
         }
         return roles;

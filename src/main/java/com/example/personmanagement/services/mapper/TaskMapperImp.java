@@ -49,22 +49,16 @@ public class TaskMapperImp implements TaskMapper {
 
     private String getId(TaskEntity taskEntity) {
         log.debug("Was calling getId. Input taskEntity: {}", taskEntity);
-        //todo использовать итерарный if
-        //  DONE
         return taskEntity.getId() == null ? null : taskEntity.getId().toString();
     }
 
     private Long getId(TaskDto taskDto) {
         log.debug("Was calling getId. Input task: {}", taskDto);
-        //todo использовать итерарный if
-        //  DONE
         return taskDto.getId() == null ? null : Long.valueOf(taskDto.getId());
     }
 
     private String getUid(TaskDto taskDto) {
         log.debug("Was calling getUid. Input task: {}", taskDto);
-        //todo использовать итерарный if
-        //  DONE
         return taskDto.getUid() == null ? UUID.randomUUID().toString() : taskDto.getUid();
     }
 

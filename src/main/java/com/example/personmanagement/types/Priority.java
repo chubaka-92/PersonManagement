@@ -20,14 +20,12 @@ public enum Priority {
 
     public static Priority definePriority(String priority) {
         log.info("Was calling definePriority. Input priority: {}", priority);
-        //todo сделать через HashMap. почитай про метод getOrDefault
-        //  DONE
         return getPriorities().getOrDefault(priority, UNDEFINED);
     }
 
-    private static HashMap<String, Priority> getPriorities() {
+    private static HashMap<String, Priority> getPriorities() { //todo definePriorities
         HashMap<String, Priority> priorities = new HashMap<>();
-        for (Priority pr : Priority.values()) {
+        for (Priority pr : Priority.values()) { //todo pr - сокращай
             priorities.put(messageService.getMessage(pr), pr);
         }
         return priorities;

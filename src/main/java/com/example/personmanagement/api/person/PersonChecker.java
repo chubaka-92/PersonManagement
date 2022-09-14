@@ -6,8 +6,6 @@ import com.example.personmanagement.types.Position;
 import java.util.List;
 import java.util.Map;
 
-//TODO разбить api на подпакеты
-//  DONE
 public interface PersonChecker {
 
     List<String> checkRequiredFields(PersonDto personDto);

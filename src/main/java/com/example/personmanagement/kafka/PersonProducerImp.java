@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class PersonProducerImp implements PersonProducer {
     @Value("${topic.person.name}")
-    private String topic; //todo убрать капс  //  DONE
+    private String topic;
     private final KafkaTemplate<String, PersonEntity> kafkaTemplate;
 
     public void sendTask(PersonEntity personEntity) {

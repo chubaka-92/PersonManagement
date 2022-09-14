@@ -30,7 +30,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
-                                    FilterChain filterChain) { //todo try catch и throws одновременно. Убрать throws  // DONE
+                                    FilterChain filterChain) {
         log.info("Was calling doFilterInternal.");
         try {
             String jwt = parseJwt(request);
@@ -47,8 +47,6 @@ public class AuthTokenFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
         } catch (Exception e) {
             log.error(e.getMessage());
-            //todo убрать
-            //  DONE
         }
     }
 

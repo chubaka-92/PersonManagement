@@ -104,7 +104,7 @@ public class TaskServiceImp implements TaskService {
     }
 
     private TaskDto getNewTask(PersonEntity personEntity, TaskDto taskDto) {
-        log.debug("Was calling addNewTasks. Input personEntity: {} taskTemp: {}", personEntity, taskDto); //todo почему debug ? // DONE. излишняя информация для инфо
+        log.debug("Was calling addNewTasks. Input personEntity: {} taskTemp: {}", personEntity, taskDto);
         TaskEntity taskEntity = taskMapper.taskToTaskEntity(taskDto);
         taskEntity.setPersonId(personEntity.getId());
         taskProducer.sendTask(taskEntity);
@@ -112,7 +112,7 @@ public class TaskServiceImp implements TaskService {
     }
 
     private TaskDto getUpdateTask(TaskDto taskDto, TaskEntity taskEntity) {
-        log.debug("Was calling getUpdateTask. Input personEntity: {} taskEntity: {}", taskDto, taskEntity); //todo почему debug ? // DONE. излишняя информация для инфо
+        log.debug("Was calling getUpdateTask. Input personEntity: {} taskEntity: {}", taskDto, taskEntity);
         TaskEntity result = taskMapper.taskDtoAndTaskEntityToTaskEntity(taskDto, taskEntity);
         taskDAO.updateTask(result);
         return taskMapper.taskEntityToTask(result);

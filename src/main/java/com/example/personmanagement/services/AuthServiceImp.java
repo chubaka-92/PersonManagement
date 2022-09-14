@@ -67,7 +67,7 @@ public class AuthServiceImp {
     }
 
     private Authentication getAuthenticate(LoginRequest loginRequest) {
-        log.debug("Was calling getAuthenticate. Input loginRequest: {}", loginRequest); //todo почему debug ? // DONE. излишняя информация для инфо
+        log.debug("Was calling getAuthenticate. Input loginRequest: {}", loginRequest);
         return authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(
                         loginRequest.getUsername(),
