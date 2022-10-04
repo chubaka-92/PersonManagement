@@ -1,4 +1,4 @@
-package com.example.personmanagement.api.role;
+package com.example.personmanagement.api.dao;
 
 import com.example.personmanagement.entity.RoleEntity;
 

@@ -1,4 +1,4 @@
-package com.example.personmanagement.api.task;
+package com.example.personmanagement.api.initializer;
 
 import com.example.personmanagement.dto.TaskDto;
 
@@ -14,4 +14,6 @@ public interface TaskInitializer {
     boolean hasErrors();
 
     TaskDto getTaskDtoError();
+
+    void setTaskDtoError(TaskDto taskDto);
 }

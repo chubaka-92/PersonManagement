@@ -1,11 +1,10 @@
 package com.example.personmanagement.types;
 
-import com.example.personmanagement.services.MessageService;
-import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.HashMap;
+import java.util.ResourceBundle;
 
 @Slf4j
 @ToString
@@ -16,17 +15,17 @@ public enum Priority {
     CRITICAL,
     UNDEFINED;
 
-    private static final MessageService messageService = new MessageService();
+    private static final String MESSAGE = "message";
 
     public static Priority definePriority(String priority) {
         log.info("Was calling definePriority. Input priority: {}", priority);
-        return getPriorities().getOrDefault(priority, UNDEFINED);
+        return definePriorities().getOrDefault(priority, UNDEFINED);
     }
 
-    private static HashMap<String, Priority> getPriorities() { //todo definePriorities
+    private static HashMap<String, Priority> definePriorities() { //todo definePriorities  //  DONE
         HashMap<String, Priority> priorities = new HashMap<>();
-        for (Priority pr : Priority.values()) { //todo pr - сокращай
-            priorities.put(messageService.getMessage(pr), pr);
+        for (Priority priority : Priority.values()) { //todo pr - сокращай  //  DONE
+            priorities.put(ResourceBundle.getBundle(MESSAGE).getString(priority.name()), priority);
         }
         return priorities;
     }

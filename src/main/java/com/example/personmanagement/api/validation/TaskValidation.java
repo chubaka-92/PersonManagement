@@ -1,4 +1,4 @@
-package com.example.personmanagement.api.task;
+package com.example.personmanagement.api.validation;
 
 import com.example.personmanagement.dto.TaskDto;
 

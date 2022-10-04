@@ -17,7 +17,7 @@ import java.text.MessageFormat;
 @Service
 @RequiredArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
-    private final MessageService messageService = new MessageService();
+    private final MessageService messageService;
     private static final String USER_NOT_FOUND = "userNotFound";
     private final UserRepository userRepository;
 

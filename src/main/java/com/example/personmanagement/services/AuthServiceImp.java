@@ -1,6 +1,6 @@
 package com.example.personmanagement.services;
 
-import com.example.personmanagement.api.user.UserValidation;
+import com.example.personmanagement.api.validation.UserValidation;
 import com.example.personmanagement.config.security.jwt.JwtUtils;
 import com.example.personmanagement.dao.UserDAOImp;
 import com.example.personmanagement.dto.JwtResponse;

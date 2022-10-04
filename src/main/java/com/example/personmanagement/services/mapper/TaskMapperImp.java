@@ -1,10 +1,11 @@
 package com.example.personmanagement.services.mapper;
 
-import com.example.personmanagement.api.task.TaskMapper;
+import com.example.personmanagement.api.mapper.TaskMapper;
 import com.example.personmanagement.dto.TaskDto;
 import com.example.personmanagement.entity.TaskEntity;
 import com.example.personmanagement.services.MessageService;
 import com.example.personmanagement.types.Priority;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -12,9 +13,10 @@ import java.util.UUID;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class TaskMapperImp implements TaskMapper {
 
-    private final MessageService messageService = new MessageService();
+    private final MessageService messageService;
 
     public TaskDto taskEntityToTask(TaskEntity taskEntity) {
         log.info("Was calling taskEntityToTask. Input taskEntity: {}", taskEntity);

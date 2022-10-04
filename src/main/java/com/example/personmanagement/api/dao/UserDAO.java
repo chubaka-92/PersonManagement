@@ -1,4 +1,4 @@
-package com.example.personmanagement.api.user;
+package com.example.personmanagement.api.dao;
 
 import com.example.personmanagement.entity.UserEntity;
 

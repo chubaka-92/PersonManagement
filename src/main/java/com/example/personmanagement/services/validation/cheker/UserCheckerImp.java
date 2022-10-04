@@ -1,8 +1,8 @@
 package com.example.personmanagement.services.validation.cheker;
 
-import com.example.personmanagement.api.role.RoleDAO;
-import com.example.personmanagement.api.user.UserChecker;
-import com.example.personmanagement.api.user.UserDAO;
+import com.example.personmanagement.api.checker.UserChecker;
+import com.example.personmanagement.api.dao.RoleDAO;
+import com.example.personmanagement.api.dao.UserDAO;
 import com.example.personmanagement.dto.UserDto;
 import com.example.personmanagement.services.MessageService;
 import com.example.personmanagement.types.Roles;
@@ -24,7 +24,7 @@ public class UserCheckerImp implements UserChecker {
     private static final String ROLE_NOT_FOUND = "roleNotFound";
     private static final String EMAIL_EXIST = "emailExist";
     private static final String INCORRECT_EMAIL = "incorrectEmail";
-    private final MessageService messageService = new MessageService();
+    private final MessageService messageService;
     private final UserDAO userDAO;
     private final RoleDAO roleDAO;
 
@@ -32,10 +32,20 @@ public class UserCheckerImp implements UserChecker {
     public List<String> checkRequiredFields(UserDto userDto) {
         log.info("Was calling checkRequiredFields. Input userDto: {}", userDto);
         List<String> invalidFields = new ArrayList<>();
-        checkingUserName(userDto, invalidFields);
-        checkingEmail(userDto, invalidFields);
-        checkingPassword(userDto, invalidFields);
-        checkingRoles(userDto, invalidFields);
+
+
+        if (checkingBadValueUserName(userDto)) { //todo сделать приватный метод на проверку на null и isBlank
+            invalidFields.add(USER_NAME);
+        }
+        if (checkingBadValueEmail(userDto)) { //todo сделать приватный метод на проверку на null и isBlank
+            invalidFields.add(EMAIL);
+        }
+        if (checkingBadValuePassword(userDto)) { //todo сделать приватный метод на проверку на null и isBlank
+            invalidFields.add(PASSWORD);
+        }
+        if (checkingBadValueRoles(userDto)) { //todo сделать приватный метод на проверку на null и isBlank
+            invalidFields.add(ROLES);
+        }
 
         return invalidFields;
     }
@@ -90,32 +100,23 @@ public class UserCheckerImp implements UserChecker {
         }
     }
 
-    private void checkingRoles(UserDto userDto, List<String> invalidFields) {
-        log.debug("Was calling checkingRoles. Input userDto: {} invalidFields: {}", userDto, invalidFields);
-        if (userDto.getRoles() == null || userDto.getRoles().isEmpty()) { //todo сделать приватный метод на проверку на null и isBlank     //  DONE
-            invalidFields.add(ROLES);
-        }
+    private boolean checkingBadValueRoles(UserDto userDto) {
+        log.debug("Was calling checkingRoles. Input userDto: {}", userDto);
+        return (userDto.getRoles() == null || userDto.getRoles().isEmpty());
     }
 
-    private void checkingPassword(UserDto userDto, List<String> invalidFields) {
-        log.debug("Was calling checkingPassword. Input userDto: {} invalidFields: {}", userDto, invalidFields);
-        if (userDto.getPassword() == null || userDto.getPassword().isBlank()) { //todo сделать приватный метод на проверку на null и isBlank   //  DONE
-            invalidFields.add(PASSWORD);
-        }
+    private boolean checkingBadValuePassword(UserDto userDto) {
+        log.debug("Was calling checkingPassword. Input userDto: {}", userDto);
+        return (userDto.getPassword() == null || userDto.getPassword().isBlank());
     }
 
-    private void checkingEmail(UserDto userDto, List<String> invalidFields) {
-        log.debug("Was calling checkingEmail. Input userDto: {} invalidFields: {}", userDto, invalidFields);
-        if (userDto.getEmail() == null || userDto.getEmail().isBlank()) { //todo сделать приватный метод на проверку на null и isBlank   //  DONE
-            invalidFields.add(EMAIL);
-
-        }
+    private boolean checkingBadValueEmail(UserDto userDto) {
+        log.debug("Was calling checkingEmail. Input userDto: {}", userDto);
+        return (userDto.getEmail() == null || userDto.getEmail().isBlank());
     }
 
-    private void checkingUserName(UserDto userDto, List<String> invalidFields) {
-        log.debug("Was calling checkingUserName. Input userDto: {} invalidFields: {}", userDto, invalidFields);
-        if (userDto.getUsername() == null || userDto.getUsername().isBlank()) { //todo сделать приватный метод на проверку на null и isBlank   //  DONE
-            invalidFields.add(USER_NAME);
-        }
+    private boolean checkingBadValueUserName(UserDto userDto) {
+        log.debug("Was calling checkingBadValueUserName. Input userDto: {}", userDto);
+        return (userDto.getUsername() == null || userDto.getUsername().isBlank());
     }
 }

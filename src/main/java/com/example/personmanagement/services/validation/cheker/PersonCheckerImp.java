@@ -1,10 +1,12 @@
 package com.example.personmanagement.services.validation.cheker;
 
-import com.example.personmanagement.api.person.PersonChecker;
+import com.example.personmanagement.api.checker.PersonChecker;
 import com.example.personmanagement.dto.PersonDto;
 import com.example.personmanagement.services.MessageService;
 import com.example.personmanagement.types.Position;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.text.MessageFormat;
@@ -16,22 +18,34 @@ import java.util.Map;
 import static com.example.personmanagement.types.PersonFieldName.*;
 
 @Slf4j
+@Component
+@RequiredArgsConstructor
 public class PersonCheckerImp implements PersonChecker {
     private static final String INCORRECT_AGE = "incorrectAge";
     private static final String INCORRECT_POSITION = "incorrectPosition";
     private static final String INCORRECT_SALARY = "incorrectSalary";
     private static final String LITTLE_WORK_EXPERIENCE = "littleWorkExperience";
     private static final int WORK_MIN_AGE = 16;
-    private final MessageService messageService = new MessageService();
+    private final MessageService messageService;
 
     public List<String> checkRequiredFields(PersonDto personDto) {
         log.info("Was calling checkRequiredFields. Input person: {}", personDto);
         List<String> invalidFields = new ArrayList<>();
-        checkingName(personDto, invalidFields);
-        checkingPosition(personDto, invalidFields);
-        checkingAge(personDto, invalidFields);
-        checkingSalary(personDto, invalidFields);
-        checkingExperience(personDto, invalidFields);
+        if (checkingBadValueName(personDto)) { //todo сделать приватный метод на проверку на null и isBlank  //  DONE
+            invalidFields.add(NAME);
+        }
+        if (checkingBadValuePosition(personDto)) { //todo сделать приватный метод на проверку на null и isBlank  //  DONE
+            invalidFields.add(POSITION);
+        }
+        if (checkingBadValueAge(personDto)) { //todo сделать приватный метод на проверку на null и isBlank  //  DONE
+            invalidFields.add(AGE);
+        }
+        if (checkingBadValueSalary(personDto)) { //todo сделать приватный метод на проверку на null и isBlank  //  DONE
+            invalidFields.add(SALARY);
+        }
+        if (checkingBadValueExperience(personDto)) { //todo сделать приватный метод на проверку на null и isBlank  //  DONE
+            invalidFields.add(EXPERIENCE);
+        }
         return invalidFields;
     }
 
@@ -97,48 +111,28 @@ public class PersonCheckerImp implements PersonChecker {
                 && positionPerson.getSalaryMax().compareTo(salaryPerson) >= 0;
     }
 
-    private void checkingExperience(PersonDto personDto, List<String> invalidFields) {
-        log.info("Was calling checkingExperience. Input personDto: {} invalidFields: {}",
-                personDto,
-                invalidFields);
-        if (personDto.getExperience() == null || personDto.getExperience().isBlank()) { //todo сделать приватный метод на проверку на null и isBlank  //  DONE
-            invalidFields.add(EXPERIENCE);
-        }
+    private boolean checkingBadValueExperience(PersonDto personDto) {
+        log.info("Was calling checkingBadValueExperience. Input personDto: {}", personDto);
+        return (personDto.getExperience() == null || personDto.getExperience().isBlank());
     }
 
-    private void checkingSalary(PersonDto personDto, List<String> invalidFields) {
-        log.info("Was calling checkingSalary. Input personDto: {} invalidFields: {}",
-                personDto,
-                invalidFields);
-        if (personDto.getSalary() == null || personDto.getSalary().isBlank()) { //todo сделать приватный метод на проверку на null и isBlank  //  DONE
-            invalidFields.add(SALARY);
-        }
+    private boolean checkingBadValueSalary(PersonDto personDto) {
+        log.info("Was calling checkingBadValueSalary. Input personDto: {} ", personDto);
+        return (personDto.getSalary() == null || personDto.getSalary().isBlank());
     }
 
-    private void checkingAge(PersonDto personDto, List<String> invalidFields) {
-        log.info("Was calling checkingAge. Input personDto: {} invalidFields: {}",
-                personDto,
-                invalidFields);
-        if (personDto.getAge() == null || personDto.getAge().isBlank()) { //todo сделать приватный метод на проверку на null и isBlank  //  DONE
-            invalidFields.add(AGE);
-        }
+    private boolean checkingBadValueAge(PersonDto personDto) {
+        log.info("Was calling checkingBadValueAge. Input personDto: {} ", personDto);
+        return (personDto.getAge() == null || personDto.getAge().isBlank());
     }
 
-    private void checkingPosition(PersonDto personDto, List<String> invalidFields) {
-        log.info("Was calling checkingPosition. Input personDto: {} invalidFields: {}",
-                personDto,
-                invalidFields);
-        if (personDto.getPosition() == null || personDto.getPosition().isBlank()) { //todo сделать приватный метод на проверку на null и isBlank   //  DONE
-            invalidFields.add(POSITION);
-        }
+    private boolean checkingBadValuePosition(PersonDto personDto) {
+        log.info("Was calling checkingBadValuePosition. Input personDto: {}", personDto);
+        return (personDto.getPosition() == null || personDto.getPosition().isBlank());
     }
 
-    private void checkingName(PersonDto personDto, List<String> invalidFields) {
-        log.info("Was calling checkingName. Input personDto: {} invalidFields: {}",
-                personDto,
-                invalidFields);
-        if (personDto.getName() == null || personDto.getName().isBlank()) { //todo сделать приватный метод на проверку на null и isBlank   //  DONE
-            invalidFields.add(NAME);
-        }
+    private boolean checkingBadValueName(PersonDto personDto) {
+        log.info("Was calling checkingBadValueName. Input personDto: {}", personDto);
+        return personDto.getName() == null || personDto.getName().isBlank();
     }
 }

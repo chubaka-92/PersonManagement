@@ -1,7 +1,11 @@
 package com.example.personmanagement.services;
 
 
-import com.example.personmanagement.api.person.*;
+import com.example.personmanagement.api.dao.PersonDAO;
+import com.example.personmanagement.api.mapper.PersonMapper;
+import com.example.personmanagement.api.producer.PersonProducer;
+import com.example.personmanagement.api.service.PersonService;
+import com.example.personmanagement.api.validation.PersonValidation;
 import com.example.personmanagement.dto.PersonDto;
 import com.example.personmanagement.entity.PersonEntity;
 import lombok.RequiredArgsConstructor;

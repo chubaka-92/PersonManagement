@@ -1,23 +1,27 @@
 package com.example.personmanagement.services.validation.initializer;
 
-import com.example.personmanagement.api.person.PersonInitializer;
+import com.example.personmanagement.api.initializer.PersonInitializer;
 import com.example.personmanagement.dto.PersonDto;
 import com.example.personmanagement.services.MessageService;
 import com.example.personmanagement.types.PersonFieldName;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Map;
 
 @Slf4j
 @Getter
+@Setter
+@Component
 @RequiredArgsConstructor
 public class PersonInitializerImp implements PersonInitializer {
     private static final String EMPTY_FIELD = "emptyField";
-    private final PersonDto personDtoError;
-    private final MessageService messageService = new MessageService();
+    private PersonDto personDtoError;
+    private final MessageService messageService;
 
     public void addFieldsEmpty(List<String> incorrectFields) {
         log.info("Was calling addFieldsEmpty. Input incorrectFields: {}", incorrectFields);

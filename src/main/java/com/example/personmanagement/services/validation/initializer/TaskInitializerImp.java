@@ -1,23 +1,27 @@
 package com.example.personmanagement.services.validation.initializer;
 
-import com.example.personmanagement.api.task.TaskInitializer;
+import com.example.personmanagement.api.initializer.TaskInitializer;
 import com.example.personmanagement.dto.TaskDto;
 import com.example.personmanagement.services.MessageService;
 import com.example.personmanagement.types.TaskFieldName;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Map;
 
 @Slf4j
+@Setter
 @Getter
+@Component
 @RequiredArgsConstructor
 public class TaskInitializerImp implements TaskInitializer {
     private static final String EMPTY_FIELD = "emptyField";
-    private final TaskDto taskDtoError;
-    private final MessageService messageService = new MessageService();
+    private TaskDto taskDtoError;
+    private final MessageService messageService;
 
 
     public void addFieldsEmpty(List<String> incorrectFields) {

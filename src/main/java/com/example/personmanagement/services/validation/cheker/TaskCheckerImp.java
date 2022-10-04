@@ -1,10 +1,12 @@
 package com.example.personmanagement.services.validation.cheker;
 
-import com.example.personmanagement.api.task.TaskChecker;
+import com.example.personmanagement.api.checker.TaskChecker;
 import com.example.personmanagement.dto.TaskDto;
 import com.example.personmanagement.services.MessageService;
 import com.example.personmanagement.types.Priority;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,9 +17,11 @@ import static com.example.personmanagement.types.TaskFieldName.DESCRIPTION;
 import static com.example.personmanagement.types.TaskFieldName.PRIORITY;
 
 @Slf4j
+@Component
+@RequiredArgsConstructor
 public class TaskCheckerImp implements TaskChecker {
     private static final String INCORRECT_PRIORITY = "incorrectPriority";
-    private final MessageService messageService = new MessageService();
+    private final MessageService messageService;
 
 
     public List<String> checkRequiredFields(TaskDto taskDto) {

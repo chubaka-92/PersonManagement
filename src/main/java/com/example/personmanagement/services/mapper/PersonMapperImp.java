@@ -1,7 +1,7 @@
 package com.example.personmanagement.services.mapper;
 
-import com.example.personmanagement.api.person.PersonMapper;
-import com.example.personmanagement.api.task.TaskMapper;
+import com.example.personmanagement.api.mapper.PersonMapper;
+import com.example.personmanagement.api.mapper.TaskMapper;
 import com.example.personmanagement.dto.PersonDto;
 import com.example.personmanagement.dto.TaskDto;
 import com.example.personmanagement.entity.PersonEntity;
@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class PersonMapperImp implements PersonMapper {
 
-    private final MessageService messageService = new MessageService();
+    private final MessageService messageService;
     private final TaskMapper taskMapper;
 
     public PersonDto personEntityToPerson(PersonEntity personEntity) {

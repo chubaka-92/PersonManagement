@@ -1,4 +1,4 @@
-package com.example.personmanagement.api.person;
+package com.example.personmanagement.api.mapper;
 
 import com.example.personmanagement.dto.PersonDto;
 import com.example.personmanagement.entity.PersonEntity;

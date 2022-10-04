@@ -1,10 +1,12 @@
 package com.example.personmanagement.services;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 
 import java.util.ResourceBundle;
 
 @Slf4j
+@Service
 public class MessageService {
 
     private static final String MESSAGE = "message";

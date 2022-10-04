@@ -1,12 +1,11 @@
 package com.example.personmanagement.services.validation.validator;
 
-import com.example.personmanagement.api.person.PersonChecker;
-import com.example.personmanagement.api.person.PersonInitializer;
-import com.example.personmanagement.api.person.PersonValidation;
+import com.example.personmanagement.api.checker.PersonChecker;
+import com.example.personmanagement.api.initializer.PersonInitializer;
+import com.example.personmanagement.api.validation.PersonValidation;
 import com.example.personmanagement.dto.PersonDto;
-import com.example.personmanagement.services.validation.cheker.PersonCheckerImp;
-import com.example.personmanagement.services.validation.initializer.PersonInitializerImp;
 import com.example.personmanagement.types.Position;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -15,13 +14,15 @@ import static com.example.personmanagement.types.Position.definePosition;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class PersonValidationImp implements PersonValidation {
+
+    private final PersonChecker personChecker;
+    private final PersonInitializer personErrorMessage;
 
     public PersonDto validate(PersonDto personDto) {
         log.info("Was calling validate. Input person: {}", personDto);
-        PersonChecker personChecker = new PersonCheckerImp();
-        PersonInitializer personErrorMessage = new PersonInitializerImp(personDto);
-
+        personErrorMessage.setPersonDtoError(personDto);
         personErrorMessage.addFieldsEmpty(personChecker.checkRequiredFields(personDto));
 
         Position position = definePosition(personDto.getPosition());
