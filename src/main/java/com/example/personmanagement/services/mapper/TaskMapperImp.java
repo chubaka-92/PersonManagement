@@ -4,7 +4,7 @@ import com.example.personmanagement.api.mapper.TaskMapper;
 import com.example.personmanagement.dto.TaskDto;
 import com.example.personmanagement.entity.TaskEntity;
 import com.example.personmanagement.services.MessageService;
-import com.example.personmanagement.types.Priorities;
+import com.example.personmanagement.services.finder.PriorityFinder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -17,7 +17,7 @@ import java.util.UUID;
 public class TaskMapperImp implements TaskMapper {
 
     private final MessageService messageService;
-    private final Priorities priorities;
+    private final PriorityFinder priorityFinder;
 
     public TaskDto taskEntityToTask(TaskEntity taskEntity) {
         log.info("Was calling taskEntityToTask. Input taskEntity: {}", taskEntity);
@@ -35,7 +35,7 @@ public class TaskMapperImp implements TaskMapper {
                 .id(getId(taskDto))
                 .uid(getUid(taskDto))
                 .description(taskDto.getDescription().trim())
-                .priority(priorities.getPriority(taskDto.getPriority()))
+                .priority(priorityFinder.getPriority(taskDto.getPriority()))
                 .build();
     }
 
@@ -45,7 +45,7 @@ public class TaskMapperImp implements TaskMapper {
                 .id(taskEntity.getId())
                 .uid(taskEntity.getUid())
                 .description(taskDto.getDescription().trim())
-                .priority(priorities.getPriority(taskDto.getPriority()))
+                .priority(priorityFinder.getPriority(taskDto.getPriority()))
                 .personId(taskEntity.getPersonId())
                 .build();
     }

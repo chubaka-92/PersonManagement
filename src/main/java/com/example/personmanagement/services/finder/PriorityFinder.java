@@ -1,6 +1,7 @@
-package com.example.personmanagement.types;
+package com.example.personmanagement.services.finder;
 
 import com.example.personmanagement.services.MessageService;
+import com.example.personmanagement.types.Priority;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,7 +15,8 @@ import java.util.Map;
 @Getter
 @Component
 @RequiredArgsConstructor
-public class Priorities {
+public class PriorityFinder {
+
     private final MessageService messageService;
     private final Map<String, Priority> priorities = new HashMap<>();
 

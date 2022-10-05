@@ -4,8 +4,8 @@ import com.example.personmanagement.api.checker.PersonChecker;
 import com.example.personmanagement.api.initializer.PersonInitializer;
 import com.example.personmanagement.api.validation.PersonValidation;
 import com.example.personmanagement.dto.PersonDto;
+import com.example.personmanagement.services.finder.PositionFinder;
 import com.example.personmanagement.types.Position;
-import com.example.personmanagement.types.Positions;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -19,14 +19,14 @@ public class PersonValidationImp implements PersonValidation {
 
     private final PersonChecker personChecker;
     private final PersonInitializer personErrorMessage;
-    private final Positions positions;
+    private final PositionFinder positionFinder;
 
     public PersonDto validate(PersonDto personDto) {
         log.info("Was calling validate. Input person: {}", personDto);
         personErrorMessage.setPersonDtoError(personDto);
         personErrorMessage.addFieldsEmpty(personChecker.checkRequiredFields(personDto));
 
-        Position position = positions.getPosition(personDto.getPosition());
+        Position position = positionFinder.getPosition(personDto.getPosition());
 
         if (!personErrorMessage.hasErrors()) {
             checkingFilingFields(personDto, personErrorMessage, personChecker, position);
