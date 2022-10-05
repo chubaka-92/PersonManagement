@@ -7,7 +7,7 @@ import com.example.personmanagement.dto.TaskDto;
 import com.example.personmanagement.entity.PersonEntity;
 import com.example.personmanagement.entity.TaskEntity;
 import com.example.personmanagement.services.MessageService;
-import com.example.personmanagement.services.finder.PositionFinder;
+import com.example.personmanagement.services.provider.TypeProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -24,7 +24,7 @@ public class PersonMapperImp implements PersonMapper {
 
     private final MessageService messageService;
     private final TaskMapper taskMapper;
-    private final PositionFinder positionFinder;
+    private final TypeProvider positions;
 
     public PersonDto personEntityToPerson(PersonEntity personEntity) {
         log.info("Was calling personEntityToPerson. Input personEntity: {}", personEntity);
@@ -50,7 +50,7 @@ public class PersonMapperImp implements PersonMapper {
                 .age(Integer.valueOf(personDto.getAge()))
                 .email(personDto.getEmail().trim())
                 .salary(new BigDecimal(personDto.getSalary()))
-                .position(positionFinder.getPosition(personDto.getPosition()))
+                .position(positions.getPosition(personDto.getPosition()))
                 .experience(Double.valueOf(personDto.getExperience()))
                 .build();
     }
@@ -64,7 +64,7 @@ public class PersonMapperImp implements PersonMapper {
                 .age(Integer.valueOf(personDto.getAge()))
                 .email(personDto.getEmail().trim())
                 .salary(new BigDecimal(personDto.getSalary()))
-                .position(positionFinder.getPosition(personDto.getPosition()))
+                .position(positions.getPosition(personDto.getPosition()))
                 .experience(Double.valueOf(personDto.getExperience()))
                 .build();
     }
