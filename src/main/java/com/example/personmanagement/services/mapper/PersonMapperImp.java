@@ -1,13 +1,13 @@
 package com.example.personmanagement.services.mapper;
 
-import com.example.personmanagement.api.PersonMapper;
-import com.example.personmanagement.api.TaskMapper;
+import com.example.personmanagement.api.mapper.PersonMapper;
+import com.example.personmanagement.api.mapper.TaskMapper;
 import com.example.personmanagement.dto.PersonDto;
 import com.example.personmanagement.dto.TaskDto;
 import com.example.personmanagement.entity.PersonEntity;
 import com.example.personmanagement.entity.TaskEntity;
 import com.example.personmanagement.services.MessageService;
-import com.example.personmanagement.types.Position;
+import com.example.personmanagement.services.provider.TypeProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -22,8 +22,9 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class PersonMapperImp implements PersonMapper {
 
-    private final MessageService messageService = new MessageService();
+    private final MessageService messageService;
     private final TaskMapper taskMapper;
+    private final TypeProvider positions;
 
     public PersonDto personEntityToPerson(PersonEntity personEntity) {
         log.info("Was calling personEntityToPerson. Input personEntity: {}", personEntity);
@@ -49,7 +50,7 @@ public class PersonMapperImp implements PersonMapper {
                 .age(Integer.valueOf(personDto.getAge()))
                 .email(personDto.getEmail().trim())
                 .salary(new BigDecimal(personDto.getSalary()))
-                .position(Position.definePosition(personDto.getPosition()))
+                .position(positions.getPosition(personDto.getPosition()))
                 .experience(Double.valueOf(personDto.getExperience()))
                 .build();
     }
@@ -63,43 +64,31 @@ public class PersonMapperImp implements PersonMapper {
                 .age(Integer.valueOf(personDto.getAge()))
                 .email(personDto.getEmail().trim())
                 .salary(new BigDecimal(personDto.getSalary()))
-                .position(Position.definePosition(personDto.getPosition()))
+                .position(positions.getPosition(personDto.getPosition()))
                 .experience(Double.valueOf(personDto.getExperience()))
                 .build();
     }
 
     private Long getId(PersonDto personDto) {
         log.debug("Was calling getId.");
-        if (personDto.getId() == null) {
-            return null;
-        }
-        return Long.valueOf(personDto.getId());
+        return personDto.getId() == null ? null : Long.valueOf(personDto.getId());
+
     }
 
     private String getId(PersonEntity personEntity) {
         log.debug("Was calling getId.");
-        if (personEntity.getId() == null) {
-            return null;
-        }
-        return personEntity.getId().toString();
+        return personEntity.getId() == null ? null : personEntity.getId().toString();
     }
 
     private List<TaskDto> getTasks(List<TaskEntity> taskEntities) {
         log.debug("Was calling getTasks.");
-        if (taskEntities == null) {
-            return null;
-        }
-        return taskEntities
-                .stream()
+        return taskEntities == null ? null : taskEntities.stream()
                 .map(taskMapper::taskEntityToTask)
                 .collect(Collectors.toList());
     }
 
     private String getUid(PersonDto personDto) {
         log.debug("Was calling getUid. Input personDto: {}", personDto);
-        if (personDto.getUid() == null) {
-            return UUID.randomUUID().toString();
-        }
-        return personDto.getUid();
+        return personDto.getUid() == null ? UUID.randomUUID().toString() : personDto.getUid();
     }
 }

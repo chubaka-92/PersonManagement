@@ -17,17 +17,18 @@ import java.text.MessageFormat;
 @Service
 @RequiredArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
-    private final UserRepository userRepository;
-    private final MessageService messageService = new MessageService();
+    private final MessageService messageService;
     private static final String USER_NOT_FOUND = "userNotFound";
+    private final UserRepository userRepository;
 
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) {
         log.info("Was calling loadUserByUsername. Input username: {}", username);
         UserEntity user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException(
-                        MessageFormat.format(messageService.getMessage(USER_NOT_FOUND), username)));
+                .orElseThrow(() -> new UsernameNotFoundException(MessageFormat.format(
+                        messageService.getMessage(USER_NOT_FOUND),
+                        username)));
         return UserDetailsImpl.build(user);
     }
 }

@@ -1,6 +1,6 @@
 package com.example.personmanagement.kafka;
 
-import com.example.personmanagement.api.TaskProducer;
+import com.example.personmanagement.api.producer.TaskProducer;
 import com.example.personmanagement.entity.TaskEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

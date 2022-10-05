@@ -1,14 +1,11 @@
 package com.example.personmanagement.types;
 
-import com.example.personmanagement.services.MessageService;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
-import lombok.extern.slf4j.Slf4j;
 
 import java.math.BigDecimal;
 
-@Slf4j
 @Getter
 @ToString
 @AllArgsConstructor
@@ -25,22 +22,4 @@ public enum Position {
     private final BigDecimal salaryMax;
     private final Double workExperience;
     private final Integer countTasks;
-
-    public static Position definePosition(String position) {
-        log.info("Was calling definePosition. Input position: {}", position);
-        MessageService messageService = new MessageService();
-        if (messageService.getMessage(INTERN).equals(position)) {
-            return INTERN;
-        } else if (messageService.getMessage(TECHNOLOGIST).equals(position)) {
-            return TECHNOLOGIST;
-        } else if (messageService.getMessage(ENGINEER).equals(position)) {
-            return ENGINEER;
-        } else if (messageService.getMessage(LEAD_ENGINEER).equals(position)) {
-            return LEAD_ENGINEER;
-        } else if (messageService.getMessage(CHIEF_ENGINEER).equals(position)) {
-            return CHIEF_ENGINEER;
-        } else {
-            return UNDEFINED;
-        }
-    }
 }

@@ -1,4 +1,4 @@
-package com.example.personmanagement.api;
+package com.example.personmanagement.api.initializer;
 
 import com.example.personmanagement.dto.UserDto;
 
@@ -13,4 +13,6 @@ public interface UserInitializer {
     boolean hasErrors();
 
     UserDto getUserDtoError();
+
+    void setUserDtoError(UserDto userDto);
 }

@@ -1,4 +1,4 @@
-package com.example.personmanagement.api;
+package com.example.personmanagement.api.checker;
 
 import com.example.personmanagement.dto.PersonDto;
 import com.example.personmanagement.types.Position;

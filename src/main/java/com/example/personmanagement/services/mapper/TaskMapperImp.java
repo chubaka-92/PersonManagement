@@ -1,10 +1,11 @@
 package com.example.personmanagement.services.mapper;
 
-import com.example.personmanagement.api.TaskMapper;
+import com.example.personmanagement.api.mapper.TaskMapper;
 import com.example.personmanagement.dto.TaskDto;
 import com.example.personmanagement.entity.TaskEntity;
 import com.example.personmanagement.services.MessageService;
-import com.example.personmanagement.types.Priority;
+import com.example.personmanagement.services.provider.TypeProvider;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -12,9 +13,11 @@ import java.util.UUID;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class TaskMapperImp implements TaskMapper {
 
-    private final MessageService messageService = new MessageService();
+    private final MessageService messageService;
+    private final TypeProvider priorities;
 
     public TaskDto taskEntityToTask(TaskEntity taskEntity) {
         log.info("Was calling taskEntityToTask. Input taskEntity: {}", taskEntity);
@@ -32,7 +35,7 @@ public class TaskMapperImp implements TaskMapper {
                 .id(getId(taskDto))
                 .uid(getUid(taskDto))
                 .description(taskDto.getDescription().trim())
-                .priority(Priority.definePriority(taskDto.getPriority()))
+                .priority(priorities.getPriority(taskDto.getPriority()))
                 .build();
     }
 
@@ -42,33 +45,24 @@ public class TaskMapperImp implements TaskMapper {
                 .id(taskEntity.getId())
                 .uid(taskEntity.getUid())
                 .description(taskDto.getDescription().trim())
-                .priority(Priority.definePriority(taskDto.getPriority()))
+                .priority(priorities.getPriority(taskDto.getPriority()))
                 .personId(taskEntity.getPersonId())
                 .build();
     }
 
     private String getId(TaskEntity taskEntity) {
         log.debug("Was calling getId. Input taskEntity: {}", taskEntity);
-        if (taskEntity.getId() == null) {
-            return null;
-        }
-        return taskEntity.getId().toString();
+        return taskEntity.getId() == null ? null : taskEntity.getId().toString();
     }
 
     private Long getId(TaskDto taskDto) {
         log.debug("Was calling getId. Input task: {}", taskDto);
-        if (taskDto.getId() == null) {
-            return null;
-        }
-        return Long.valueOf(taskDto.getId());
+        return taskDto.getId() == null ? null : Long.valueOf(taskDto.getId());
     }
 
     private String getUid(TaskDto taskDto) {
         log.debug("Was calling getUid. Input task: {}", taskDto);
-        if (taskDto.getUid() == null) {
-            return UUID.randomUUID().toString();
-        }
-        return taskDto.getUid();
+        return taskDto.getUid() == null ? UUID.randomUUID().toString() : taskDto.getUid();
     }
 
 }

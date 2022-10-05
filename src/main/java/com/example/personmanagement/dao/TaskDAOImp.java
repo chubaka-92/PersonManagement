@@ -1,6 +1,6 @@
 package com.example.personmanagement.dao;
 
-import com.example.personmanagement.api.TaskDAO;
+import com.example.personmanagement.api.dao.TaskDAO;
 import com.example.personmanagement.entity.TaskEntity;
 import com.example.personmanagement.exeption.TaskNotFoundException;
 import com.example.personmanagement.repository.TaskRepository;
@@ -21,7 +21,7 @@ public class TaskDAOImp implements TaskDAO {
     private final TaskRepository taskRepository;
     private static final String TASK_NOT_FOUND = "taskNotFound";
     private static final String TASKS_NOT_FOUND = "tasksNotFound";
-    private final MessageService messageService = new MessageService();
+    private final MessageService messageService;
 
     public List<TaskEntity> findTasks() {
         log.info("Was calling findTasks.");

@@ -5,6 +5,9 @@ import lombok.Getter;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Slf4j
 @Getter
 @ToString
@@ -16,17 +19,16 @@ public enum Roles {
     UNDEFINED("undefined");
 
     private final String name;
+    private static final Map<String, Roles> ROLES = new HashMap<>();
+
+    static {
+        for (Roles role : Roles.values()) {
+            ROLES.put(role.name, role);
+        }
+    }
 
     public static Roles defineRole(String role) {
         log.info("Was calling defineRole. Input role: {}", role);
-        if (ROLE_USER.name.equals(role)) {
-            return ROLE_USER;
-        } else if (ROLE_MODERATOR.name.equals(role)) {
-            return ROLE_MODERATOR;
-        } else if (ROLE_ADMIN.name.equals(role)) {
-            return ROLE_ADMIN;
-        } else {
-            return UNDEFINED;
-        }
+        return ROLES.getOrDefault(role, UNDEFINED);
     }
 }

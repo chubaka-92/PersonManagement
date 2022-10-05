@@ -12,10 +12,8 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 @Slf4j
 @Component
@@ -25,15 +23,14 @@ public class AuthTokenFilter extends OncePerRequestFilter {
     private static final String AUTHORIZATION_TYPE = "Bearer ";
     private static final int BEGIN_INDEX = 7;
 
-    private JwtUtils jwtUtils;// todo Autowired на поле нехорошо //  DOne
-    // todo Autowired на поле нехорошо  //  DONE
+    private JwtUtils jwtUtils;
     private UserDetailsServiceImpl userDetailsService;
 
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
-                                    FilterChain filterChain) throws ServletException, IOException {
+                                    FilterChain filterChain) {
         log.info("Was calling doFilterInternal.");
         try {
             String jwt = parseJwt(request);
@@ -47,11 +44,10 @@ public class AuthTokenFilter extends OncePerRequestFilter {
 
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             }
+            filterChain.doFilter(request, response);
         } catch (Exception e) {
             log.error(e.getMessage());
-            System.err.println(e.getMessage());
         }
-        filterChain.doFilter(request, response);
     }
 
     private String parseJwt(HttpServletRequest request) {

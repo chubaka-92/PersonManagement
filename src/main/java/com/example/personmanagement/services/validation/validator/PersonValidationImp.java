@@ -1,30 +1,32 @@
 package com.example.personmanagement.services.validation.validator;
 
-import com.example.personmanagement.api.PersonChecker;
-import com.example.personmanagement.api.PersonInitializer;
-import com.example.personmanagement.api.PersonValidation;
+import com.example.personmanagement.api.checker.PersonChecker;
+import com.example.personmanagement.api.initializer.PersonInitializer;
+import com.example.personmanagement.api.validation.PersonValidation;
 import com.example.personmanagement.dto.PersonDto;
-import com.example.personmanagement.services.validation.cheker.PersonCheckerImp;
-import com.example.personmanagement.services.validation.initializer.PersonInitializerImp;
+import com.example.personmanagement.services.provider.TypeProvider;
 import com.example.personmanagement.types.Position;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import static com.example.personmanagement.types.Position.UNDEFINED;
-import static com.example.personmanagement.types.Position.definePosition;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class PersonValidationImp implements PersonValidation {
 
-    public PersonDto validate(PersonDto personDto) {
-        log.info("Was calling validate. Input person: " + personDto);
-        PersonChecker personChecker = new PersonCheckerImp();
-        PersonInitializer personErrorMessage = new PersonInitializerImp(personDto);
+    private final PersonChecker personChecker;
+    private final PersonInitializer personErrorMessage;
+    private final TypeProvider positions;
 
+    public PersonDto validate(PersonDto personDto) {
+        log.info("Was calling validate. Input person: {}", personDto);
+        personErrorMessage.setPersonDtoError(personDto);
         personErrorMessage.addFieldsEmpty(personChecker.checkRequiredFields(personDto));
 
-        Position position = definePosition(personDto.getPosition());
+        Position position = positions.getPosition(personDto.getPosition());
 
         if (!personErrorMessage.hasErrors()) {
             checkingFilingFields(personDto, personErrorMessage, personChecker, position);
@@ -45,8 +47,7 @@ public class PersonValidationImp implements PersonValidation {
 
             personErrorMessage.addIncorrectArgumentMessage(personChecker.checkSalary(position, personDto.getSalary()));
 
-            personErrorMessage.addIncorrectArgumentMessage(
-                    personChecker.checkExperience(position, personDto.getExperience()));
+            personErrorMessage.addIncorrectArgumentMessage(personChecker.checkExperience(position, personDto.getExperience()));
         } else {
             personErrorMessage.addIncorrectArgumentMessage(personChecker.checkPosition(personDto.getPosition()));
         }

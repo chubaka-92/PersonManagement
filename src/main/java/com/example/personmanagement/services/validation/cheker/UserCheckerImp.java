@@ -1,8 +1,8 @@
 package com.example.personmanagement.services.validation.cheker;
 
-import com.example.personmanagement.api.RoleDAO;
-import com.example.personmanagement.api.UserChecker;
-import com.example.personmanagement.api.UserDAO;
+import com.example.personmanagement.api.checker.UserChecker;
+import com.example.personmanagement.api.dao.RoleDAO;
+import com.example.personmanagement.api.dao.UserDAO;
 import com.example.personmanagement.dto.UserDto;
 import com.example.personmanagement.services.MessageService;
 import com.example.personmanagement.types.Roles;
@@ -24,7 +24,7 @@ public class UserCheckerImp implements UserChecker {
     private static final String ROLE_NOT_FOUND = "roleNotFound";
     private static final String EMAIL_EXIST = "emailExist";
     private static final String INCORRECT_EMAIL = "incorrectEmail";
-    private final MessageService messageService = new MessageService();
+    private final MessageService messageService;
     private final UserDAO userDAO;
     private final RoleDAO roleDAO;
 
@@ -32,19 +32,19 @@ public class UserCheckerImp implements UserChecker {
     public List<String> checkRequiredFields(UserDto userDto) {
         log.info("Was calling checkRequiredFields. Input userDto: {}", userDto);
         List<String> invalidFields = new ArrayList<>();
-        if (userDto.getUsername() == null || userDto.getUsername().isBlank()) {
+
+        if (checkingBadValueUserName(userDto)) {
             invalidFields.add(USER_NAME);
         }
-        if (userDto.getEmail() == null || userDto.getEmail().isBlank()) {
+        if (checkingBadValueEmail(userDto)) {
             invalidFields.add(EMAIL);
         }
-        if (userDto.getPassword() == null || userDto.getPassword().isBlank()) {
+        if (checkingBadValuePassword(userDto)) {
             invalidFields.add(PASSWORD);
         }
-        if (userDto.getRoles() == null || userDto.getRoles().isEmpty()) {
+        if (checkingBadValueRoles(userDto)) {
             invalidFields.add(ROLES);
         }
-
         return invalidFields;
     }
 
@@ -85,6 +85,7 @@ public class UserCheckerImp implements UserChecker {
     }
 
     private boolean correctFormatEmail(String email) {
+        log.debug("Was calling correctFormatEmail. Input email: {}", email);
         return email.trim().matches("(\\w+@\\w+\\.\\w+)");
     }
 
@@ -92,11 +93,29 @@ public class UserCheckerImp implements UserChecker {
         log.debug("Was calling checkingRole. Input response: {} role: {}", response, role);
         Roles roleUser = Roles.defineRole(role);
         if (roleUser == Roles.UNDEFINED) {
-            String message = MessageFormat.format(messageService.getMessage(INCORRECT_ROLE), role);
-            response.put(ROLES, message);
+            response.put(ROLES, MessageFormat.format(messageService.getMessage(INCORRECT_ROLE), role));
         } else if (!roleDAO.existenceRoleName(roleUser.name())) {
-            String message = MessageFormat.format(messageService.getMessage(ROLE_NOT_FOUND), role);
-            response.put(ROLES, message);
+            response.put(ROLES, MessageFormat.format(messageService.getMessage(ROLE_NOT_FOUND), role));
         }
+    }
+
+    private boolean checkingBadValueRoles(UserDto userDto) {
+        log.debug("Was calling checkingRoles. Input userDto: {}", userDto);
+        return (userDto.getRoles() == null || userDto.getRoles().isEmpty());
+    }
+
+    private boolean checkingBadValuePassword(UserDto userDto) {
+        log.debug("Was calling checkingPassword. Input userDto: {}", userDto);
+        return (userDto.getPassword() == null || userDto.getPassword().isBlank());
+    }
+
+    private boolean checkingBadValueEmail(UserDto userDto) {
+        log.debug("Was calling checkingEmail. Input userDto: {}", userDto);
+        return (userDto.getEmail() == null || userDto.getEmail().isBlank());
+    }
+
+    private boolean checkingBadValueUserName(UserDto userDto) {
+        log.debug("Was calling checkingBadValueUserName. Input userDto: {}", userDto);
+        return (userDto.getUsername() == null || userDto.getUsername().isBlank());
     }
 }

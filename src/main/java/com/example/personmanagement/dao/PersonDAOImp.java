@@ -1,6 +1,6 @@
 package com.example.personmanagement.dao;
 
-import com.example.personmanagement.api.PersonDAO;
+import com.example.personmanagement.api.dao.PersonDAO;
 import com.example.personmanagement.entity.PersonEntity;
 import com.example.personmanagement.exeption.PersonNotFoundException;
 import com.example.personmanagement.repository.PersonRepository;
@@ -21,7 +21,7 @@ public class PersonDAOImp implements PersonDAO {
     private static final String PERSON_NOT_FOUND = "personNotFound";
     private static final String PERSONS_NOT_FOUND = "personsNotFound";
     private final PersonRepository personRepository;
-    private final MessageService messageService = new MessageService();
+    private final MessageService messageService;
 
     public PersonEntity findPersonById(Long id) {
         log.info("Was calling findPersonById. Input id: {}", id);

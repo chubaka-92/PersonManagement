@@ -1,6 +1,6 @@
 package com.example.personmanagement.controller;
 
-import com.example.personmanagement.api.TaskService;
+import com.example.personmanagement.api.service.TaskService;
 import com.example.personmanagement.dto.TaskDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

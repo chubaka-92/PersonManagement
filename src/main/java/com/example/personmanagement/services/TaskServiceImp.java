@@ -1,6 +1,10 @@
 package com.example.personmanagement.services;
 
-import com.example.personmanagement.api.*;
+import com.example.personmanagement.api.dao.PersonDAO;
+import com.example.personmanagement.api.mapper.TaskMapper;
+import com.example.personmanagement.api.producer.TaskProducer;
+import com.example.personmanagement.api.service.TaskService;
+import com.example.personmanagement.api.validation.TaskValidation;
 import com.example.personmanagement.dao.TaskDAOImp;
 import com.example.personmanagement.dto.TaskDto;
 import com.example.personmanagement.entity.PersonEntity;
@@ -22,7 +26,7 @@ public class TaskServiceImp implements TaskService {
     private static final int ONE_TASK = 1;
     private final TaskDAOImp taskDAO;
     private static final String TOO_MANY_TASKS = "tooManyTasks";
-    private final MessageService messageService = new MessageService();
+    private final MessageService messageService;
     private final TaskMapper taskMapper;
     private final TaskValidation taskValidation;
     private final PersonDAO personDao;
