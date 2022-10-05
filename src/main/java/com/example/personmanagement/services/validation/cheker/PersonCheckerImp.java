@@ -4,6 +4,7 @@ import com.example.personmanagement.api.checker.PersonChecker;
 import com.example.personmanagement.dto.PersonDto;
 import com.example.personmanagement.services.MessageService;
 import com.example.personmanagement.types.Position;
+import com.example.personmanagement.types.Positions;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -27,6 +28,7 @@ public class PersonCheckerImp implements PersonChecker {
     private static final String LITTLE_WORK_EXPERIENCE = "littleWorkExperience";
     private static final int WORK_MIN_AGE = 16;
     private final MessageService messageService;
+    private final Positions positions;
 
     public List<String> checkRequiredFields(PersonDto personDto) {
         log.info("Was calling checkRequiredFields. Input person: {}", personDto);
@@ -76,7 +78,7 @@ public class PersonCheckerImp implements PersonChecker {
     public Map<String, String> checkPosition(String position) {
         log.info("Was calling checkPosition. Input position: {}", position);
         Map<String, String> response = new HashMap<>();
-        if (Position.definePosition(position) == Position.UNDEFINED) {
+        if (positions.getPosition(position) == Position.UNDEFINED) {
             String message = messageService.getMessage(INCORRECT_POSITION);
             response.put(POSITION, message);
         }

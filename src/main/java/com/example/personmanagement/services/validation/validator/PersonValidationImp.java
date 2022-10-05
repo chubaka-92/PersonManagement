@@ -5,12 +5,12 @@ import com.example.personmanagement.api.initializer.PersonInitializer;
 import com.example.personmanagement.api.validation.PersonValidation;
 import com.example.personmanagement.dto.PersonDto;
 import com.example.personmanagement.types.Position;
+import com.example.personmanagement.types.Positions;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import static com.example.personmanagement.types.Position.UNDEFINED;
-import static com.example.personmanagement.types.Position.definePosition;
 
 @Slf4j
 @Service
@@ -19,13 +19,14 @@ public class PersonValidationImp implements PersonValidation {
 
     private final PersonChecker personChecker;
     private final PersonInitializer personErrorMessage;
+    private final Positions positions;
 
     public PersonDto validate(PersonDto personDto) {
         log.info("Was calling validate. Input person: {}", personDto);
         personErrorMessage.setPersonDtoError(personDto);
         personErrorMessage.addFieldsEmpty(personChecker.checkRequiredFields(personDto));
 
-        Position position = definePosition(personDto.getPosition());
+        Position position = positions.getPosition(personDto.getPosition());
 
         if (!personErrorMessage.hasErrors()) {
             checkingFilingFields(personDto, personErrorMessage, personChecker, position);

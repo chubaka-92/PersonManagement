@@ -3,13 +3,9 @@ package com.example.personmanagement.types;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
-import lombok.extern.slf4j.Slf4j;
 
 import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.ResourceBundle;
 
-@Slf4j
 @Getter
 @ToString
 @AllArgsConstructor
@@ -26,20 +22,4 @@ public enum Position {
     private final BigDecimal salaryMax;
     private final Double workExperience;
     private final Integer countTasks;
-
-    private static final String MESSAGE = "message";
-
-    public static Position definePosition(String position) {
-        log.info("Was calling definePosition. Input position: {}", position);
-        return getPositions().getOrDefault(position, UNDEFINED);
-    }
-
-    private static HashMap<String, Position> getPositions() {
-        HashMap<String, Position> positions = new HashMap<>();
-        for (Position position : Position.values()) {
-            positions.put(ResourceBundle.getBundle(MESSAGE).getString(position.name()), position);
-        }
-        return positions;
-    }
-
 }

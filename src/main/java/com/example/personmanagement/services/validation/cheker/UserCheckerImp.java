@@ -33,20 +33,18 @@ public class UserCheckerImp implements UserChecker {
         log.info("Was calling checkRequiredFields. Input userDto: {}", userDto);
         List<String> invalidFields = new ArrayList<>();
 
-
-        if (checkingBadValueUserName(userDto)) { //todo сделать приватный метод на проверку на null и isBlank
+        if (checkingBadValueUserName(userDto)) { //todo сделать приватный метод на проверку на null и isBlank   //  DONE
             invalidFields.add(USER_NAME);
         }
-        if (checkingBadValueEmail(userDto)) { //todo сделать приватный метод на проверку на null и isBlank
+        if (checkingBadValueEmail(userDto)) { //todo сделать приватный метод на проверку на null и isBlank  //  DONE
             invalidFields.add(EMAIL);
         }
-        if (checkingBadValuePassword(userDto)) { //todo сделать приватный метод на проверку на null и isBlank
+        if (checkingBadValuePassword(userDto)) { //todo сделать приватный метод на проверку на null и isBlank  //  DONE
             invalidFields.add(PASSWORD);
         }
-        if (checkingBadValueRoles(userDto)) { //todo сделать приватный метод на проверку на null и isBlank
+        if (checkingBadValueRoles(userDto)) { //todo сделать приватный метод на проверку на null и isBlank  //  DONE
             invalidFields.add(ROLES);
         }
-
         return invalidFields;
     }
 
@@ -87,6 +85,7 @@ public class UserCheckerImp implements UserChecker {
     }
 
     private boolean correctFormatEmail(String email) {
+        log.debug("Was calling correctFormatEmail. Input email: {}", email);
         return email.trim().matches("(\\w+@\\w+\\.\\w+)");
     }
 
