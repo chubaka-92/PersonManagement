@@ -33,19 +33,19 @@ public class PersonCheckerImp implements PersonChecker {
     public List<String> checkRequiredFields(PersonDto personDto) {
         log.info("Was calling checkRequiredFields. Input person: {}", personDto);
         List<String> invalidFields = new ArrayList<>();
-        if (checkingBadValueName(personDto)) { //todo сделать приватный метод на проверку на null и isBlank  //  DONE
+        if (checkingBadValueName(personDto)) {
             invalidFields.add(NAME);
         }
-        if (checkingBadValuePosition(personDto)) { //todo сделать приватный метод на проверку на null и isBlank  //  DONE
+        if (checkingBadValuePosition(personDto)) {
             invalidFields.add(POSITION);
         }
-        if (checkingBadValueAge(personDto)) { //todo сделать приватный метод на проверку на null и isBlank  //  DONE
+        if (checkingBadValueAge(personDto)) {
             invalidFields.add(AGE);
         }
-        if (checkingBadValueSalary(personDto)) { //todo сделать приватный метод на проверку на null и isBlank  //  DONE
+        if (checkingBadValueSalary(personDto)) {
             invalidFields.add(SALARY);
         }
-        if (checkingBadValueExperience(personDto)) { //todo сделать приватный метод на проверку на null и isBlank  //  DONE
+        if (checkingBadValueExperience(personDto)) {
             invalidFields.add(EXPERIENCE);
         }
         return invalidFields;
