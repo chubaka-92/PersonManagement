@@ -33,16 +33,16 @@ public class UserCheckerImp implements UserChecker {
         log.info("Was calling checkRequiredFields. Input userDto: {}", userDto);
         List<String> invalidFields = new ArrayList<>();
 
-        if (checkingBadValueUserName(userDto)) { //todo сделать приватный метод на проверку на null и isBlank   //  DONE
+        if (checkingBadValueUserName(userDto)) {
             invalidFields.add(USER_NAME);
         }
-        if (checkingBadValueEmail(userDto)) { //todo сделать приватный метод на проверку на null и isBlank  //  DONE
+        if (checkingBadValueEmail(userDto)) {
             invalidFields.add(EMAIL);
         }
-        if (checkingBadValuePassword(userDto)) { //todo сделать приватный метод на проверку на null и isBlank  //  DONE
+        if (checkingBadValuePassword(userDto)) {
             invalidFields.add(PASSWORD);
         }
-        if (checkingBadValueRoles(userDto)) { //todo сделать приватный метод на проверку на null и isBlank  //  DONE
+        if (checkingBadValueRoles(userDto)) {
             invalidFields.add(ROLES);
         }
         return invalidFields;
