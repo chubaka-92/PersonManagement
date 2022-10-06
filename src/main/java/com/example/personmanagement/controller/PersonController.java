@@ -1,12 +1,17 @@
 package com.example.personmanagement.controller;
 
+import com.example.personmanagement.api.PDFService;
 import com.example.personmanagement.api.service.PersonService;
 import com.example.personmanagement.dto.PersonDto;
+import com.example.personmanagement.services.MessageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.List;
 
 @Slf4j
@@ -15,7 +20,12 @@ import java.util.List;
 @RequestMapping("/person")
 public class PersonController {
 
+    private static final String CONTENT_DISPOSITION = "Content-Disposition";
+    private static final String HEADER_VALUE = "headerValuePdf";
+    private static final String APPLICATION_PDF = "application/pdf";
+    private final MessageService messageService;
     private final PersonService personService;
+    private final PDFService pdfService;
 
 
     @GetMapping("/{uid}")
@@ -52,5 +62,16 @@ public class PersonController {
     public ResponseEntity<List<PersonDto>> createPersons(@RequestBody List<PersonDto> personsDto) {
         log.info("Was calling createPersons.Input persons: {}", personsDto);
         return ResponseEntity.ok(personService.addNewPersons(personsDto));
+    }
+
+    @GetMapping("/{uid}/pdf")
+    public void getPersonPdf(@PathVariable("uid") String uid, HttpServletResponse response) throws IOException {
+        log.info("Was calling getPersonPdf. Input uid: {}", uid);
+
+        response.setContentType(APPLICATION_PDF);
+        PersonDto personDto = personService.getPersonByUid(uid);
+        response.setHeader(CONTENT_DISPOSITION,
+                MessageFormat.format(messageService.getMessage(HEADER_VALUE), personDto.getName()));
+        pdfService.export(response, personDto);
     }
 }
