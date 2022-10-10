@@ -20,10 +20,6 @@ import java.util.List;
 @RequestMapping("/person")
 public class PersonController {
 
-    private static final String CONTENT_DISPOSITION = "Content-Disposition";
-    private static final String HEADER_VALUE = "headerValuePdf";
-    private static final String APPLICATION_PDF = "application/pdf";
-    private final MessageService messageService;
     private final PersonService personService;
     private final PDFService pdfService;
 
@@ -67,11 +63,8 @@ public class PersonController {
     @GetMapping("/{uid}/pdf")
     public void getPersonPdf(@PathVariable("uid") String uid, HttpServletResponse response) throws IOException {
         log.info("Was calling getPersonPdf. Input uid: {}", uid);
-
-        response.setContentType(APPLICATION_PDF);// todo вынести логику из контроллера
-        PersonDto personDto = personService.getPersonByUid(uid);
-        response.setHeader(CONTENT_DISPOSITION,
-                MessageFormat.format(messageService.getMessage(HEADER_VALUE), personDto.getName()));
-        pdfService.export(response, personDto);
+        // todo вынести логику из контроллера
+        //  DONE
+        pdfService.export(response, personService.getPersonByUid(uid));
     }
 }

@@ -13,13 +13,14 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.MessageFormat;
+import java.util.List;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class PDFServiceImp implements PDFService {
 
-    private static final String LOGO = "src\\main\\resources\\cat.jpg";// todo название LOGO_PATH
+    private static final String LOGO_PATH = "src\\main\\resources\\cat.jpg";// todo название LOGO_PATH  // DONE
     private static final String PERSON = "person";
     private static final String PERSON_ID = "personId";
     private static final String PERSON_UID = "personUid";
@@ -34,10 +35,16 @@ public class PDFServiceImp implements PDFService {
     private static final String TASK_UID = "taskUid";
     private static final String TASK_DESCRIPTION = "taskDescription";
     private static final String TASK_PRIORITY = "taskPriority";
+    private static final String APPLICATION_PDF = "application/pdf";
+    private static final String CONTENT_DISPOSITION = "Content-Disposition";
+    private static final String HEADER_VALUE = "headerValuePdf";
     private final MessageService messageService;
 
     public void export(HttpServletResponse response, PersonDto personDto) throws IOException {
         log.info("Was calling export. Input personDto: {}", personDto);
+
+        settingResponse(response, personDto.getName());
+
         Document document = new Document(PageSize.A4);
         PdfWriter.getInstance(document, response.getOutputStream());
 
@@ -51,10 +58,17 @@ public class PDFServiceImp implements PDFService {
         fontDescription.setSize(12);
 
         setPerson(personDto, document, fontTitle, fontDescription);
-        setTasks(personDto, document, fontTitleTask, fontDescription);
+        setTasks(personDto.getTasks(), document, fontTitleTask, fontDescription);
         setLogo(document);
 
         document.close();
+    }
+
+    private void settingResponse(HttpServletResponse response, String name) {
+        log.debug("Was calling settingResponse.");
+        response.setContentType(APPLICATION_PDF);
+        response.setHeader(CONTENT_DISPOSITION,
+                MessageFormat.format(messageService.getMessage(HEADER_VALUE), name));
     }
 
     private void setPerson(PersonDto personDto, Document document, Font fontTitle, Font fontDescription) {
@@ -82,21 +96,25 @@ public class PDFServiceImp implements PDFService {
 
     private void setLogo(Document document) throws IOException {
         log.debug("Was calling setLogo.");
-        Image img = Image.getInstance(LOGO);
+        Image img = Image.getInstance(LOGO_PATH);
         img.setAbsolutePosition(350, 580);
         document.add(img);
     }
 
-    private void setTasks(PersonDto personDto, Document document, Font fontTitleTask, Font fontDescription) {// todo лучше принимать сразу список тасок, так как поля PersonDto тут не используются
+    private void setTasks(List<TaskDto> tasks, Document document, Font fontTitleTask, Font fontDescription) {// todo лучше принимать сразу список тасок, так как поля PersonDto тут не используются  //  DONE
         log.debug("Was calling setTasks.");
-        if (!personDto.getTasks().isEmpty()) {// todo может быть NPE, если таски null
+        if (isTaskExist(tasks)) {// todo может быть NPE, если таски null  //  DONE
             Paragraph titleTask = new Paragraph(messageService.getMessage(TASK_TITLE), fontTitleTask);
             document.add(Chunk.NEWLINE);
             document.add(titleTask);
-            for (TaskDto task : personDto.getTasks()) {
-                setTask(document, fontDescription, task);
-            }// todo сделай через стримы
+            // todo сделай через стримы
+            //  Done
+            tasks.forEach(task->setTask(document, fontDescription, task));
         }
+    }
+
+    private boolean isTaskExist(List<TaskDto> tasks) {
+        return tasks != null || !tasks.isEmpty();
     }
 
     private void setTask(Document document, Font fontDescription, TaskDto task) {
