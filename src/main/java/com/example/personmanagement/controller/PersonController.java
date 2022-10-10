@@ -68,7 +68,7 @@ public class PersonController {
     public void getPersonPdf(@PathVariable("uid") String uid, HttpServletResponse response) throws IOException {
         log.info("Was calling getPersonPdf. Input uid: {}", uid);
 
-        response.setContentType(APPLICATION_PDF);
+        response.setContentType(APPLICATION_PDF);// todo вынести логику из контроллера
         PersonDto personDto = personService.getPersonByUid(uid);
         response.setHeader(CONTENT_DISPOSITION,
                 MessageFormat.format(messageService.getMessage(HEADER_VALUE), personDto.getName()));

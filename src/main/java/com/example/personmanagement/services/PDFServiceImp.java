@@ -19,7 +19,7 @@ import java.text.MessageFormat;
 @RequiredArgsConstructor
 public class PDFServiceImp implements PDFService {
 
-    private static final String LOGO = "src\\main\\resources\\cat.jpg";
+    private static final String LOGO = "src\\main\\resources\\cat.jpg";// todo название LOGO_PATH
     private static final String PERSON = "person";
     private static final String PERSON_ID = "personId";
     private static final String PERSON_UID = "personUid";
@@ -87,15 +87,15 @@ public class PDFServiceImp implements PDFService {
         document.add(img);
     }
 
-    private void setTasks(PersonDto personDto, Document document, Font fontTitleTask, Font fontDescription) {
+    private void setTasks(PersonDto personDto, Document document, Font fontTitleTask, Font fontDescription) {// todo лучше принимать сразу список тасок, так как поля PersonDto тут не используются
         log.debug("Was calling setTasks.");
-        if (!personDto.getTasks().isEmpty()) {
+        if (!personDto.getTasks().isEmpty()) {// todo может быть NPE, если таски null
             Paragraph titleTask = new Paragraph(messageService.getMessage(TASK_TITLE), fontTitleTask);
             document.add(Chunk.NEWLINE);
             document.add(titleTask);
             for (TaskDto task : personDto.getTasks()) {
                 setTask(document, fontDescription, task);
-            }
+            }// todo сделай через стримы
         }
     }
 
