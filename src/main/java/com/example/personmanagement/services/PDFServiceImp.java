@@ -114,7 +114,7 @@ public class PDFServiceImp implements PDFService {
     }
 
     private boolean isTaskExist(List<TaskDto> tasks) {
-        return tasks != null || !tasks.isEmpty();
+        return tasks != null && !tasks.isEmpty();
     }
 
     private void setTask(Document document, Font fontDescription, TaskDto task) {
