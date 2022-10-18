@@ -63,8 +63,6 @@ public class PersonController {
     @GetMapping("/{uid}/pdf")
     public void getPersonPdf(@PathVariable("uid") String uid, HttpServletResponse response) throws IOException {
         log.info("Was calling getPersonPdf. Input uid: {}", uid);
-        // todo вынести логику из контроллера
-        //  DONE
         pdfService.export(response, personService.getPersonByUid(uid));
     }
 }

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -20,7 +21,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PDFServiceImp implements PDFService {
 
-    private static final String LOGO_PATH = "src\\main\\resources\\cat.jpg";// todo название LOGO_PATH  // DONE
+    private static final String LOGO_PATH = "src\\main\\resources\\cat.jpg";
     private static final String PERSON = "person";
     private static final String PERSON_ID = "personId";
     private static final String PERSON_UID = "personUid";
@@ -51,11 +52,11 @@ public class PDFServiceImp implements PDFService {
         document.open();
 
         Font fontTitle = Liberation.SANS_BOLD.create();
-        fontTitle.setSize(20);
+        fontTitle.setSize(20);// todo волшебное числа
         Font fontTitleTask = Liberation.SANS_BOLD.create();
-        fontTitle.setSize(15);
+        fontTitle.setSize(15);// todo волшебное числа
         Font fontDescription = Liberation.SANS.create();
-        fontDescription.setSize(12);
+        fontDescription.setSize(12);// todo волшебное числа
 
         setPerson(personDto, document, fontTitle, fontDescription);
         setTasks(personDto.getTasks(), document, fontTitleTask, fontDescription);
@@ -83,6 +84,17 @@ public class PDFServiceImp implements PDFService {
         Paragraph salaryPerson = new Paragraph(getFormat(PERSON_SALARY, personDto.getSalary()), fontDescription);
         Paragraph experiencePerson = new Paragraph(getFormat(PERSON_EXPERIENCE, personDto.getExperience()), fontDescription);
 
+//        List<Paragraph> paragraphs = List.of(new Paragraph(getFormat(PERSON, personDto.getName()), fontTitle),
+//                new Paragraph(getFormat(PERSON_ID, personDto.getId()), fontDescription),
+//                new Paragraph(getFormat(PERSON_UID, personDto.getUid()), fontDescription),
+//                new Paragraph(getFormat(PERSON_NAME, personDto.getName()), fontDescription),
+//                new Paragraph(getFormat(PERSON_AGE, personDto.getAge()), fontDescription),
+//                new Paragraph(getFormat(PERSON_EMAIL, personDto.getEmail()), fontDescription),
+//                new Paragraph(getFormat(PERSON_POSITION, personDto.getPosition()), fontDescription),
+//                new Paragraph(getFormat(PERSON_SALARY, personDto.getSalary()), fontDescription),
+//                new Paragraph(getFormat(PERSON_EXPERIENCE, personDto.getExperience()), fontDescription));
+//        paragraphs.forEach(document::add); todo лучше вот так
+
         document.add(titlePerson);
         document.add(idPerson);
         document.add(uidPerson);
@@ -97,18 +109,16 @@ public class PDFServiceImp implements PDFService {
     private void setLogo(Document document) throws IOException {
         log.debug("Was calling setLogo.");
         Image img = Image.getInstance(LOGO_PATH);
-        img.setAbsolutePosition(350, 580);
+        img.setAbsolutePosition(350, 580);// todo волшебные числа
         document.add(img);
     }
 
-    private void setTasks(List<TaskDto> tasks, Document document, Font fontTitleTask, Font fontDescription) {// todo лучше принимать сразу список тасок, так как поля PersonDto тут не используются  //  DONE
+    private void setTasks(List<TaskDto> tasks, Document document, Font fontTitleTask, Font fontDescription) {
         log.debug("Was calling setTasks.");
-        if (isTaskExist(tasks)) {// todo может быть NPE, если таски null  //  DONE
+        if (isTaskExist(tasks)) {
             Paragraph titleTask = new Paragraph(messageService.getMessage(TASK_TITLE), fontTitleTask);
             document.add(Chunk.NEWLINE);
             document.add(titleTask);
-            // todo сделай через стримы
-            //  Done
             tasks.forEach(task->setTask(document, fontDescription, task));
         }
     }

@@ -1,4 +1,4 @@
-package com.example.personmanagement.config.masking;// todo название пакета не оч, лучше masking  //  DONE
+package com.example.personmanagement.config.masking;
 
 import ch.qos.logback.classic.PatternLayout;
 import ch.qos.logback.classic.spi.ILoggingEvent;
